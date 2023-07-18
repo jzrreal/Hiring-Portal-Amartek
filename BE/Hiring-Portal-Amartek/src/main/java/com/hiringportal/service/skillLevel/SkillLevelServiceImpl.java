@@ -1,6 +1,6 @@
 package com.hiringportal.service.skillLevel;
 
-import com.hiringportal.entity.SkillLevel;
+import com.hiringportal.entities.SkillLevel;
 import com.hiringportal.repository.SkillLevelRepository;
 import com.hiringportal.service.ValidationService;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.hiringportal.service;
 
-import com.hiringportal.entity.SkillLevel;
+import com.hiringportal.entities.SkillLevel;
 import com.hiringportal.repository.SkillLevelRepository;
 import com.hiringportal.service.skillLevel.SkillLevelService;
 import org.junit.jupiter.api.Assertions;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.util.Assert;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.hiringportal.entity;
+package com.hiringportal.entities;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -18,32 +18,21 @@ import java.util.Date;
 @Builder
 @Entity
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-@Table(name = "tb_tr_work_experiences")
-public class WorkExperience {
-
+@Table(name = "tb_tr_achievements")
+public class Achievement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "work_experience_id")
+    @Column(name = "achievement_id")
     private Integer id;
-
     @NotBlank
     private String title;
     @NotBlank
-    private String company;
+    private String issuer;
     @NotNull
-    private Date startDate;
-    private Boolean current;
+    private Date awardedDate;
     @Column(columnDefinition = "text")
     private String description;
-    private Date until;
 
-//    @ManyToOne
-//    @JoinColumn(name = "job_function_id")
-//    private JobFunction jobFunction;
-
-//    @ManyToOne
-//    @JoinColumn(name = "job_level_id")
-//    private JobLevel jobLevel;
 
 //    @ManyToOne
 //    @JoinColumn(name = "candidate_profile_id")
