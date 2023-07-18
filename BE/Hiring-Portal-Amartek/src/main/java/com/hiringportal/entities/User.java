@@ -17,6 +17,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -33,7 +35,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Token token;
+    private List<Token> tokens;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
