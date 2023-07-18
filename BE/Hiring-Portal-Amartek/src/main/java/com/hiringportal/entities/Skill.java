@@ -27,8 +27,8 @@ public class Skill {
     @ManyToOne
     @JoinColumn(name = "skill_level_id")
     private SkillLevel skillLevel;
-//    @ManyToOne
-//    @JoinColumn(name = "candidate_profile_id")
-//    private CandidateProfile candidateProfile;
+    @ManyToOne
+    @JoinColumn(name = "candidate_profile_id")
+    private CandidateProfile candidateProfile;
 
 }

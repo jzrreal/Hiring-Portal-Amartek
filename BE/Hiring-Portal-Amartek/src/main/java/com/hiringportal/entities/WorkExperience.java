@@ -45,7 +45,7 @@ public class WorkExperience {
 //    @JoinColumn(name = "job_level_id")
 //    private JobLevel jobLevel;
 
-//    @ManyToOne
-//    @JoinColumn(name = "candidate_profile_id")
-//    private CandidateProfile candidateProfile;
+    @ManyToOne
+    @JoinColumn(name = "candidate_profile_id")
+    private CandidateProfile candidateProfile;
 }

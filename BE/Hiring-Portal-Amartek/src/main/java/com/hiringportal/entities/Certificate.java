@@ -34,8 +34,8 @@ public class Certificate {
     @Column(columnDefinition = "text")
     private String description;
 
-//    @ManyToOne
-//    @JoinColumn(name = "candidate_profile_id")
-//    private CandidateProfile candidateProfile;
+    @ManyToOne
+    @JoinColumn(name = "candidate_profile_id")
+    private CandidateProfile candidateProfile;
 
 }
