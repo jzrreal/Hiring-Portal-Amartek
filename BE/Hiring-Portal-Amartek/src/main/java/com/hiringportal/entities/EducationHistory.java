@@ -1,16 +1,15 @@
 package com.hiringportal.entities;
 
-import java.util.List;
+import java.time.Year;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,16 +19,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_m_roles")
-public class Role {
+@Table(name = "tb_tr_education_histories")
+public class EducationHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @Column(name = "education_history_id")
     private Integer id;
 
+    private String level;
     private String name;
+    private String major;
+    private Year year_start;
+    private Year year_end;
 
-    @OneToMany(mappedBy = "role")
-    @JsonIgnore
-    private List<User> users;
+    @ManyToOne
+    @JoinColumn(name = "candidate_profile_id")
+    private CandidateProfile candidateProfile;
 }
