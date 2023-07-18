@@ -1,1 +1,0 @@
-# Hiring-Portal-Amartek
