@@ -1,24 +1,19 @@
 package com.hiringportal.entities;
 
-import java.time.Year;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Table(name = "tb_tr_education_histories")
 public class EducationHistory {
     @Id
@@ -29,8 +24,11 @@ public class EducationHistory {
     private String level;
     private String name;
     private String major;
-    private Year year_start;
-    private Year year_end;
+    @Column(columnDefinition = "year")
+    private Date yearStart;
+    @Column(columnDefinition = "year")
+
+    private Date yearEnd;
 
     @ManyToOne
     @JoinColumn(name = "candidate_profile_id")
