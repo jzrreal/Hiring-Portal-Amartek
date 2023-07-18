@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -19,16 +21,21 @@ import lombok.Setter;
 @Entity
 @Getter @Setter
 @AllArgsConstructor
-@Table(name = "tb_m_roles")
-public class Role {
+@Table(name = "tb_tr_candidate_profiles")
+public class CandidateProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @Column(name = "candidate_profile_id")
     private Integer id;
 
-    private String name;
+    private String phone;
+    private String summary;
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "candidateProfile")
     @JsonIgnore
-    private List<User> users;
+    private List<EducationHistory> educationHistories;
 }
