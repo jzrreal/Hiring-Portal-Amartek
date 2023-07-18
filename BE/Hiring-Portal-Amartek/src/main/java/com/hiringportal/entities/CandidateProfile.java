@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +25,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_tr_candidate_profiles")
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Table(name = "tb_m_candidate_profiles")
 public class CandidateProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +34,9 @@ public class CandidateProfile {
     private Integer id;
 
     private String phone;
+    @Column(columnDefinition = "text")
     private String summary;
+    private Date birthDate;
     
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -39,4 +45,16 @@ public class CandidateProfile {
     @OneToMany(mappedBy = "candidateProfile")
     @JsonIgnore
     private List<EducationHistory> educationHistories;
+    @OneToMany(mappedBy = "candidateProfile")
+    @JsonIgnore
+    private List<Achievement> achievements;
+    @OneToMany(mappedBy = "candidateProfile")
+    @JsonIgnore
+    private List<Certificate> certificates;
+    @OneToMany(mappedBy = "candidateProfile")
+    @JsonIgnore
+    private List<Skill> skills;
+    @OneToMany(mappedBy = "candidateProfile")
+    @JsonIgnore
+    private List<WorkExperience> workExperiences;
 }
