@@ -13,12 +13,13 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter @Setter
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_m_roles")
 public class Role {
     @Id

@@ -12,12 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter @Setter
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_tr_education_histories")
 public class EducationHistory {
     @Id
