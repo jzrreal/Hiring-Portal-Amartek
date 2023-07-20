@@ -1,7 +1,8 @@
-import Template from "./pages/dashboard";
+import Dashboard from "./pages/dashboard";
+
 function App() {
   return (
-    <Template />
+    <Dashboard />
   );
 }
 
