@@ -1,6 +1,6 @@
 package com.hiringportal.entities;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -43,6 +43,7 @@ public class CandidateProfile {
     private String token;
     
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
