@@ -36,9 +36,9 @@ public class Questions {
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id", insertable = false, updatable = false)
-//    private QuestionLevel questionLevel;
+    @ManyToOne
+    @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id", insertable = false, updatable = false)
+    private QuestionLevel questionLevel;
 
     public enum Segment {
         DATABASE,
