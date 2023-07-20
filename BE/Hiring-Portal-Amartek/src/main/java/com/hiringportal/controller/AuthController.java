@@ -62,8 +62,8 @@ public class AuthController {
      * POST
      * localhost:port/api/auth/verify-email?token
      */
-    @PostMapping(value = "logout")
-    public ResponseEntity<Object> verifyEmail(@RequestParam(name = "token") String token) {
+    @PostMapping(value = "verify-email")
+    public ResponseEntity<Object> verifyEmail() {
         return null;
     }
 }
