@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_tr_job_applications")
-public class JobApplications {
+public class JobApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_application_id")
@@ -30,11 +30,11 @@ public class JobApplications {
 
     @ManyToOne
     @JoinColumn(name = "job_post_id")
-    private JobPosts jobPosts;
+    private JobPost jobPost;
     
-    // @ManyToOne
-    // @JoinColumn(name = "cadidate_profile_id")
-    // private CandidateProfiles CandidateProfiles;
+     @ManyToOne
+     @JoinColumn(name = "cadidate_profile_id")
+     private CandidateProfile candidateProfile;
     
     @ManyToOne
     @JoinColumn(name = "application_status_id")
