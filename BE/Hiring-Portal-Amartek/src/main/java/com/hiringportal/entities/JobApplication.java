@@ -2,14 +2,7 @@ package com.hiringportal.entities;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_tr_job_applications")
-public class JobApplications {
+public class JobApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_application_id")
@@ -30,13 +23,16 @@ public class JobApplications {
 
     @ManyToOne
     @JoinColumn(name = "job_post_id")
-    private JobPosts jobPosts;
-    
+    private JobPost jobPost;
+
     @ManyToOne
-    @JoinColumn(name = "cadidate_profile_id")
+    @JoinColumn(name = "candidate_profile_id")
     private CandidateProfile candidateProfile;
-    
+
     @ManyToOne
     @JoinColumn(name = "application_status_id")
     private JobApplicationStatus jobApplicationStatus;
+
+    @OneToOne(mappedBy = "jobApplication")
+    private Test test;
 }

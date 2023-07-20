@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-// import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,14 +24,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_tr_job_posts")
-public class JobPosts {
+public class JobPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_post_id")
     private Integer id;
 
     private String title;
+    @Column(columnDefinition = "text")
     private String description;
+    @Column(columnDefinition = "text")
     private String requirement;
     private Date post_at;
     private Date open_until;
@@ -42,21 +43,17 @@ public class JobPosts {
 
     @ManyToOne
     @JoinColumn(name = "job_level_id")
-    private JobLevels jobLevels;
+    private JobLevel jobLevel;
 
     @ManyToOne
     @JoinColumn(name = "job_function_id")
-    private JobFunctions jobFunctions;
+    private JobFunction jobFunction;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobPosts")
-    public List<JobApplications> jobApplications;
-
-    // @JsonIgnore
-    // @OneToOne(mappedBy = "jobPosts")
-    // public Test test;
+    @OneToMany(mappedBy = "jobPost")
+    public List<JobApplication> jobApplications;
 }
