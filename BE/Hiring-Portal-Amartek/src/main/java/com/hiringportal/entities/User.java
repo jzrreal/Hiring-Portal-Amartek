@@ -44,6 +44,10 @@ public class User {
     @JsonIgnore
     private List<Token> tokens;
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<JobPost> jobPosts;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
