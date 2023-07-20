@@ -34,3 +34,4 @@ build/
 
 **/src/main/resources/application.properties
 **/test/resources/application-test.properties
+/src/main/java/com/hiringportal/dto/WebResponse.java

@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class SkillLevel {
     @NotBlank
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "skillLevel")
     private List<Skill> skills;
 }
