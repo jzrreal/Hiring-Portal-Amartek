@@ -57,4 +57,7 @@ public class CandidateProfile {
     @OneToMany(mappedBy = "candidateProfile")
     @JsonIgnore
     private List<WorkExperience> workExperiences;
+    @OneToMany(mappedBy = "candidateProfile")
+    @JsonIgnore
+    private List<JobApplication> jobApplications;
 }
