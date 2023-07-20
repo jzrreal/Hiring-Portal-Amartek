@@ -14,9 +14,9 @@ public class ValidationService {
 
     private final Validator validator;
 
-    public void validate(Object object){
+    public void validate(Object object) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object);
-        if (constraintViolations.size() != 0){
+        if (constraintViolations.size() != 0) {
             throw new ConstraintViolationException(constraintViolations);
         }
     }
