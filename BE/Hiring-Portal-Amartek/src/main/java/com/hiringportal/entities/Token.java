@@ -1,7 +1,5 @@
 package com.hiringportal.entities;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,32 +9,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_tr_job_applications")
-public class JobApplications {
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Table(name = "tb_tr_tokens")
+public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "job_application_id")
+    @Column(name = "token_id")
     private Integer id;
 
-    private Date apply_date;
+    private String token;
+    private Boolean revokeToken;
+    private Boolean expired;
 
     @ManyToOne
-    @JoinColumn(name = "job_post_id")
-    private JobPosts jobPosts;
-    
-    @ManyToOne
-    @JoinColumn(name = "cadidate_profile_id")
-    private CandidateProfile candidateProfile;
-    
-    @ManyToOne
-    @JoinColumn(name = "application_status_id")
-    private JobApplicationStatus jobApplicationStatus;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

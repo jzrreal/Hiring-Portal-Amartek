@@ -33,7 +33,7 @@ public class JobLevels {
     @OneToMany(mappedBy = "jobLevels")
     public List<JobPosts> jobPosts;
 
-    // @JsonIgnore
-    // @OneToMany(mappedBy = "jobLevels")
-    // public List<WorkExperience> workExperience;
+    @JsonIgnore
+    @OneToMany(mappedBy = "jobLevels")
+    public List<WorkExperience> workExperiences;
 }

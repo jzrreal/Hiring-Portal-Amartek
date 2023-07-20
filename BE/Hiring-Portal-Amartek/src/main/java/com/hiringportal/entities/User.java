@@ -1,7 +1,5 @@
 package com.hiringportal.entities;
 
-import java.sql.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,34 +7,40 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_tr_job_applications")
-public class JobApplications {
+@Table(name = "tb_m_users")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "job_application_id")
+    @Column(name = "user_id")
     private Integer id;
 
-    private Date apply_date;
+    private String email;
+    private String full_name;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Token> tokens;
 
     @ManyToOne
-    @JoinColumn(name = "job_post_id")
-    private JobPosts jobPosts;
-    
-    @ManyToOne
-    @JoinColumn(name = "cadidate_profile_id")
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @OneToOne(mappedBy = "user")
     private CandidateProfile candidateProfile;
-    
-    @ManyToOne
-    @JoinColumn(name = "application_status_id")
-    private JobApplicationStatus jobApplicationStatus;
 }

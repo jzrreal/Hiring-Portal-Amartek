@@ -16,24 +16,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_m_job_functions")
-public class JobFunctions {
+@Table(name = "tb_m_roles")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "job_function_id")
+    @Column(name = "role_id")
     private Integer id;
 
     private String name;
 
+    @OneToMany(mappedBy = "role")
     @JsonIgnore
-    @OneToMany(mappedBy = "jobFunctions")
-    public List<JobPosts> jobPosts;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "jobFunctions")
-    public List<WorkExperience> workExperiences;
+    private List<User> users;
 }

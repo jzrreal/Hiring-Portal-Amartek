@@ -48,9 +48,9 @@ public class JobPosts {
     @JoinColumn(name = "job_function_id")
     private JobFunctions jobFunctions;
 
-    // @ManyToOne
-    // @JoinColumn(name = "user_id")
-    // private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @JsonIgnore
     @OneToMany(mappedBy = "jobPosts")
