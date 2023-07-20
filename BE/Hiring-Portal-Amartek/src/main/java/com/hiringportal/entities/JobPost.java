@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_tr_job_posts")
-public class JobPosts {
+public class JobPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_post_id")
@@ -42,19 +42,19 @@ public class JobPosts {
 
     @ManyToOne
     @JoinColumn(name = "job_level_id")
-    private JobLevels jobLevels;
+    private JobLevel jobLevel;
 
     @ManyToOne
     @JoinColumn(name = "job_function_id")
-    private JobFunctions jobFunctions;
+    private JobFunction jobFunction;
 
-    // @ManyToOne
-    // @JoinColumn(name = "user_id")
-    // private User user;
+     @ManyToOne
+     @JoinColumn(name = "user_id")
+     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobPosts")
-    public List<JobApplications> jobApplications;
+    @OneToMany(mappedBy = "jobPost")
+    public List<JobApplication> jobApplications;
 
     // @JsonIgnore
     // @OneToOne(mappedBy = "jobPosts")
