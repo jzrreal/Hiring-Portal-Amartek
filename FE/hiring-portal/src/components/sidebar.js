@@ -2,103 +2,83 @@ import React from "react";
 
 function Sidebar() {
   return (
-    <aside
-      id="layout-menu"
-      className="layout-menu menu-vertical menu bg-menu-theme"
-    >
-      <div className="app-brand demo">
-        <a href="index.html" className="app-brand-link">
-          <span className="app-brand-logo demo"></span>
-          <span className="app-brand-text demo menu-text fw-bolder ms-2">
-            Sneat
-          </span>
-        </a>
+    <aside className="main-sidebar sidebar-dark-primary elevation-4">
+      {/* Brand Logo */}
+      <a href="#" className="brand-link">
+        <img src="https://www.amartek.id/i/favicon.png" className="img-fuild" />
+        <span className="brand-text font-weight-bold font-weight-light ml-3">Portal Hiring</span>
+      </a>
+      {/* Brand Logo */}
 
-        <a
-          href="#"
-          className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"
-        >
-          <i className="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
-      </div>
+      {/* Sidebar Menu */}
+      <div className="sidebar">
+        <nav className="mt-4">
+          <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            {/* Dashboard */}
+            <li className="nav-item">
+              <a href="#" className="nav-link active">
+                <i className="nav-icon fas fa-tachometer-alt"></i>
+                <p>
+                  Dashboard
+                </p>
+              </a>
+            </li>
+            {/* Dashboard */}
 
-      <div className="menu-inner-shadow"></div>
+            {/* Master Data */}
+            <li className="nav-item">
+              <a href="#" className="nav-link">
+                <i className="nav-icon fas fa-copy"></i>
+                <p>
+                  Master Data
+                  <i className="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul className="nav nav-treeview">
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Role</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Candidate Profile</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Skill Level</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Question Level</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Job Level</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a href="#" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Job Function</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            {/* Master Data */}
 
-      <ul className="menu-inner py-1">
-        {/* Dashboard */}
-        <li className="menu-item active">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Dashboard</div>
-          </a>
-        </li>
-
-        {/* Master Data */}
-        <li className="menu-item">
-          <a href="#" className="menu-link menu-toggle">
-            <i className="menu-icon tf-icons bx bx-cube-alt"></i>
-            <div>Master Data</div>
-          </a>
-          <ul className="menu-sub">
-           {/* Roles */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Roles</div>
-          </a>
-        </li>
-        {/* Users */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Users</div>
-          </a>
-        </li>
-        {/* Candidate Profiles */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Candidate Profiles</div>
-          </a>
-        </li>
-        {/* Application Status */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Application Status</div>
-          </a>
-        </li>
-        {/* Question Levels */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Question Levels</div>
-          </a>
-        </li>
-        {/* Skill Levels */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Skill Levels</div>
-          </a>
-        </li>
-        {/* Job Levels */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Job Levels</div>
-          </a>
-        </li>
-        {/* Job Functions */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Job Functions</div>
-          </a>
-        </li>
           </ul>
-        </li>
-      </ul>
+        </nav>
+      </div>
+      {/* Sidebar Menu */}
     </aside>
   );
 }
