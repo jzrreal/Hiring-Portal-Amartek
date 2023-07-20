@@ -1,9 +1,11 @@
 package com.hiringportal.repository;
 
-import com.hiringportal.entities.WorkExperience;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.hiringportal.entities.EducationHistory;
+
 @Repository
-public interface WorkExperienceRepository extends JpaRepository<WorkExperience, Integer> {
+public interface EducationHistoryRepository extends JpaRepository<EducationHistory, Integer> {
+    
 }
