@@ -31,5 +31,5 @@ public class JobApplicationStatus {
 
     @JsonIgnore
     @OneToMany(mappedBy = "jobApplicationStatus")
-    public List<JobApplications> jobApplications;
+    public List<JobApplication> jobApplications;
 }
