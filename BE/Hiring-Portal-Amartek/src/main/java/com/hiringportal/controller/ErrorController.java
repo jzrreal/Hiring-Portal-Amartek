@@ -24,10 +24,10 @@ public class ErrorController {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorResponse> responseStatusException(ResponseStatusException exception){
-        return ResponseEntity.badRequest().body(
+        return ResponseEntity.status(exception.getRawStatusCode()).body(
                 ErrorResponse.builder()
                         .message(exception.getReason())
-                        .status(exception.getStatus().value())
+                        .status(exception.getRawStatusCode())
                         .build()
         );
     }
