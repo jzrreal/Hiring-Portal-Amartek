@@ -1,4 +1,4 @@
-package com.hiringportal.entity;
+package com.hiringportal.entities;
 
 import java.util.List;
 
@@ -20,16 +20,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_m_application_status")
-public class JobApplicationStatus {
+@Table(name = "tb_m_job_functions")
+public class JobFunctions {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "application_status_id")
+    @Column(name = "job_function_id")
     private Integer id;
 
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobApplicationStatus")
-    public List<JobApplications> jobApplications;
+    @OneToMany(mappedBy = "jobFunctions")
+    public List<JobPosts> jobPosts;
+
+    // @JsonIgnore
+    // @OneToMany(mappedBy = "jobFunctions")
+    // public List<WorkExperience> workExperience;
 }
