@@ -37,13 +37,13 @@ public class WorkExperience {
     private String description;
     private Date until;
 
-//    @ManyToOne
-//    @JoinColumn(name = "job_function_id")
-//    private JobFunction jobFunction;
+    @ManyToOne
+    @JoinColumn(name = "job_function_id")
+    private JobFunction jobFunction;
 
-//    @ManyToOne
-//    @JoinColumn(name = "job_level_id")
-//    private JobLevel jobLevel;
+    @ManyToOne
+    @JoinColumn(name = "job_level_id")
+    private JobLevel jobLevel;
 
     @ManyToOne
     @JoinColumn(name = "candidate_profile_id")
