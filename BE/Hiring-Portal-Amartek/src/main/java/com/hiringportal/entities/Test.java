@@ -40,8 +40,8 @@ public class Test {
     @Column(name = "job_application_id", unique = true)
     private Integer jobApplicationId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "job_application_id", referencedColumnName = "job_application_id", insertable = false, updatable = false)
-//    private JobApplication jobApplication;
+    @ManyToOne
+    @JoinColumn(name = "job_application_id", referencedColumnName = "job_application_id", insertable = false, updatable = false)
+    private JobApplication jobApplication;
 
 }
