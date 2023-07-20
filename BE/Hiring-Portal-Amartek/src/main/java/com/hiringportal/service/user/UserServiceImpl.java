@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Integer id) {
         return userRepository.findById(id).orElseThrow(
-            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role with Id " + id + " not found")
+            () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with Id " + id + " not found")
         );
     }
 
