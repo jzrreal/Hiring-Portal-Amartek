@@ -18,10 +18,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,6 +39,8 @@ public class CandidateProfile {
     @Column(columnDefinition = "text")
     private String summary;
     private Date birthDate;
+    private Boolean verify;
+    private String token;
     
     @OneToOne
     @JoinColumn(name = "user_id")
