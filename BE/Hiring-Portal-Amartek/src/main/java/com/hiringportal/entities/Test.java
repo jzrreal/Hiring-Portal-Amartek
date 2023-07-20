@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -37,11 +38,11 @@ public class Test {
     @Column(name = "test_token")
     private String testToken;
 
-    @Column(name = "job_application_id", unique = true)
-    private Integer jobApplicationId;
-
-    @ManyToOne
-    @JoinColumn(name = "job_application_id", referencedColumnName = "job_application_id", insertable = false, updatable = false)
+    @OneToOne
+    @JoinColumn(name = "job_application_id", referencedColumnName = "job_application_id")
     private JobApplication jobApplication;
+
+    @OneToMany(mappedBy = "test")
+    private List<TestQuestion> testQuestions;
 
 }

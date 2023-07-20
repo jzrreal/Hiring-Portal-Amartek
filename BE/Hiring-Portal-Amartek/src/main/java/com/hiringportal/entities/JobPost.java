@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-// import javax.persistence.OneToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +32,9 @@ public class JobPost {
     private Integer id;
 
     private String title;
+    @Column(columnDefinition = "text")
     private String description;
+    @Column(columnDefinition = "text")
     private String requirement;
     private Date post_at;
     private Date open_until;
@@ -48,15 +50,11 @@ public class JobPost {
     @JoinColumn(name = "job_function_id")
     private JobFunction jobFunction;
 
-     @ManyToOne
-     @JoinColumn(name = "user_id")
-     private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @JsonIgnore
     @OneToMany(mappedBy = "jobPost")
     public List<JobApplication> jobApplications;
-
-    // @JsonIgnore
-    // @OneToOne(mappedBy = "jobPosts")
-    // public Test test;
 }

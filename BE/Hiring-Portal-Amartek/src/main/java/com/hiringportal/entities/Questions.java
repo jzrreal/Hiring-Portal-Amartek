@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import com.hiringportal.enums.Segment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -26,23 +28,20 @@ public class Questions {
     @Column(name = "question", columnDefinition = "TEXT")
     private String question;
 
-    @Column(name = "question_level_id", nullable = false)
-    private Integer questionLevelId;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "segment", nullable = false)
+    @Column(name = "segment", nullable = false, columnDefinition = "enum")
     private Segment segment;
 
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id", insertable = false, updatable = false)
+    @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id")
     private QuestionLevel questionLevel;
 
-    public enum Segment {
-        DATABASE,
-        BASIC_PROGRAMMING,
-        LOGIKA_MATEMATIKA
-    }
+    @OneToMany(mappedBy = "question")
+    private List<Choice> choices;
+
+    @OneToMany(mappedBy = "questions")
+    private List<TestQuestion> testQuestions;
 }

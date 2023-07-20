@@ -27,7 +27,7 @@ public class Choice {
     @JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = false)
     private Questions question;
 
-    @Column(name = "correct", nullable = false)
-    private boolean correct = false;
+    @Column(name = "correct")
+    private boolean correct;
 
 }

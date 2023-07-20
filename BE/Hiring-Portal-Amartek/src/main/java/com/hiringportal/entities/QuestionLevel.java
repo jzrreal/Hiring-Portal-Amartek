@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,5 +26,8 @@ public class QuestionLevel {
 
     @Column(name = "point", nullable = false)
     private int point;
+
+    @OneToMany(mappedBy = "questionLevel")
+    private List<Questions> questions;
 
 }
