@@ -7,19 +7,17 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Builder
 public class CandidateProfileRequest {
-    @NotNull
     private Integer id;
     @NotBlank
     private String phone;
     private String summary;
     @NotNull
     private Date birthDate;
-    @NotNull
     private Integer userId;
 }
