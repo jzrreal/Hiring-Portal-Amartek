@@ -180,6 +180,46 @@ public class QuestionsController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> update (@Valid @RequestBody AddQuestionDTO addQuestionDTO,@PathVariable Integer id, BindingResult bindingResult) {
+        try {
+            Questions question = new Questions();
+            addQuestionDTO.setQuestionId(id);
+            question.setQuestion(addQuestionDTO.getQuestion());
+            question.setSegment(Segment.valueOf(addQuestionDTO.getSegment()));
+            // Set current date and time as createdAt
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            question.setCreatedAt(java.sql.Timestamp.valueOf(currentDateTime));
+            // Set QuestionLevel based on questionLevelId (assuming have the necessary service to retrieve it)
+            QuestionLevel questionLevel = questionLevelService.getById(addQuestionDTO.getQuestionLevelId());
+            question.setQuestionLevel(questionLevel);
+            // save dulu
+            questionService.update(question);
+            // Create and save Choices
+            List<Choice> choices = new ArrayList<>();
+            for (InsertChoiceQuestionDTO insertChoice : addQuestionDTO.getChoices()) {
+                Choice choice = new Choice();
+                choice.setChoice(insertChoice.getChoice());
+                choice.setCorrect(insertChoice.getCorrect());
+                choice.setQuestion(question);
+                // Save each choice
+                choiceService.update(choice);
+                choices.add(choice);
+            }
+//            this bcause cnt get respon objct in list
+//            question.setChoices(choices);
+
+            return CustomResponse.generateResponse("Success save data :",HttpStatus.OK ,question);
+        } catch (ResponseStatusException exception){
+            return ResponseEntity.badRequest().body(
+                    ErrorResponse.builder()
+                            .message(exception.getReason())
+                            .status(exception.getStatus().value())
+                            .build()
+            );
+        }
+    }
+
     @DeleteMapping("/{questionId}")
     public ResponseEntity<String> deleteQuestionById(@PathVariable Integer questionId) {
         try {
@@ -203,5 +243,6 @@ public class QuestionsController {
             return new ResponseEntity<>("Failed to delete question.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 }
