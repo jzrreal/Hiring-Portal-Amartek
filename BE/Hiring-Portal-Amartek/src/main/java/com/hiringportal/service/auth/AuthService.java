@@ -2,6 +2,7 @@ package com.hiringportal.service.auth;
 
 import com.hiringportal.dto.LoginRequest;
 import com.hiringportal.dto.RegisterRequest;
+import com.hiringportal.dto.ResendVerificationRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface AuthService {
@@ -12,5 +13,7 @@ public interface AuthService {
 
     //Login proceed check email and password then return response token
     String login(LoginRequest request);
+    String verifyEmail(String token);
+    String resendVerification(ResendVerificationRequest request);
 
 }
