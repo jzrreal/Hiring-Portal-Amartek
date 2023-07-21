@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/candidate-profiles")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/")
+@RequestMapping("api/candidate-profiles")
 public class CandidateProfileController {
 
     private final CandidateProfileService candidateProfileService;

@@ -22,8 +22,8 @@ function App() {
         <Route path='*' element={<NotFound />} />
 
         {/* Human Resource */}
-        <Route path='dashboard/human-resource'>
-          <Route path='' element={<Dashboard />} />
+        <Route path='human-resource'>
+          <Route path='dashboard' element={<Dashboard />} />
           <Route path='role' element={<IndexRole />} />
           <Route path='aplicant-profile' element={<IndexCandidateProfile />} />
           <Route path='skill-level' element={<IndexSkillLevel />} />

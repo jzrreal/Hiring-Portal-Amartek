@@ -1,18 +1,16 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 function Sidebar() {
-  const navigate = useNavigate();
-
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
-      <a href="#" className="brand-link">
+      <Link to="/human-resource/dashboard" className="brand-link">
         <img src="https://www.amartek.id/i/favicon.png" className="img-fuild" />
         <span className="brand-text font-weight-bold font-weight-light ml-3">
           Portal Hiring
         </span>
-      </a>
+      </Link>
       {/* Brand Logo */}
 
       {/* User */}
@@ -38,10 +36,10 @@ function Sidebar() {
           >
             {/* Dashboard */}
             <li className="nav-item">
-              <a href="#" className="nav-link active" onClick={() => navigate("/dashboard/human-resource")}>
+              <NavLink to="/human-resource/dashboard" className="nav-link">
                 <i className="nav-icon fas fa-tachometer-alt mr-2"></i>
                 <p>Dashboard</p>
-              </a>
+              </NavLink>
             </li>
             {/* Dashboard */}
 
@@ -56,40 +54,40 @@ function Sidebar() {
               </a>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={() => navigate("/dashboard/human-resource/role")}>
+                  <NavLink to="/human-resource/role" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
                     <p>Role</p>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={() => navigate("/dashboard/human-resource/aplicant-profile")}>
+                  <NavLink to="/human-resource/aplicant-profile" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
                     <p>Candidate Profile</p>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={() => navigate("/dashboard/human-resource/skill-level")}>
+                  <NavLink to="/human-resource/skill-level" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
                     <p>Skill Level</p>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={() => navigate("/dashboard/human-resource/question-level")}>
+                  <NavLink to="/human-resource/question-level" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
                     <p>Question Level</p>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={() => navigate("/dashboard/human-resource/job-level")}>
+                  <NavLink to="/human-resource/job-level" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
                     <p>Job Level</p>
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <a href="#" className="nav-link" onClick={() => navigate("/dashboard/human-resource/job-function")}>
+                  <NavLink to="/human-resource/job-function" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
                     <p>Job Function</p>
-                  </a>
+                  </NavLink>
                 </li>
               </ul>
             </li>
@@ -98,7 +96,7 @@ function Sidebar() {
         </nav>
       </div>
       {/* Sidebar Menu */}
-    </aside>
+    </aside >
   );
 }
 
