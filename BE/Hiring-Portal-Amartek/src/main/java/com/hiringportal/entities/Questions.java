@@ -40,7 +40,7 @@ public class Questions {
     @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id")
     private QuestionLevel questionLevel;
 
-//    @JsonIgnore
+
     @OneToMany(mappedBy = "question")
     private List<Choice> choices;
 

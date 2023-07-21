@@ -1,7 +1,5 @@
 package com.hiringportal.dto;
 
-import com.hiringportal.entities.Choice;
-import com.hiringportal.enums.Segment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChoiceDTO {
-    private Integer choiceId;
-    private String choice;
+public class AddQuestionDTO {
     private Integer questionId;
-    private Boolean correct;
+    private String question;
+    private Integer questionLevelId;
+    private String segment;
+    private Date createdAt;
+    private List<InsertChoiceQuestionDTO> choices;
+
 
 }
