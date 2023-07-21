@@ -179,4 +179,29 @@ public class QuestionsController {
             );
         }
     }
+
+    @DeleteMapping("/{questionId}")
+    public ResponseEntity<String> deleteQuestionById(@PathVariable Integer questionId) {
+        try {
+            // Check if the question exists
+            Questions question = questionService.getById(questionId);
+            if (question == null) {
+                return new ResponseEntity<>("Question not found.", HttpStatus.NOT_FOUND);
+            }
+
+            // Delete choices associated with the question
+            List<Choice> choices = question.getChoices();
+            for (Choice choice : choices) {
+                choiceService.delete(choice.getChoiceId());
+            }
+
+            // Delete the question
+            questionService.delete(questionId);
+
+            return new ResponseEntity<>("Question and associated choices deleted successfully!", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to delete question.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
