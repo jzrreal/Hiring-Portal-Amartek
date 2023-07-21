@@ -1,8 +1,7 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 function Navbar() {
-  const navigate = useNavigate();
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
       {/* Left navbar links */}
@@ -15,10 +14,10 @@ function Navbar() {
       {/* Right navbar links */}
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a href="#" className="nav-link text-danger" onClick={() => navigate("/login")}>
+          <Link to="/login" className="nav-link text-danger" >
             <i className="fas fa-door-open mr-2"></i>
             <span>Logout</span>
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
           <a className="nav-link" data-widget="fullscreen" href="#" role="button">

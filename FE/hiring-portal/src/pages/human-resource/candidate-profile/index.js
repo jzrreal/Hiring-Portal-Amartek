@@ -1,11 +1,27 @@
-import React from 'react'
+import { useEffect, useState, React } from 'react'
+import { NavLink } from 'react-router-dom';
+import axios from 'axios';
+
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
-import { useNavigate } from 'react-router-dom';
 
 function Index() {
-  const navigate = useNavigate();
+  const [data, setData] = useState([{}]);
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: "http://localhost:8080/api/candidate-profiles",
+    })
+      .then(function (response) {
+        setData(response.data.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, [])
+
   return (
     <>
       <div className="wrapper">
@@ -28,7 +44,7 @@ function Index() {
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><a href="#" onClick={() => navigate("/dashboard/human-resource")}>Dashboard</a></li>
+                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
                     <li className="breadcrumb-item active">Candidate Profile</li>
                   </ol>
                 </div>
@@ -44,7 +60,7 @@ function Index() {
                 <div className="card">
                   <div className="card-body">
                     <a className="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal"><i className="fas fa-plus mr-2"></i> New Candidate Profile</a>
-                    <table id="example1" className="table table-bordered table-striped">
+                    <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
                           <th>Name</th>
@@ -52,34 +68,17 @@ function Index() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Administrator</td>
-                          <td>
-                            <button className="btn btn-sm btn-warning mr-2" data-toggle="modal" data-target="#editModal"><i className="fas fa-pencil-alt"></i></button>
-                            <button className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Human Resource</td>
-                          <td>
-                            <button className="btn btn-sm btn-warning mr-2" data-toggle="modal" data-target="#editModal"><i className="fas fa-pencil-alt"></i></button>
-                            <button className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Trainner</td>
-                          <td>
-                            <button className="btn btn-sm btn-warning mr-2" data-toggle="modal" data-target="#editModal"><i className="fas fa-pencil-alt"></i></button>
-                            <button className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Applicant</td>
-                          <td>
-                            <button className="btn btn-sm btn-warning mr-2" data-toggle="modal" data-target="#editModal"><i className="fas fa-pencil-alt"></i></button>
-                            <button className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
-                          </td>
-                        </tr>
+                        {data.map((data) => {
+                          return (
+                            <tr>
+                              <td className="text-capitalize">{data.name}</td>
+                              <td>
+                                <button className="btn btn-sm btn-warning mr-2" data-toggle="modal" data-target="#editModal"><i className="fas fa-pencil-alt"></i></button>
+                                <button className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -97,26 +96,26 @@ function Index() {
       </div>
 
       {/* Modal Add*/}
-      <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="addModalLabel">Create New Candidate Profile</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div className="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="addModalLabel">Create New Candidate Profile</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Role Name" />
+                  <input type="text" className="form-control" id="name" placeholder="Role Name" />
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>
@@ -124,26 +123,26 @@ function Index() {
       {/* Modal Add*/}
 
       {/* Modal Edit*/}
-      <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="editModalLabel">Detail Candidate Profile</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <div className="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="editModalLabel">Detail Candidate Profile</h5>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
               <form>
-                <div class="form-group">
+                <div className="form-group">
                   <label for="name">Name</label>
-                  <input type="text" class="form-control" id="name" placeholder="Role Name" />
+                  <input type="text" className="form-control" id="name" placeholder="Role Name" />
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" className="btn btn-primary">Save changes</button>
             </div>
           </div>
         </div>

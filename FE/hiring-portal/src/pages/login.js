@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
     const navigate = useNavigate();
@@ -36,8 +36,8 @@ function Login() {
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" className="btn btn-primary btn-block" onClick={() => navigate("/dashboard/human-resource")}>Sign In</button>
-                            <button className="btn btn-outline-primary btn-block" onClick={() => navigate("/register")}>Register</button>
+                            <Link to="/human-resource/dashboard" type="submit" className="btn btn-primary btn-block">Sign In</Link>
+                            <Link to="/register" className="btn btn-outline-primary btn-block">Register</Link>
                         </form>
                     </div>
                 </div>

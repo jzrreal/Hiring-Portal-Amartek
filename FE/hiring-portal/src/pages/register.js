@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
   const navigate = useNavigate();
@@ -96,7 +96,7 @@ function Register() {
               </div>
               <div className="mt-3">
                 <button type="submit" className="btn btn-primary btn-block">Register Now</button>
-                <button className="btn btn-outline-primary btn-block" onClick={() => navigate("/login")}>Back to Login</button>
+                <Link to="/login" className="btn btn-outline-primary btn-block" >Back to Login</Link>
               </div>
             </form>
           </div>
