@@ -25,4 +25,6 @@ public interface CandidateProfileRepository extends JpaRepository<CandidateProfi
     Optional<CandidateProfileResponse> getCandidateProfileById(Integer id);
 
     Boolean existsByPhone(String phone);
+    Optional<CandidateProfile> findCandidateProfileByToken(String token);
+    Optional<CandidateProfile> findCandidateProfileByUser_Email(String email);
 }
