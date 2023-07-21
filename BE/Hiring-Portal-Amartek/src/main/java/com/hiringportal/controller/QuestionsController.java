@@ -220,6 +220,37 @@ public class QuestionsController {
         }
     }
 
+
+    @PutMapping("edit/{questionId}")
+    public ResponseEntity<String> editQuestionById(@PathVariable Integer questionId, @RequestBody EditQuestionDTO editQuestionDTO) {
+        try {
+            // Check if the question exists
+            Questions question = questionService.getById(questionId);
+            if (question == null) {
+                return new ResponseEntity<>("Question not found.", HttpStatus.NOT_FOUND);
+            }
+
+            // Update the question fields with data from EditQuestionDTO
+            question.setQuestion(editQuestionDTO.getQuestion());
+            question.setSegment(Segment.valueOf(editQuestionDTO.getSegment()));
+
+            // Set current date and time as updatedAt
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            question.setCreatedAt(java.sql.Timestamp.valueOf(currentDateTime));
+
+            // Set QuestionLevel based on questionLevelId (assuming have the necessary service to retrieve it)
+            QuestionLevel questionLevel = questionLevelService.getById(editQuestionDTO.getQuestionLevelId());
+            question.setQuestionLevel(questionLevel);
+
+            // Save the updated question
+            questionService.save(question);
+
+            return new ResponseEntity<>("Question updated successfully!", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to update question.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @DeleteMapping("/{questionId}")
     public ResponseEntity<String> deleteQuestionById(@PathVariable Integer questionId) {
         try {
