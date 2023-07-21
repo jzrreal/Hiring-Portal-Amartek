@@ -50,21 +50,9 @@ public class JobPostController {
     // add
     @PostMapping("")
     public ResponseEntity<Object> post(@RequestBody JobPostRequest jobPostRequest) {
-        JobPost jobPost = JobPost
-            .builder()
-            .title(jobPostRequest.getTitle())
-            .description(jobPostRequest.getDescription())
-            .requirement(jobPostRequest.getRequirements())
-            .jobLevel(jobLevelService.getById(jobPostRequest.getJob_level_id()))
-            .jobFunction(jobFunctionService.getById(jobPostRequest.getJob_function_id()))
-            .post_at(new Date(System.currentTimeMillis()))
-            .open_until(jobPostRequest.getOpen_until())
-            .updated_at(new Date(System.currentTimeMillis()))
-            .vacancy(jobPostRequest.getVacancy())
-            .closed(jobPostRequest.getClosed())
-            .user(userService.getById(jobPostRequest.getUser_id()))
-            .build();
-        jobPostService.save(jobPost);
+        JobPost newJobPost = jobPostProcess(jobPostRequest);
+        newJobPost.setPost_at(new Date(System.currentTimeMillis()));
+        jobPostService.save(newJobPost);
         return CustomResponse.generateResponse("Success save", HttpStatus.OK);
     }
     // update
@@ -74,21 +62,9 @@ public class JobPostController {
         @RequestBody JobPostRequest jobPostRequest
     ) {
         JobPost oldJobPost = jobPostService.getById(id);
-        JobPost newJobPost = JobPost
-            .builder()
-            .id(id)
-            .title(jobPostRequest.getTitle())
-            .description(jobPostRequest.getDescription())
-            .requirement(jobPostRequest.getRequirements())
-            .jobLevel(jobLevelService.getById(jobPostRequest.getJob_level_id()))
-            .jobFunction(jobFunctionService.getById(jobPostRequest.getJob_function_id()))
-            .post_at(oldJobPost.getPost_at())
-            .open_until(jobPostRequest.getOpen_until())
-            .updated_at(new Date(System.currentTimeMillis()))
-            .vacancy(jobPostRequest.getVacancy())
-            .closed(jobPostRequest.getClosed())
-            .user(oldJobPost.getUser())
-            .build();
+        JobPost newJobPost = jobPostProcess(jobPostRequest);
+        newJobPost.setId(oldJobPost.getId());
+        newJobPost.setPost_at(oldJobPost.getPost_at());
         jobPostService.save(newJobPost);
         return CustomResponse.generateResponse("Success edit", HttpStatus.OK);
     }
@@ -97,5 +73,23 @@ public class JobPostController {
     public ResponseEntity<Object> delete(@PathVariable(required = true) Integer id) {
         jobPostService.delete(id);
         return CustomResponse.generateResponse("Success delete", HttpStatus.OK);
+    }
+
+    // save or update proccess
+    public JobPost jobPostProcess(JobPostRequest jobPostRequest) {
+        JobPost newJobPost = JobPost
+            .builder()
+            .title(jobPostRequest.getTitle())
+            .description(jobPostRequest.getDescription())
+            .requirement(jobPostRequest.getRequirements())
+            .jobLevel(jobLevelService.getById(jobPostRequest.getJob_level_id()))
+            .jobFunction(jobFunctionService.getById(jobPostRequest.getJob_function_id()))
+            .open_until(jobPostRequest.getOpen_until())
+            .updated_at(new Date(System.currentTimeMillis()))
+            .vacancy(jobPostRequest.getVacancy())
+            .closed(jobPostRequest.getClosed())
+            .user(userService.getById(jobPostRequest.getUser_id()))
+            .build();
+        return newJobPost;
     }
 }
