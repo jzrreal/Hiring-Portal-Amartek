@@ -1,12 +1,13 @@
 package com.hiringportal.controller;
 
+import com.hiringportal.dto.CustomResponse;
+import com.hiringportal.dto.LoginRequest;
+import com.hiringportal.dto.RegisterRequest;
 import com.hiringportal.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "api/auth")
@@ -24,13 +25,17 @@ public class AuthController {
      * - password
      */
     @PostMapping(value = "login")
-    public ResponseEntity<Object> login() {
+    public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
+        String token = authService.login(request);
         /**
-         * TODO : create DTO for LoginRequest
          * TODO : create service to JWT service
          * TODO : response JWT token to user with message login success
          */
-        return null;
+        return CustomResponse.generateResponse(
+                "Success login",
+                HttpStatus.OK,
+                token
+        );
     }
 
     /**
@@ -43,18 +48,13 @@ public class AuthController {
      * - full_name
      */
     @PostMapping(value = "register")
-    public ResponseEntity<Object> register() {
-        return null;
-    }
+    public ResponseEntity<Object> register(@RequestBody RegisterRequest request) {
+        String message = authService.register(request);
 
-    /**
-     * Logout
-     * POST
-     * localhost:port/api/auth/logout
-     */
-    @PostMapping(value = "logout")
-    public ResponseEntity<Object> logout() {
-        return null;
+        return CustomResponse.generateResponse(
+                message,
+                HttpStatus.OK
+        );
     }
 
     /**
