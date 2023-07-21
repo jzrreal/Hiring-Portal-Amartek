@@ -23,4 +23,6 @@ public interface CandidateProfileRepository extends JpaRepository<CandidateProfi
             join User u on c.user.id = u.id where c.id = :id
             """)
     Optional<CandidateProfileResponse> getCandidateProfileById(Integer id);
+
+    Boolean existsByPhone(String phone);
 }
