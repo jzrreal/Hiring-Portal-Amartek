@@ -2,6 +2,7 @@ package com.hiringportal.service.auth;
 
 import com.hiringportal.dto.LoginRequest;
 import com.hiringportal.dto.RegisterRequest;
+import com.hiringportal.dto.ResendVerificationRequest;
 import com.hiringportal.entities.CandidateProfile;
 import com.hiringportal.entities.Role;
 import com.hiringportal.entities.Token;
@@ -11,6 +12,7 @@ import com.hiringportal.repository.RoleRepository;
 import com.hiringportal.repository.TokenRepository;
 import com.hiringportal.repository.UserRepository;
 import com.hiringportal.service.ValidationService;
+import com.hiringportal.service.email.EmailService;
 import com.hiringportal.service.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,7 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final TokenRepository tokenRepository;
+    private final EmailService emailService;
 
     @Override
     public String register(RegisterRequest request) {
@@ -71,6 +74,7 @@ public class AuthServiceImpl implements AuthService {
         candidateProfileRepository.save(candidateProfile);
 
         //Todo : Send email with token in user
+        emailService.sendEmailVerification(user.getFullName(), user.getEmail(), candidateProfile.getToken());
 
         return "Success register, check email for verify your account";
     }
@@ -98,6 +102,36 @@ public class AuthServiceImpl implements AuthService {
         revokeAllUsersTokens(user);
         saveUserToken(user, token);
         return token;
+    }
+
+    @Override
+    public String verifyEmail(String token) {
+        CandidateProfile candidateProfile = candidateProfileRepository.findCandidateProfileByToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "account not found"));
+
+        if (candidateProfile.getVerify()) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Email already verify");
+
+        candidateProfile.setVerify(true);
+        candidateProfileRepository.save(candidateProfile);
+
+        return "Success verify email";
+    }
+
+    @Override
+    public String resendVerification(ResendVerificationRequest request) {
+        validationService.validate(request);
+
+        CandidateProfile candidateProfile = candidateProfileRepository.findCandidateProfileByUser_Email(request.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "account not found"));
+
+        if (candidateProfile.getVerify()) throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Email already verify");
+
+        candidateProfile.setToken(UUID.randomUUID().toString());
+        candidateProfileRepository.save(candidateProfile);
+
+        emailService.sendEmailVerification(candidateProfile.getUser().getFullName(), request.getEmail(), candidateProfile.getToken());
+
+        return "Success resend verify email, check email for verify your account";
     }
 
     private void revokeAllUsersTokens(User user){

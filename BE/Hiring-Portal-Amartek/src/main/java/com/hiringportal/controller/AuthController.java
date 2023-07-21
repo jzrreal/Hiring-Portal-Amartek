@@ -3,6 +3,7 @@ package com.hiringportal.controller;
 import com.hiringportal.dto.CustomResponse;
 import com.hiringportal.dto.LoginRequest;
 import com.hiringportal.dto.RegisterRequest;
+import com.hiringportal.dto.ResendVerificationRequest;
 import com.hiringportal.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,6 @@ public class AuthController {
     @PostMapping(value = "login")
     public ResponseEntity<Object> login(@RequestBody LoginRequest request) {
         String token = authService.login(request);
-        /**
-         * TODO : create service to JWT service
-         * TODO : response JWT token to user with message login success
-         */
         return CustomResponse.generateResponse(
                 "Success login",
                 HttpStatus.OK,
@@ -59,11 +56,38 @@ public class AuthController {
 
     /**
      * verify email
-     * POST
+     * GET
      * localhost:port/api/auth/verify-email?token
      */
-    @PostMapping(value = "verify-email")
-    public ResponseEntity<Object> verifyEmail() {
-        return null;
+    @GetMapping(value = "verify-email")
+    public ResponseEntity<Object> verifyEmail(
+            @RequestParam(name = "token") String token
+    ) {
+        String response = authService.verifyEmail(token);
+
+        return CustomResponse.generateResponse(
+                response,
+                HttpStatus.OK
+        );
+    }
+
+    /**
+     * resend email verification
+     * POST
+     * localhost:port/api/auth/resend-verification
+     * payload
+     * - email
+     * response message success, check your email
+     */
+    @PostMapping(value = "resend-verification")
+    public ResponseEntity<Object> resendVerification(
+            @RequestBody ResendVerificationRequest request
+    ){
+        String response = authService.resendVerification(request);
+
+        return CustomResponse.generateResponse(
+                response,
+                HttpStatus.OK
+        );
     }
 }
