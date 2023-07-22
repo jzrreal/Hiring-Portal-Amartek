@@ -1,12 +1,9 @@
 package com.hiringportal.configuration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hiringportal.dto.WebResponse;
 import com.hiringportal.entities.Token;
 import com.hiringportal.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
@@ -52,11 +49,14 @@ public class LogoutConfiguration implements LogoutHandler {
             storedToken.setExpired(true);
             storedToken.setRevokeToken(true);
             tokenRepository.save(storedToken);
+            stringJson = "{\"status\":200,\"message\":\"Success logout\"}";
+            response.setStatus(HttpServletResponse.SC_OK);
+        }else {
+            stringJson = "{\"timestamp\":\"" + new Date() + "\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/auth/logout\"}";
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
 
         try {
-            stringJson = "{\"status\":200,\"message\":\"Success logout\"}";
-            response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().write(stringJson);
