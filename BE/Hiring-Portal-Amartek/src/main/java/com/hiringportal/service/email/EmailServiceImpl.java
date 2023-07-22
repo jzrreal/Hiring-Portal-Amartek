@@ -16,7 +16,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService{
-    @Value("${VERIFY_EMAIL_HOST}")
+    @Value("${EMAIL_HOST}")
     private String host;
     private String FROM_EMAIL = "noreply@batmandiri.com";
     private final TemplateEngine templateEngine;
