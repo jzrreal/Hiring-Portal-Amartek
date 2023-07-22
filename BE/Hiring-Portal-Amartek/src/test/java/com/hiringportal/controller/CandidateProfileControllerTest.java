@@ -57,11 +57,8 @@ public class CandidateProfileControllerTest {
     void setUp() {
         candidateProfileRepository.deleteAll();
         userRepository.deleteAll();
-        roleRepository.deleteAll();
 
-        role = roleRepository.save(Role.builder()
-                .name("Admin")
-                .build());
+        role = roleRepository.findById(4).orElse(null);
 
         for (int i = 0; i < 4; i++) {
             User user = userRepository.save(User.builder()
