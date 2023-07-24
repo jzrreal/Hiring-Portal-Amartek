@@ -1,7 +1,32 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
+
+  const [authToken, setAuthToken] = useState("");
+
+  const logoutEvent = (e) => {
+    e.preventDefault()
+
+    setAuthToken(localStorage.getItem("authToken"))
+
+    axios({
+      method: "POST",
+      url: process.env.REACT_APP_API_URL + "/api/auth/logout",
+      headers: {
+        'Authorization': 'Bearer ' + authToken
+      }
+    })
+    .then(response => {
+      console.log(response.data)
+      console.log(authToken)
+      window.location.replace("http://localhost:3000/login")
+    })
+    .catch(err => {
+      console.log(err.response.data.message)
+    })
+  }
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
       {/* Left navbar links */}
@@ -14,7 +39,7 @@ function Navbar() {
       {/* Right navbar links */}
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link to="/login" className="nav-link text-danger" >
+          <Link className="nav-link text-danger" onClick={logoutEvent} >
             <i className="fas fa-door-open mr-2"></i>
             <span>Logout</span>
           </Link>
