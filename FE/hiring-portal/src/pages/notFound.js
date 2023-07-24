@@ -16,7 +16,7 @@ function NotFound() {
         <Link className="btn btn-primary mt-3" onClick={() => navigate(-1)}>Back Previous Page</Link>
       </div>
       <div class="lockscreen-footer text-center">
-        <strong>Copyright &copy; 2023 <a href="https://www.amartek.id/">Bumi Amartha Teknologi Mandiri</a></strong>
+        <span>Copyright &copy; 2023 <a href="https://www.amartek.id/" className="font-weight-bold">Bumi Amartha Teknologi Mandiri</a></span>
         <div>All rights reserved.</div>
       </div>
     </div>

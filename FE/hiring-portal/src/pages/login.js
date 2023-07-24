@@ -1,9 +1,6 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
-    const navigate = useNavigate();
-
     return (
         <div className="hold-transition login-page">
             <div className="login-box">
@@ -36,8 +33,8 @@ function Login() {
                                     </div>
                                 </div>
                             </div>
-                            <Link to="/human-resource/dashboard" type="submit" className="btn btn-primary btn-block">Sign In</Link>
-                            <Link to="/register" className="btn btn-outline-primary btn-block">Register</Link>
+                            <a href="/human-resource/dashboard" type="submit" className="btn btn-primary btn-block">Sign In</a>
+                            <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
                     </div>
                 </div>
