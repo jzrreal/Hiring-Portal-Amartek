@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import axios from 'axios';
+import axios, { HttpStatusCode } from 'axios';
 import Swal from 'sweetalert2';
 
 function Register() {
@@ -41,21 +41,24 @@ function Register() {
   const handleSubmit = e => {
     e.preventDefault()
 
-    console.log(body)
-
     axios({
       method: "POST",
       url: process.env.REACT_APP_API_URL + "/api/auth/register",
       data: body
       })
-    .then(
+    .then(response => {
       Toast.fire({
         icon: 'success',
-        title: 'Account verification has been sent to your email'
-    }),
-    )
-    .catch(function (error) {
-        console.log(error);
+        title: response.data.message
+      });
+      })
+    .catch((error) => {
+      console.log("error")
+      console.log(error.response.data.message)
+      Toast.fire({
+        icon:"error",
+        title: error.response.data.message
+      })
     });
   }
 
