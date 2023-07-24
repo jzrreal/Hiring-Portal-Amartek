@@ -110,6 +110,8 @@ function Index() {
                 <div className="form-group">
                   <label for="name">Name</label>
                   <input type="text" className="form-control" id="name" placeholder="Qustion Level Name" />
+                  <label for="point">Point</label>
+                  <input type="text" className="form-control" id="point" placeholder="Qustion Level point" />
                 </div>
               </form>
             </div>
