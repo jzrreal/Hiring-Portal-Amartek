@@ -26,6 +26,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .antMatchers("/api/test").authenticated()
                 .antMatchers("/api/profiles").authenticated()
+                .antMatchers("/api/dashboards").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
