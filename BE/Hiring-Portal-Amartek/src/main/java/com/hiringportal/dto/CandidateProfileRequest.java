@@ -2,6 +2,7 @@ package com.hiringportal.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.hiringportal.enums.Gender;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,4 +21,5 @@ public class CandidateProfileRequest {
     @NotNull
     private Date birthDate;
     private Integer userId;
+    private Gender gender;
 }

@@ -2,23 +2,21 @@ package com.hiringportal.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.hiringportal.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
+@Builder
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CandidateProfileResponse {
+public class DashboardIndexApplicantResponse {
 
-    private String email;
-    private String fullName;
-    private String phone;
-    private String summary;
-    private Date birthDate;
-    private Gender gender;
+    private Integer totalApplyJob;
+    private List<JobApplicationResponse> jobApplicationResponses;
+
 }
