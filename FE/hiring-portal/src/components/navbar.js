@@ -1,27 +1,24 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 
 function Navbar() {
 
-  const [authToken, setAuthToken] = useState("");
-
   const logoutEvent = (e) => {
     e.preventDefault()
-
-    setAuthToken(localStorage.getItem("authToken"))
 
     axios({
       method: "POST",
       url: process.env.REACT_APP_API_URL + "/api/auth/logout",
       headers: {
-        'Authorization': 'Bearer ' + authToken
+        'Authorization': 'Bearer ' + localStorage.getItem("authToken")
       }
     })
     .then(response => {
-      console.log(response.data)
-      console.log(authToken)
-      window.location.replace("http://localhost:3000/login")
+      if(response.data.status == 200){
+        localStorage.removeItem("authToken")
+        window.location.replace("http://localhost:3000/login")
+      }
     })
     .catch(err => {
       console.log(err.response.data.message)
