@@ -1,19 +1,34 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
-
 function Index() {
+  const navigate = useNavigate();
   const [data, setData] = useState([{}]);
 
+  // Alert Toast
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
+  // Get Data
   useEffect(() => {
     axios({
       method: "GET",
-      url: process.env.REACT_APP_API_URL+"/api/job-functions",
+      url: process.env.REACT_APP_API_URL + "/api/job-functions",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -22,6 +37,32 @@ function Index() {
         console.log(error);
       });
   }, [])
+
+  // Delete Data
+  function deleteData(id) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete Now!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios({
+          method: "DELETE",
+          url: process.env.REACT_APP_API_URL + "/api/job-functions/" + id,
+        }).then(
+          Toast.fire({
+            icon: 'success',
+            title: 'Success delete data'
+          }),
+          setData(data),
+          navigate('/human-resource/job-function', { replace: true })
+        ).catch(function (error) { console.log(error); })
+      }
+    })
+  }
 
   return (
     <>
@@ -60,7 +101,7 @@ function Index() {
               <div className="col-12">
                 <div className="card">
                   <div className="card-body">
-                    <a className="btn btn-primary mb-3" data-toggle="modal" data-target="#addModal"><i className="fas fa-plus mr-2"></i> New Job Function</a>
+                    <NavLink to="/human-resource/job-function/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Job Function</NavLink>
                     <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
@@ -74,8 +115,8 @@ function Index() {
                             <tr>
                               <td className="text-capitalize">{data.name}</td>
                               <td>
-                                <button className="btn btn-sm btn-warning mr-2" data-toggle="modal" data-target="#editModal"><i className="fas fa-pencil-alt"></i></button>
-                                <button className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+                                <NavLink to={`/human-resource/job-function/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
+                                <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
                               </td>
                             </tr>
                           );
@@ -95,60 +136,6 @@ function Index() {
         <Footer />
         {/* Footer */}
       </div>
-
-      {/* Modal Add*/}
-      <div className="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="addModalLabel">Create New Job Function</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" className="form-control" id="name" placeholder="Job Function Name" />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div >
-      {/* Modal Add*/}
-
-      {/* Modal Edit*/}
-      <div className="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="editModalLabel">Detail Job Function</h5>
-              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div className="modal-body">
-              <form>
-                <div className="form-group">
-                  <label for="name">Name</label>
-                  <input type="text" className="form-control" id="name" placeholder="Job Function Name" />
-                </div>
-              </form>
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div >
-      {/* Modal Edit*/}
     </>
   )
 }

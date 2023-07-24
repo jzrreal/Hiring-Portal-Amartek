@@ -192,7 +192,7 @@ function Register() {
               </div>
               <div className="mt-3">
                 <button type="submit" className="btn btn-primary btn-block">Register Now</button>
-                <Link to="/login" className="btn btn-outline-primary btn-block" >Back to Login</Link>
+                <a href="/login" className="btn btn-outline-primary btn-block" >Back to Login</a>
               </div>
             </form>
           </div>
