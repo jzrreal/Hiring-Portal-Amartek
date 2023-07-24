@@ -1,5 +1,6 @@
 package com.hiringportal.dto;
 
+import com.hiringportal.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,5 @@ public class UserRequest {
     private String password;
     private String full_name;
     private Integer role_id;
+    private Gender gender;
 }
