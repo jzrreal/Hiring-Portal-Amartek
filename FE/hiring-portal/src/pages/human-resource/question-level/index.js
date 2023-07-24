@@ -12,7 +12,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/api/question-levels",
+      url: process.env.REACT_APP_API_URL+"/api/question-levels",
     })
       .then(function (response) {
         setData(response.data.data);

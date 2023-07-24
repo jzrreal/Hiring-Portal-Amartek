@@ -12,7 +12,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/api/candidate-profiles",
+      url: process.env.REACT_APP_API_URL+"/api/applicants",
     })
       .then(function (response) {
         setData(response.data.data);
