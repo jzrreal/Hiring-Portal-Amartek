@@ -10,7 +10,7 @@ import IndexSkillLevel from './pages/human-resource/skill-level';
 import IndexQuestionLevel from './pages/human-resource/question-level';
 import IndexJobLevel from './pages/human-resource/job-level';
 import IndexJobFunction from './pages/human-resource/job-function';
-import EmailVerified from './pages/emailVerified';
+import EmailVerification from './pages/emailVerification';
 // Human Resource
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
-        <Route path='/email-verified' element={<EmailVerified />} />
+        <Route path='/email-verification' element={<EmailVerification />} />
 
         {/* Human Resource */}
         <Route path='human-resource'>
