@@ -95,6 +95,13 @@ public class AuthServiceImpl implements AuthService {
         User user = userRepository.findUserByEmail(request.getEmail())
                 .orElseThrow();
 
+        if (user.getRole().getId() != 4){
+            String token = jwtService.generateToken(user);
+            revokeAllUsersTokens(user);
+            saveUserToken(user, token);
+            return token;
+        }
+
         if (!user.getCandidateProfile().getVerify()) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "please verify your account");
         }

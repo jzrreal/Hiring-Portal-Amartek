@@ -46,6 +46,7 @@ public class CandidateProfileServiceImpl implements CandidateProfileService{
                 .token(UUID.randomUUID().toString())
                 .summary(request.getSummary())
                 .user(user)
+                .gender(request.getGender())
                 .build();
 
         return candidateProfileRepository.save(candidateProfile);
