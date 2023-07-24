@@ -12,7 +12,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/api/job-levels",
+      url: process.env.REACT_APP_API_URL + "/api/job-levels",
     })
       .then(function (response) {
         setData(response.data.data);
