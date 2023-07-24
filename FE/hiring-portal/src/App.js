@@ -13,6 +13,7 @@ import EditRole from './pages/human-resource/role/edit';
 // Role
 // Candidate Profile
 import IndexCandidateProfile from './pages/human-resource/candidate-profile';
+import DetailCandidateProfile from './pages/human-resource/candidate-profile/detail';
 import EditCandidateProfile from './pages/human-resource/candidate-profile/edit';
 // Candidate Profile
 // Skill Level
@@ -57,6 +58,7 @@ function App() {
           </Route>
           <Route path='applicant'>
             <Route index element={<IndexCandidateProfile />} />
+            <Route path='detail/:id' element={<DetailCandidateProfile />} />
             <Route path='edit/:id' element={<EditCandidateProfile />} />
           </Route>
           <Route path='skill-level'>

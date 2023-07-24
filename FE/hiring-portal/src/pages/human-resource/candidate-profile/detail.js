@@ -1,29 +1,14 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
-import Swal from 'sweetalert2';
 
 function Edit() {
-    const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
-
-    // Alert Toast
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
 
     // Get Data
     useEffect(() => {
@@ -38,21 +23,6 @@ function Edit() {
                 console.log(error);
             });
     }, [])
-
-    // Edit Data
-    function handleSubmit() {
-        axios({
-            method: "PUT",
-            url: "http://localhost:8080/api/applicants/" + id,
-            data: data
-        }).then(
-            Toast.fire({
-                icon: 'success',
-                title: 'Success update data'
-            }),
-            navigate('/human-resource/applicant', { replace: true })
-        ).catch(function (error) { console.log(error); })
-    }
 
     return (
         <>
@@ -72,13 +42,13 @@ function Edit() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Edit Applicant</h1>
+                                    <h1 className="m-0">Detail Applicant</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
                                         <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
                                         <li className="breadcrumb-item"><NavLink to="/human-resource/applicant">Applicant</NavLink></li>
-                                        <li className="breadcrumb-item active">Edit Applicant</li>
+                                        <li className="breadcrumb-item active">Detail Applicant</li>
                                     </ol>
                                 </div>
                             </div>
@@ -92,34 +62,33 @@ function Edit() {
                             <div className="col-12">
                                 <div className="card">
                                     <div className="card-body">
-                                        <form onSubmit={handleSubmit}>
+                                        <form>
                                             <div className="form-group">
                                                 <label for="name">ID Applicant</label>
-                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
+                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} readOnly/>
                                             </div>
                                             <div className="form-group">
                                                 <label for="fullname">Fullname</label>
-                                                <input type="text" className="form-control" id="fullname" value={data.full_name} onChange={e => setData({ ...data, full_name: e.target.value })} />
+                                                <input type="text" className="form-control" id="fullname" value={data.full_name} onChange={e => setData({ ...data, full_name: e.target.value })} readOnly/>
                                             </div>
                                             <div className="form-group">
                                                 <label for="email">Email</label>
-                                                <input type="email" className="form-control" id="email" value={data.email} onChange={e => setData({ ...data, email: e.target.value })} />
+                                                <input type="email" className="form-control" id="email" value={data.email} onChange={e => setData({ ...data, email: e.target.value })} readOnly/>
                                             </div>
                                             <div className="form-group">
                                                 <label for="phone">Phone Number</label>
-                                                <input type="text" className="form-control" id="phone" value={data.phone} onChange={e => setData({ ...data, phone: e.target.value })} />
+                                                <input type="text" className="form-control" id="phone" value={data.phone} onChange={e => setData({ ...data, phone: e.target.value })} readOnly/>
                                             </div>
                                             <div className="form-group">
                                                 <label for="birthdate">Birth Date</label>
-                                                <input type="date" className="form-control" id="birthdate" value={data.birthdate} onChange={e => setData({ ...data, birthdate: e.target.value })} />
+                                                <input type="text" className="form-control" id="birthdate" value={data.birthdate} onChange={e => setData({ ...data, birthdate: e.target.value })} readOnly/>
                                             </div>
                                             <div className="form-group">
                                                 <label for="summary">Summary</label>
-                                                <textarea className="form-control" id="summary" value={data.summary} onChange={e => setData({ ...data, summary: e.target.value })} />
+                                                <textarea className="form-control" id="summary" value={data.summary} onChange={e => setData({ ...data, summary: e.target.value })} readOnly/>
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/applicant" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                                                <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
                                     </div>

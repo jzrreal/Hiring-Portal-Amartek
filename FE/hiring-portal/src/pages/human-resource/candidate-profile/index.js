@@ -1,28 +1,13 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import Swal from 'sweetalert2'
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  const navigate = useNavigate();
   const [data, setData] = useState([{}]);
-
-  // Alert Toast
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
 
   // Get Data
   useEffect(() => {
@@ -37,32 +22,6 @@ function Index() {
         console.log(error);
       });
   }, [])
-
-  // Delete Data
-  function deleteData(id) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete Now!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios({
-          method: "DELETE",
-          url: "http://localhost:8080/api/applicants/" + id,
-        }).then(
-          Toast.fire({
-            icon: 'success',
-            title: 'Success delete data'
-          }),
-          setData(data),
-          navigate('/human-resource/applicant', { replace: true })
-        ).catch(function (error) { console.log(error); })
-      }
-    })
-  }
 
   return (
     <>
@@ -118,8 +77,8 @@ function Index() {
                               <td>{data.email}</td>
                               <td className="text-capitalize">{data.phone}</td>
                               <td>
-                                <NavLink to={`/human-resource/applicant/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
-                                <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+                                <NavLink to={`/human-resource/applicant/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
+                                <NavLink to={`/human-resource/applicant/edit/${data.id}`} className="btn btn-sm btn-warning"><i className="fas fa-pencil-alt"></i></NavLink>
                               </td>
                             </tr>
                           );
