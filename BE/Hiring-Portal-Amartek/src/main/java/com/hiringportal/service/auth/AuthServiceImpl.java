@@ -74,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         candidateProfileRepository.save(candidateProfile);
 
-        //Todo : Send email with token in user
+        //Send email verification
         emailService.sendEmailVerification(user.getFullName(), user.getEmail(), candidateProfile.getToken());
 
         return "Success register, check email for verify your account";
