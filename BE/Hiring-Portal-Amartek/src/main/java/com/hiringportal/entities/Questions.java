@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hiringportal.enums.Segment;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,8 +40,10 @@ public class Questions {
     @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id")
     private QuestionLevel questionLevel;
 
+
     @OneToMany(mappedBy = "question")
     private List<Choice> choices;
+
 
     @OneToMany(mappedBy = "questions")
     private List<TestQuestion> testQuestions;

@@ -1,105 +1,102 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <aside
-      id="layout-menu"
-      className="layout-menu menu-vertical menu bg-menu-theme"
-    >
-      <div className="app-brand demo">
-        <a href="index.html" className="app-brand-link">
-          <span className="app-brand-logo demo"></span>
-          <span className="app-brand-text demo menu-text fw-bolder ms-2">
-            Sneat
-          </span>
-        </a>
+    <aside className="main-sidebar sidebar-dark-primary elevation-4">
+      {/* Brand Logo */}
+      <Link to="/human-resource/dashboard" className="brand-link">
+        <img src="https://www.amartek.id/i/favicon.png" className="img-fuild" />
+        <span className="brand-text font-weight-bold font-weight-light ml-3">
+          Portal Hiring
+        </span>
+      </Link>
+      {/* Brand Logo */}
 
-        <a
-          href="#"
-          className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"
-        >
-          <i className="bx bx-chevron-left bx-sm align-middle"></i>
-        </a>
+      {/* User */}
+      <div className="user-panel mt-3 pb-3 mb-3 d-flex align-items-center">
+        <div className="image">
+          <img src="/assets/dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
+        </div>
+        <div className="info ml-2">
+          <span className="d-block text-white font-weight-bold" style={{ fontSize: 18 }}>Alexander Pierce</span>
+          <span href="#" className="d-block text-secondary">Human Resource</span>
+        </div>
       </div>
+      {/* User */}
 
-      <div className="menu-inner-shadow"></div>
+      {/* Sidebar Menu */}
+      <div className="sidebar">
+        <nav className="mt-2">
+          <ul
+            className="nav nav-pills nav-sidebar flex-column"
+            data-widget="treeview"
+            role="menu"
+            data-accordion="false"
+          >
+            {/* Dashboard */}
+            <li className="nav-item">
+              <NavLink to="/human-resource/dashboard" className="nav-link">
+                <i className="nav-icon fas fa-tachometer-alt mr-2"></i>
+                <p>Dashboard</p>
+              </NavLink>
+            </li>
+            {/* Dashboard */}
 
-      <ul className="menu-inner py-1">
-        {/* Dashboard */}
-        <li className="menu-item active">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Dashboard</div>
-          </a>
-        </li>
-
-        {/* Master Data */}
-        <li className="menu-item">
-          <a href="#" className="menu-link menu-toggle">
-            <i className="menu-icon tf-icons bx bx-cube-alt"></i>
-            <div>Master Data</div>
-          </a>
-          <ul className="menu-sub">
-           {/* Roles */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Roles</div>
-          </a>
-        </li>
-        {/* Users */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Users</div>
-          </a>
-        </li>
-        {/* Candidate Profiles */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Candidate Profiles</div>
-          </a>
-        </li>
-        {/* Application Status */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Application Status</div>
-          </a>
-        </li>
-        {/* Question Levels */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Question Levels</div>
-          </a>
-        </li>
-        {/* Skill Levels */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Skill Levels</div>
-          </a>
-        </li>
-        {/* Job Levels */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Job Levels</div>
-          </a>
-        </li>
-        {/* Job Functions */}
-        <li className="menu-item">
-          <a href="index.html" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-home-circle"></i>
-            <div>Job Functions</div>
-          </a>
-        </li>
+            {/* Master Data */}
+            <li className="nav-item">
+              <a href="#" className="nav-link">
+                <i className="nav-icon fas fa-copy mr-2"></i>
+                <p>
+                  Master Data
+                  <i className="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul className="nav nav-treeview">
+                <li className="nav-item">
+                  <NavLink to="/human-resource/role" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Role</p>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/human-resource/aplicant-profile" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Candidate Profile</p>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/human-resource/skill-level" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Skill Level</p>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/human-resource/question-level" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Question Level</p>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/human-resource/job-level" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Job Level</p>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/human-resource/job-function" className="nav-link">
+                    <i className="far fa-circle nav-icon"></i>
+                    <p>Job Function</p>
+                  </NavLink>
+                </li>
+              </ul>
+            </li>
+            {/* Master Data */}
           </ul>
-        </li>
-      </ul>
-    </aside>
+        </nav>
+      </div>
+      {/* Sidebar Menu */}
+    </aside >
   );
 }
 
