@@ -12,13 +12,13 @@ import java.util.Optional;
 
 public interface CandidateProfileRepository extends JpaRepository<CandidateProfile, Integer> {
     @Query(value = """
-            select new com.hiringportal.dto.CandidateProfileResponse(u.email, u.fullName, c.phone, c.summary, c.birthDate)
+            select new com.hiringportal.dto.CandidateProfileResponse(u.email, u.fullName, c.phone, c.summary, c.birthDate, u.gender)
             from CandidateProfile c
             join User u on c.user.id = u.id
             """)
     List<CandidateProfileResponse> getAllCandidateProfile();
     @Query(value = """
-            select new com.hiringportal.dto.CandidateProfileResponse(u.email, u.fullName, c.phone, c.summary, c.birthDate)
+            select new com.hiringportal.dto.CandidateProfileResponse(u.email, u.fullName, c.phone, c.summary, c.birthDate, u.gender)
             from CandidateProfile c
             join User u on c.user.id = u.id where c.id = :id
             """)

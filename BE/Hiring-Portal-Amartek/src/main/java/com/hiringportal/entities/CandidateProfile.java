@@ -34,9 +34,6 @@ public class CandidateProfile {
     private Date birthDate;
     private Boolean verify;
     private String token;
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "enum")
-    private Gender gender;
     
     @OneToOne
     @JsonIgnore
