@@ -61,6 +61,7 @@ public class AuthServiceImpl implements AuthService {
                 .fullName(request.getFullName())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(role)
+                .gender(request.getGender())
                 .build();
         userRepository.save(user);
 
