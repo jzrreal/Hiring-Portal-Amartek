@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function Register() {
   const navigate = useNavigate();
@@ -21,6 +22,18 @@ function Register() {
     gender : gender
   }
 
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+
   // const genderHandler = e => {
   //   if 
   // }
@@ -35,6 +48,12 @@ function Register() {
       url: process.env.REACT_APP_API_URL + "/api/auth/register",
       data: body
       })
+    .then(
+      Toast.fire({
+        icon: 'success',
+        title: 'Account verification has been sent to your email'
+    }),
+    )
     .catch(function (error) {
         console.log(error);
     });
