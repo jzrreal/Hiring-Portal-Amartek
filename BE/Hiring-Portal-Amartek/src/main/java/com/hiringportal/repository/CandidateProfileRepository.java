@@ -1,11 +1,11 @@
 package com.hiringportal.repository;
 
+import com.hiringportal.dto.ApplicantResponse;
 import com.hiringportal.dto.CandidateProfileResponse;
+import com.hiringportal.entities.CandidateProfile;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
-
-import com.hiringportal.entities.CandidateProfile;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,4 +27,9 @@ public interface CandidateProfileRepository extends JpaRepository<CandidateProfi
     Boolean existsByPhone(String phone);
     Optional<CandidateProfile> findCandidateProfileByToken(String token);
     Optional<CandidateProfile> findCandidateProfileByUser_Email(String email);
+    @Query(value = """
+    select new com.hiringportal.dto.ApplicantResponse(c.id, u.fullName, u.email, c.phone)
+    from CandidateProfile c join User u on c.user.id = u.id
+            """)
+    List<ApplicantResponse> findFirstFiveApplicant(PageRequest pageRequest);
 }
