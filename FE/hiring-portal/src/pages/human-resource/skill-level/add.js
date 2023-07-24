@@ -28,7 +28,7 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: "http://localhost:8080/api/skill-levels",
+            url: process.env.REACT_APP_API_URL + "/api/skill-levels",
             data: inputData
         }).then(
             Toast.fire({

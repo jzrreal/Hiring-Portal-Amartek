@@ -28,7 +28,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/api/job-functions",
+      url: process.env.REACT_APP_API_URL + "/api/job-functions",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -51,7 +51,7 @@ function Index() {
       if (result.isConfirmed) {
         axios({
           method: "DELETE",
-          url: "http://localhost:8080/api/job-functions/" + id,
+          url: process.env.REACT_APP_API_URL + "/api/job-functions/" + id,
         }).then(
           Toast.fire({
             icon: 'success',

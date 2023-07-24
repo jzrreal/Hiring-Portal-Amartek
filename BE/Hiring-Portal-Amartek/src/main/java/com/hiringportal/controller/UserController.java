@@ -44,6 +44,7 @@ public class UserController {
                 .email(user.getEmail())
                 .full_name(user.getFullName())
                 .role_name(roleService.getById(user.getRole().getId()).getName())
+                .gender(user.getGender())
                 .build();
                 userResponses.add(userResponse);
         }
@@ -59,6 +60,7 @@ public class UserController {
             .email(user.getEmail())
             .full_name(user.getFullName())
             .role_name(roleService.getById(user.getRole().getId()).getName())
+            .gender(user.getGender())
             .build();
         return CustomResponse.generateResponse("Data found",HttpStatus.OK, userResponse);
     }
@@ -70,6 +72,7 @@ public class UserController {
             .password(userRequest.getPassword())
             .fullName(userRequest.getFull_name())
             .role(roleService.getById(userRequest.getRole_id()))
+            .gender(userRequest.getGender())
             .build();
         userService.save(user);
         return CustomResponse.generateResponse("Success save data",HttpStatus.OK);
@@ -86,6 +89,7 @@ public class UserController {
             .password(userRequest.getPassword())
             .fullName(userRequest.getFull_name())
             .role(roleService.getById(userRequest.getRole_id()))
+            .gender(userRequest.getGender())
             .build();
         userService.save(user);
         return CustomResponse.generateResponse("Success update data",HttpStatus.OK);

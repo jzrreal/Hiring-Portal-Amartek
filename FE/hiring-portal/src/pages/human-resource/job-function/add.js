@@ -28,7 +28,7 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: "http://localhost:8080/api/job-functions",
+            url: process.env.REACT_APP_API_URL + "/api/job-functions",
             data: inputData
         }).then(
             Toast.fire({

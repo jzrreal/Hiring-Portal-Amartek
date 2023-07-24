@@ -25,6 +25,8 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests()
                 .antMatchers("/api/test").authenticated()
+                .antMatchers("/api/profiles").authenticated()
+                .antMatchers("/api/dashboards").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
@@ -36,7 +38,10 @@ public class SecurityConfiguration {
                 .logoutUrl("/api/auth/logout")
                 .addLogoutHandler(logoutConfiguration)
                 .logoutSuccessHandler((request, response, authentication) ->
-                        SecurityContextHolder.clearContext());
+                        SecurityContextHolder.clearContext())
+                .and()
+                .cors();
         return http.build();
     }
+//    .hasAnyAuthority("human resource")
 }

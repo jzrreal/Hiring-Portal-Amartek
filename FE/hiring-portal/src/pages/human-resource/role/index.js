@@ -8,6 +8,7 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
+  console.log(process.env.REACT_APP_API_URL + "/api/roles");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
 
@@ -28,7 +29,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/api/roles",
+      url: process.env.REACT_APP_API_URL + "/api/roles",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -51,7 +52,7 @@ function Index() {
       if (result.isConfirmed) {
         axios({
           method: "DELETE",
-          url: "http://localhost:8080/api/roles/" + id,
+          url: process.env.REACT_APP_API_URL + "/api/roles/" + id,
         }).then(
           Toast.fire({
             icon: 'success',

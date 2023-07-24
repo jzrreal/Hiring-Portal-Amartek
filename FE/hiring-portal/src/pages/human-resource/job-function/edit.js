@@ -29,7 +29,7 @@ function Edit() {
     useEffect(() => {
         axios({
             method: "GET",
-            url: "http://localhost:8080/api/job-functions/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/job-functions/" + id,
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -43,7 +43,7 @@ function Edit() {
     function handleSubmit() {
         axios({
             method: "PUT",
-            url: "http://localhost:8080/api/job-functions/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/job-functions/" + id,
             data: data
         }).then(
             Toast.fire({

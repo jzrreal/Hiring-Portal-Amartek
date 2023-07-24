@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.hiringportal.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,6 +39,9 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private String fullName;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum")
+    private Gender gender;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore

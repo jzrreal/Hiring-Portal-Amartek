@@ -28,7 +28,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/api/skill-levels",
+      url: process.env.REACT_APP_API_URL + "/api/skill-levels",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -51,7 +51,7 @@ function Index() {
       if (result.isConfirmed) {
         axios({
           method: "DELETE",
-          url: "http://localhost:8080/api/skill-levels/" + id,
+          url: process.env.REACT_APP_API_URL + "/api/skill-levels/" + id,
         }).then(
           Toast.fire({
             icon: 'success',

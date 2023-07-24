@@ -1,6 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 function Login() {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+
+    const body = {
+        email: email,
+        password: password
+      }
+    
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+    
+      const handleSubmit = e => {
+        e.preventDefault()
+    
+        axios({
+          method: "POST",
+          url: process.env.REACT_APP_API_URL + "/api/auth/login",
+          data: body
+          })
+        .then(response => {
+            if(response.data.status == 200){
+                console.log(response.data.data)
+                localStorage.removeItem("authToken")
+                localStorage.setItem("authToken", response.data.data)
+                window.location.replace("http://localhost:3000/human-resource/dashboard")
+            }
+        })
+        .catch((error) => {
+        Toast.fire({
+            icon:"error",
+            title: error.response.data.message
+            })
+        });
+      }
+
     return (
         <div className="hold-transition login-page">
             <div className="login-box">
@@ -10,11 +59,17 @@ function Login() {
                 <div className="card mt-5">
                     <div className="card-body login-card-body">
                         <p className="login-box-msg">Sign In to start your session</p>
-                        <form action="../../index3.html" method="POST">
+
+                        <form method="POST" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label for="exampleInputEmail1">Email</label>
                                 <div className="input-group mb-3">
-                                    <input type="email" className="form-control" placeholder="Email" />
+                                    <input 
+                                        type="email" 
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        className="form-control" 
+                                        placeholder="Email" />
                                     <div className="input-group-append">
                                         <div className="input-group-text">
                                             <span className="fas fa-envelope"></span>
@@ -25,7 +80,12 @@ function Login() {
                             <div className="form-group">
                                 <label for="exampleInputEmail1">Password</label>
                                 <div className="input-group mb-3">
-                                    <input type="password" className="form-control" placeholder="Password" />
+                                    <input 
+                                        type="password" 
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        className="form-control" 
+                                        placeholder="Password" />
                                     <div className="input-group-append">
                                         <div className="input-group-text">
                                             <span className="fas fa-lock"></span>
@@ -33,7 +93,7 @@ function Login() {
                                     </div>
                                 </div>
                             </div>
-                            <a href="/human-resource/dashboard" type="submit" className="btn btn-primary btn-block">Sign In</a>
+                            <button type="submit" className="btn btn-primary btn-block">Sign In</button>
                             <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
                     </div>

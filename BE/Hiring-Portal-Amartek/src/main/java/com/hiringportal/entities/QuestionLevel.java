@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +28,7 @@ public class QuestionLevel {
     @Column(name = "point", nullable = false)
     private int point;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "questionLevel")
     private List<Questions> questions;
 

@@ -28,7 +28,7 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: "http://localhost:8080/api/roles",
+            url: process.env.REACT_APP_API_URL + "/api/roles",
             data: inputData
         }).then(
             Toast.fire({
