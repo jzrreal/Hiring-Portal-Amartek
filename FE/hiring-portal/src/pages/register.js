@@ -33,7 +33,7 @@ function Register() {
     axios({
       method: "POST",
       url: process.env.REACT_APP_API_URL + "/api/auth/register",
-      body: body
+      data: body
       })
     .catch(function (error) {
         console.log(error);
