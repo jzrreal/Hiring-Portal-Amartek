@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
-    const [inputData, setInputData] = useState({ name: '' })
+    const [inputData, setInputData] = useState({ expiration_hour: '', test_time_minute: '' })
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -28,7 +28,7 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: process.env.REACT_APP_API_URL + "/api/test-parameter",
+            url: process.env.REACT_APP_API_URL + "/api/test-parameters",
             data: inputData
         }).then(
             Toast.fire({
@@ -79,8 +79,12 @@ function Add() {
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Test Parameter Name" />
+                                                <label for="expiration_hour">Expired Hours</label>
+                                                <input type="number" className="form-control" id="expiration_hour" onChange={e => setInputData({ ...inputData, expiration_hour: e.target.value })} placeholder="Set Expired Hours" />
+                                            </div>
+                                            <div className="form-group">
+                                                <label for="test_time_minute">Test Time (in Minute)</label>
+                                                <input type="number" className="form-control" id="test_time_minute" onChange={e => setInputData({ ...inputData, test_time_minute: e.target.value })} placeholder="Set Test Time in Minute" />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>

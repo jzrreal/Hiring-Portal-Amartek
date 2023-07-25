@@ -76,7 +76,7 @@ public class JobPostController {
     }
 
     // save or update proccess
-    public JobPost jobPostProcess(JobPostRequest jobPostRequest) {
+    private JobPost jobPostProcess(JobPostRequest jobPostRequest) {
         JobPost newJobPost = JobPost
             .builder()
             .title(jobPostRequest.getTitle())

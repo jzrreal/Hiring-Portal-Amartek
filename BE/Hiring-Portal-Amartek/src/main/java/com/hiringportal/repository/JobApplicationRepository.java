@@ -17,7 +17,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
                 select new com.hiringportal.dto.JobApplicationResponse(ja.id, ja.apply_date, jp.title, jp.jobFunction.name, jp.jobLevel.name, jas.name) from JobApplication ja
                 join JobPost jp on ja.jobPost.id = jp.id
                 join CandidateProfile cp on ja.candidateProfile.id = cp.id
-                join JobApplicationStatus jas on ja.jobApplicationStatus.id = jas.id
+                join ApplicationStatus jas on ja.applicationStatus.id = jas.id
                 where cp.id = :candidateProfileId
             """)
     List<JobApplicationResponse> findFirstFiveJobApplicationByCandidateProfileId(Integer candidateProfileId, PageRequest pageRequest);

@@ -103,7 +103,7 @@ function Edit() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="point">Point</label>
-                                                <input type="text" className="form-control" id="point" value={data.point} onChange={e => setData({ ...data, point: e.target.value })} />
+                                                <input type="number" className="form-control" id="point" value={data.point} onChange={e => setData({ ...data, point: e.target.value })} />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/question-level" type="button" className="btn btn-secondary mr-2">Back</NavLink>

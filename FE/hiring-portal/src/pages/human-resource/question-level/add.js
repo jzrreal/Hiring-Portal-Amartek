@@ -84,7 +84,7 @@ function Add() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="point">Point</label>
-                                                <input type="text" className="form-control" id="point" onChange={e => setInputData({ ...inputData, point: e.target.value })} placeholder="Point" />
+                                                <input type="number" className="form-control" id="point" onChange={e => setInputData({ ...inputData, point: e.target.value })} placeholder="Point" />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/question-level" type="button" className="btn btn-secondary mr-2">Back</NavLink>

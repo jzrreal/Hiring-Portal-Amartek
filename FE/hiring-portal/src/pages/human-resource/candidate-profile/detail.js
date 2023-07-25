@@ -72,6 +72,10 @@ function Edit() {
                                                 <input type="text" className="form-control" id="fullname" value={data.full_name} onChange={e => setData({ ...data, full_name: e.target.value })} readOnly />
                                             </div>
                                             <div className="form-group">
+                                                <label for="gebder">Gender</label>
+                                                <input type="text" className="form-control" id="gebder" value={data.gender} onChange={e => setData({ ...data, full_name: e.target.value })} readOnly />
+                                            </div>
+                                            <div className="form-group">
                                                 <label for="email">Email</label>
                                                 <input type="email" className="form-control" id="email" value={data.email} onChange={e => setData({ ...data, email: e.target.value })} readOnly />
                                             </div>
@@ -81,7 +85,7 @@ function Edit() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="birthdate">Birth Date</label>
-                                                <input type="text" className="form-control" id="birthdate" value={data.birthdate} onChange={e => setData({ ...data, birthdate: e.target.value })} readOnly />
+                                                <input type="text" className="form-control" id="birthdate" value={data.birth_date} onChange={e => setData({ ...data, birth_date: e.target.value })} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="summary">Summary</label>

@@ -8,7 +8,6 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  console.log(process.env.REACT_APP_API_URL + "/api/application-status");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
 
@@ -29,7 +28,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: process.env.REACT_APP_API_URL + "/api/application-status",
+      url: process.env.REACT_APP_API_URL + "/api/questions",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -52,14 +51,14 @@ function Index() {
       if (result.isConfirmed) {
         axios({
           method: "DELETE",
-          url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
+          url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
         }).then(
           Toast.fire({
             icon: 'success',
             title: 'Success delete data'
           }),
           setData(data),
-          navigate('/human-resource/applicant-status', { replace: true })
+          navigate('/trainer/question', { replace: true })
         ).catch(function (error) { console.log(error); })
       }
     })
@@ -83,12 +82,12 @@ function Index() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1 className="m-0">List of Applicant Status</h1>
+                  <h1 className="m-0">List of Question</h1>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                    <li className="breadcrumb-item active">Applicant Status</li>
+                    <li className="breadcrumb-item"><NavLink to="/trainer/dashboard">Dashboard</NavLink></li>
+                    <li className="breadcrumb-item active">Question</li>
                   </ol>
                 </div>
               </div>
@@ -102,7 +101,7 @@ function Index() {
               <div className="col-12">
                 <div className="card">
                   <div className="card-body">
-                    <NavLink to="/human-resource/applicant-status/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Applicant Status</NavLink>
+                    <NavLink to="/trainer/question/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Question</NavLink>
                     <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
@@ -116,7 +115,7 @@ function Index() {
                             <tr>
                               <td className="text-capitalize">{data.name}</td>
                               <td>
-                                <NavLink to={`/human-resource/applicant-status/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
+                                <NavLink to={`/trainer/question/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
                               </td>
                             </tr>

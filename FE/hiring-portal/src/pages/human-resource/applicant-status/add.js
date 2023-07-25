@@ -28,7 +28,7 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: process.env.REACT_APP_API_URL + "/api/applicant-status",
+            url: process.env.REACT_APP_API_URL + "/api/application-status",
             data: inputData
         }).then(
             Toast.fire({

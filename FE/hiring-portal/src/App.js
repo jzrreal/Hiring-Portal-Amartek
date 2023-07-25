@@ -4,8 +4,8 @@ import Register from "./pages/register";
 import NotFound from "./pages/notFound";
 
 // Human Resource
-import Dashboard from "./pages/human-resource/dashboard";
-import Profile from "./pages/human-resource/profile";
+import DashboardHumanResource from "./pages/human-resource/dashboard";
+import ProfileHumanResource from "./pages/human-resource/profile";
 // Role
 import IndexRole from './pages/human-resource/role';
 import AddRole from './pages/human-resource/role/add';
@@ -53,7 +53,19 @@ import IndexJobPost from './pages/human-resource/job-post';
 import IndexJobApplicant from './pages/human-resource/job-applicant';
 // Job Applicant
 // Human Resource
-import EmailVerified from './pages/emailVerified';
+
+// Trainer
+import DashboardTrainer from "./pages/trainer/dashboard";
+// Question
+import IndexQuestion from './pages/trainer/question';
+import AddQuestion from './pages/trainer/question/add';
+import EditQuestion from './pages/trainer/question/edit';
+// Question
+// Trainer
+
+// Auth
+import EmailVerification from './pages/emailVerification';
+// Auth
 
 function App() {
   return (
@@ -63,12 +75,12 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
-        <Route path='/email-verified' element={<EmailVerified />} />
+        <Route path='/email-verification' element={<EmailVerification />} />
 
         {/* Human Resource */}
         <Route path='human-resource'>
-          <Route path='dashboard' element={<Dashboard />} />
-          <Route path='profile' element={<Profile />} />
+          <Route path='dashboard' element={<DashboardHumanResource />} />
+          <Route path='profile' element={<ProfileHumanResource />} />
           {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
@@ -120,6 +132,19 @@ function App() {
           {/* Job */}
         </Route>
         {/* Human Resource */}
+
+        {/* Trainer */}
+        <Route path='trainer'>
+          <Route path='dashboard' element={<DashboardTrainer />} />
+          {/* Question */}
+          <Route path='question'>
+            <Route index element={<IndexQuestion />} />
+            <Route path='add' element={<AddQuestion />} />
+            <Route path='edit/:id' element={<EditQuestion />} />
+          </Route>
+          {/* Question */}
+        </Route>
+        {/* Trainer */}
       </Routes>
     </Router>
   );

@@ -29,7 +29,7 @@ function Edit() {
     useEffect(() => {
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -43,14 +43,14 @@ function Edit() {
     function handleSubmit() {
         axios({
             method: "PUT",
-            url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
             data: data
         }).then(
             Toast.fire({
                 icon: 'success',
                 title: 'Success update data'
             }),
-            navigate('/human-resource/applicant-status', { replace: true })
+            navigate('/trainer/question', { replace: true })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -72,13 +72,13 @@ function Edit() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Edit Applicant Status</h1>
+                                    <h1 className="m-0">Edit Question</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/applicant-status">Applicant Status</NavLink></li>
-                                        <li className="breadcrumb-item active">Edit Applicant Status</li>
+                                        <li className="breadcrumb-item"><NavLink to="/trainer/dashboard">Dashboard</NavLink></li>
+                                        <li className="breadcrumb-item"><NavLink to="/trainer/question">Question</NavLink></li>
+                                        <li className="breadcrumb-item active">Edit Question</li>
                                     </ol>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ function Edit() {
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <label for="name">ID Applicant Status</label>
+                                                <label for="name">ID Question</label>
                                                 <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
                                             </div>
                                             <div className="form-group">
@@ -102,7 +102,7 @@ function Edit() {
                                                 <input type="text" className="form-control" id="name" value={data.name} onChange={e => setData({ ...data, name: e.target.value })} />
                                             </div>
                                             <div className="float-right">
-                                                <NavLink to="/human-resource/applicant-status" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                <NavLink to="/trainer/question" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                                                 <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>

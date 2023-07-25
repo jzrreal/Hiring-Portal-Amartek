@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -7,10 +7,9 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 import Swal from 'sweetalert2';
 
-function Edit() {
+function Add() {
     const navigate = useNavigate()
-    const { id } = useParams();
-    const [data, setData] = useState([])
+    const [inputData, setInputData] = useState({ name: '' })
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -25,32 +24,18 @@ function Edit() {
         }
     })
 
-    // Get Data
-    useEffect(() => {
-        axios({
-            method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
-        })
-            .then(function (response) {
-                setData(response.data.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    }, [])
-
-    // Edit Data
+    // Add Data
     function handleSubmit() {
         axios({
-            method: "PUT",
-            url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
-            data: data
+            method: "POST",
+            url: process.env.REACT_APP_API_URL + "/api/questions",
+            data: inputData
         }).then(
             Toast.fire({
                 icon: 'success',
-                title: 'Success update data'
+                title: 'Success save data'
             }),
-            navigate('/human-resource/applicant-status', { replace: true })
+            navigate('/trainer/question', { replace: true })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -72,13 +57,13 @@ function Edit() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Edit Applicant Status</h1>
+                                    <h1 className="m-0">Create a New Question</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/applicant-status">Applicant Status</NavLink></li>
-                                        <li className="breadcrumb-item active">Edit Applicant Status</li>
+                                        <li className="breadcrumb-item"><NavLink to="/trainer/dashboard">Dashboard</NavLink></li>
+                                        <li className="breadcrumb-item"><NavLink to="/trainer/question">Question</NavLink></li>
+                                        <li className="breadcrumb-item active">Add Question</li>
                                     </ol>
                                 </div>
                             </div>
@@ -94,15 +79,11 @@ function Edit() {
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <label for="name">ID Applicant Status</label>
-                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
-                                            </div>
-                                            <div className="form-group">
                                                 <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" value={data.name} onChange={e => setData({ ...data, name: e.target.value })} />
+                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Question Name" />
                                             </div>
                                             <div className="float-right">
-                                                <NavLink to="/human-resource/applicant-status" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                <NavLink to="/trainer/question" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                                                 <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
@@ -123,4 +104,4 @@ function Edit() {
     )
 }
 
-export default Edit
+export default Add

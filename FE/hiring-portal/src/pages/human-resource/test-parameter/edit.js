@@ -29,7 +29,7 @@ function Edit() {
     useEffect(() => {
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/test-parameter/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -43,7 +43,7 @@ function Edit() {
     function handleSubmit() {
         axios({
             method: "PUT",
-            url: process.env.REACT_APP_API_URL + "/api/test-parameter/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
             data: data
         }).then(
             Toast.fire({
@@ -98,8 +98,12 @@ function Edit() {
                                                 <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
                                             </div>
                                             <div className="form-group">
-                                                <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" value={data.name} onChange={e => setData({ ...data, name: e.target.value })} />
+                                                <label for="expiration_hour">Expired Hours</label>
+                                                <input type="number" className="form-control" id="expiration_hour" value={data.expiration_hour} onChange={e => setData({ ...data, expiration_hour: e.target.value })} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label for="test_time_minute">Test Time (in Minute)</label>
+                                                <input type="number" className="form-control" id="test_time_minute" value={data.test_time_minute} onChange={e => setData({ ...data, test_time_minute: e.target.value })} />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>

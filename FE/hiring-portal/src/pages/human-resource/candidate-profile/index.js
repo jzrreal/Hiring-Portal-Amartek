@@ -64,6 +64,7 @@ function Index() {
                       <thead>
                         <tr>
                           <th>Fullname</th>
+                          <th>Gender</th>
                           <th>Email</th>
                           <th>Phone</th>
                           <th>Actions</th>
@@ -74,6 +75,7 @@ function Index() {
                           return (
                             <tr>
                               <td className="text-capitalize">{data.full_name}</td>
+                              <td className="text-capitalize">{data.gender}</td>
                               <td>{data.email}</td>
                               <td className="text-capitalize">{data.phone}</td>
                               <td>

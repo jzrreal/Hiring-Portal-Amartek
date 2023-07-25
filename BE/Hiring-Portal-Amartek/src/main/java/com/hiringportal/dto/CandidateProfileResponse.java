@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class CandidateProfileResponse {
-
+    private Integer id;
     private String email;
     private String fullName;
     private String phone;

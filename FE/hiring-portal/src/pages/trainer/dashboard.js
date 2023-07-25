@@ -30,16 +30,15 @@ function Dashboard() {
         </section>
 
         {/* Main Content */}
-        {/* <section className="content">
+        <section className="content">
           <div className="row">
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box">
                 <span className="info-box-icon bg-info elevation-1"><i className="fas fa-cog"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Jobs</span>
+                  <span className="info-box-text">Total Questions</span>
                   <span className="info-box-number">
-                    10
-                    <small>%</small>
+                    0
                   </span>
                 </div>
               </div>
@@ -48,8 +47,8 @@ function Dashboard() {
               <div className="info-box mb-3">
                 <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-thumbs-up"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Applicants</span>
-                  <span className="info-box-number">41,410</span>
+                  <span className="info-box-text">Total Questions Easy</span>
+                  <span className="info-box-number">0</span>
                 </div>
               </div>
             </div>
@@ -58,8 +57,8 @@ function Dashboard() {
               <div className="info-box mb-3">
                 <span className="info-box-icon bg-success elevation-1"><i className="fas fa-shopping-cart"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Jobs</span>
-                  <span className="info-box-number">760</span>
+                  <span className="info-box-text">Total Questions Medium</span>
+                  <span className="info-box-number">0</span>
                 </div>
               </div>
             </div>
@@ -67,8 +66,8 @@ function Dashboard() {
               <div className="info-box mb-3">
                 <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-users"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Applicants</span>
-                  <span className="info-box-number">2,000</span>
+                  <span className="info-box-text">Total Questions Hard</span>
+                  <span className="info-box-number">0</span>
                 </div>
               </div>
             </div>
@@ -134,7 +133,7 @@ function Dashboard() {
               </div>
             </div>
           </div>
-        </section> */}
+        </section>
         {/* Main Contet */}
       </div>
       {/* Content */}

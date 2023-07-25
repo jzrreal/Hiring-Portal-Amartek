@@ -8,7 +8,7 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  console.log(process.env.REACT_APP_API_URL + "/api/test-parameter");
+  console.log(process.env.REACT_APP_API_URL + "/api/test-parameters");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
 
@@ -29,7 +29,7 @@ function Index() {
   useEffect(() => {
     axios({
       method: "GET",
-      url: process.env.REACT_APP_API_URL + "/api/test-parameter",
+      url: process.env.REACT_APP_API_URL + "/api/test-parameters",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -52,7 +52,7 @@ function Index() {
       if (result.isConfirmed) {
         axios({
           method: "DELETE",
-          url: process.env.REACT_APP_API_URL + "/api/test-parameter/" + id,
+          url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
         }).then(
           Toast.fire({
             icon: 'success',
@@ -106,7 +106,8 @@ function Index() {
                     <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Name</th>
+                          <th>Expired Hours</th>
+                          <th>Test Time (in Minute)</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -114,7 +115,8 @@ function Index() {
                         {data.map((data) => {
                           return (
                             <tr>
-                              <td className="text-capitalize">{data.name}</td>
+                              <td className="text-capitalize">{data.expiration_hour} Hour</td>
+                              <td className="text-capitalize">{data.test_time_minute} Minute</td>
                               <td>
                                 <NavLink to={`/human-resource/test-parameter/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
