@@ -16,8 +16,8 @@ public class EducationHistoriesResponse {
     private String level;
     private String name;
     private String major;
-    private Date yearStart;
-    private Date yearEnd;
+    private Integer yearStart;
+    private Integer yearEnd;
     private Integer candidateId;
 
 }

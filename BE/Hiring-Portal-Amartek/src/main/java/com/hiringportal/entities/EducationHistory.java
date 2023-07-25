@@ -30,13 +30,14 @@ public class EducationHistory {
     private String major;
 
     @Column(columnDefinition = "year")
-    private Date yearStart;
+    private Integer yearStart;
 
     @Column(columnDefinition = "year")
-    private Date yearEnd;
+    private Integer yearEnd;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_profile_id")
     @JsonIgnore
     private CandidateProfile candidateProfile;
+
 }
