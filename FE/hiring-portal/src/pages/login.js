@@ -92,7 +92,7 @@ function Login() {
                                 </div>
                             </div>
                             <button type="submit" className="btn btn-primary btn-block">Sign In</button>
-                            <Link to="/register" className="btn btn-outline-primary btn-block">Register</Link>
+                            <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
                     </div>
                 </div>

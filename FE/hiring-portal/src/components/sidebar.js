@@ -19,7 +19,7 @@ function Sidebar() {
           <img src="/assets/dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
         </div>
         <div className="info ml-2">
-          <span className="d-block text-white font-weight-bold" style={{ fontSize: 18 }}>Alexander Pierce</span>
+          <NavLink to="/human-resource/profile" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>Alexander Pierce</NavLink>
           <span href="#" className="d-block text-secondary">Human Resource</span>
         </div>
       </div>
@@ -45,7 +45,7 @@ function Sidebar() {
 
             {/* Master Data */}
             <li className="nav-item">
-              <a href="#" className="nav-link">
+              <a href="#" className="nav-link" id="master-data">
                 <i className="nav-icon fas fa-copy mr-2"></i>
                 <p>
                   Master Data
@@ -55,43 +55,53 @@ function Sidebar() {
               <ul className="nav nav-treeview">
                 <li className="nav-item">
                   <NavLink to="/human-resource/role" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
+                    <i className="far fa-circle nav-icon mr-2"></i>
                     <p>Role</p>
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/human-resource/aplicant-profile" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Candidate Profile</p>
+                  <NavLink to="/human-resource/applicant" className="nav-link">
+                    <i className="far fa-circle nav-icon mr-2"></i>
+                    <p>Applicant</p>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/human-resource/skill-level" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
+                    <i className="far fa-circle nav-icon mr-2"></i>
                     <p>Skill Level</p>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/human-resource/question-level" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
+                    <i className="far fa-circle nav-icon mr-2"></i>
                     <p>Question Level</p>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/human-resource/job-level" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
+                    <i className="far fa-circle nav-icon mr-2"></i>
                     <p>Job Level</p>
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/human-resource/job-function" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
+                    <i className="far fa-circle nav-icon mr-2"></i>
                     <p>Job Function</p>
                   </NavLink>
                 </li>
               </ul>
             </li>
             {/* Master Data */}
+
+            {/* Job Post */}
+            <li class="nav-header mt-2">JOB</li>
+            <li className="nav-item">
+              <NavLink to="/human-resource/job-post" className="nav-link">
+                <i className="nav-icon fas fa-briefcase mr-2"></i>
+                <p>Job Post</p>
+              </NavLink>
+            </li>
+            {/* Job Post */}
           </ul>
         </nav>
       </div>

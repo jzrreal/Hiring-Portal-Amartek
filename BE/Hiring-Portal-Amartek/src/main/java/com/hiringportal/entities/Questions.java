@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -34,7 +34,7 @@ public class Questions {
     private Segment segment;
 
     @Column(name = "created_at", nullable = false)
-    private Date createdAt;
+    private Timestamp createdAt;
 
     @ManyToOne
     @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id")
@@ -42,9 +42,11 @@ public class Questions {
 
 
     @OneToMany(mappedBy = "question")
+    @JsonIgnore
     private List<Choice> choices;
 
 
     @OneToMany(mappedBy = "questions")
+    @JsonIgnore
     private List<TestQuestion> testQuestions;
 }

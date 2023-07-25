@@ -23,7 +23,7 @@ public class Choice {
     @Column(name = "choice", nullable = false, length = 255)
     private String choice;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id", referencedColumnName = "question_id", nullable = false)
     private Questions question;
 

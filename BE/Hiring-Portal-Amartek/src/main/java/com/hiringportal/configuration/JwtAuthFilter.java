@@ -3,6 +3,7 @@ package com.hiringportal.configuration;
 import com.hiringportal.repository.TokenRepository;
 import com.hiringportal.service.jwt.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +45,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         log.info("Token : {}", jwtToken);
         try {
             userEmail = jwtService.extractUsername(jwtToken);
-        }catch (ExpiredJwtException exception){
+        }catch (ExpiredJwtException | SignatureException exception){
             userEmail = null;
         }
 
