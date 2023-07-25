@@ -27,6 +27,7 @@ public class SecurityConfiguration {
                 .antMatchers("/api/test").authenticated()
                 .antMatchers("/api/profiles").authenticated()
                 .antMatchers("/api/dashboards").authenticated()
+                .antMatchers("/api/tokens").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
