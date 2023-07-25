@@ -1,9 +1,6 @@
 package com.hiringportal.service.JobApplication;
 
-import com.hiringportal.dto.CandidateProfileQuery;
-import com.hiringportal.dto.CandidateProfileResponse;
-import com.hiringportal.dto.EducationHistoryQuery;
-import com.hiringportal.dto.GetApplicationByJobPostResponse;
+import com.hiringportal.dto.*;
 import com.hiringportal.entities.ApplicationStatus;
 import com.hiringportal.entities.CandidateProfile;
 import com.hiringportal.entities.JobApplication;
@@ -155,7 +152,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         );
 
         //If status submitted, when HR see applicant detail, the status change to reviewed
-        if (jobApplication.getApplicationStatus().getId() == 1){
+        if (jobApplication.getApplicationStatus().getId() == 1) {
             jobApplication.setApplicationStatus(applicationStatusRepository.findById(2).orElse(null));
             jobApplicationRepository.save(jobApplication);
         }
@@ -172,5 +169,25 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                 .email(candidateProfile.getUser().getEmail())
                 .gender(candidateProfile.getUser().getGender())
                 .build();
+    }
+
+    @Override
+    public List<ApplicationHistoryResponse> getAllApplicationHistory(Integer candidateProfileId) {
+        //Query all application status and transform into map with id as key
+        Map<Integer, String> applicationStatus =
+                applicationStatusRepository.findAll().stream()
+                        .collect(Collectors.toMap(ApplicationStatus::getId, ApplicationStatus::getName));
+
+        return jobApplicationRepository.findAllByCandidateProfileId(candidateProfileId).stream()
+                .map(jobApplication -> ApplicationHistoryResponse.builder()
+                        .jobFunction(jobApplication.getJobPost().getJobFunction().getName())
+                        .jobLevel(jobApplication.getJobPost().getJobLevel().getName())
+                        .title(jobApplication.getJobPost().getTitle())
+                        .jobPostId(jobApplication.getJobPost().getId())
+                        .status(applicationStatus.get(jobApplication.getApplicationStatus().getId()))
+                        .jobApplicationId(jobApplication.getId())
+                        .applyDate(jobApplication.getApply_date())
+                        .build()
+                ).toList();
     }
 }

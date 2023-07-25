@@ -3,6 +3,7 @@ package com.hiringportal.controller;
 import java.sql.Date;
 import java.util.List;
 
+import com.hiringportal.dto.ApplicationHistoryResponse;
 import com.hiringportal.dto.CandidateProfileResponse;
 import com.hiringportal.dto.GetApplicationByJobPostResponse;
 import com.hiringportal.entities.User;
@@ -17,6 +18,7 @@ import com.hiringportal.service.JobApplication.JobApplicationService;
 import com.hiringportal.service.jobPost.JobPostService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,9 +44,33 @@ public class ApplicationController {
 
     // delete
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable(required = true) Integer id) {
+    public ResponseEntity<Object> delete(@PathVariable(required = true) Integer id, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+
+        JobApplication jobApplication = jobApplicationService.getById(id);
+
+        if (jobApplication.getCandidateProfile().getId() != user.getCandidateProfile().getId()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not allowed");
+        }
+
         jobApplicationService.delete(id);
         return CustomResponse.generateResponse("Success delete", HttpStatus.OK);
+    }
+
+    /**
+     * See all history application by candidate
+     */
+    @GetMapping
+    public ResponseEntity<Object> getAllApplicationsHistories(Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        List<ApplicationHistoryResponse> responses =
+                jobApplicationService.getAllApplicationHistory(user.getCandidateProfile().getId());
+
+        return CustomResponse.generateResponse(
+                "Data found with total amount : " + responses.size(),
+                HttpStatus.OK,
+                responses
+        );
     }
 
     /**
