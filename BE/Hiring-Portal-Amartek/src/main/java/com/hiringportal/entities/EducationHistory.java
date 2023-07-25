@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.hiringportal.enums.EducationLevel;
@@ -27,13 +28,15 @@ public class EducationHistory {
     private EducationLevel level;
     private String name;
     private String major;
+
     @Column(columnDefinition = "year")
     private Date yearStart;
-    @Column(columnDefinition = "year")
 
+    @Column(columnDefinition = "year")
     private Date yearEnd;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_profile_id")
+    @JsonIgnore
     private CandidateProfile candidateProfile;
 }
