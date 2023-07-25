@@ -1,6 +1,7 @@
 package com.hiringportal.repository;
 
 import com.hiringportal.dto.ApplicantResponse;
+import com.hiringportal.dto.CandidateProfileQuery;
 import com.hiringportal.dto.CandidateProfileResponse;
 import com.hiringportal.entities.CandidateProfile;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +18,7 @@ public interface CandidateProfileRepository extends JpaRepository<CandidateProfi
             join User u on c.user.id = u.id
             """)
     List<CandidateProfileResponse> getAllCandidateProfile();
+
     @Query(value = """
             select new com.hiringportal.dto.CandidateProfileResponse(c.id, u.email, u.fullName, c.phone, c.summary, c.birthDate, u.gender)
             from CandidateProfile c
@@ -25,11 +27,19 @@ public interface CandidateProfileRepository extends JpaRepository<CandidateProfi
     Optional<CandidateProfileResponse> getCandidateProfileById(Integer id);
 
     Boolean existsByPhone(String phone);
+
     Optional<CandidateProfile> findCandidateProfileByToken(String token);
+
     Optional<CandidateProfile> findCandidateProfileByUser_Email(String email);
+
     @Query(value = """
-    select new com.hiringportal.dto.ApplicantResponse(c.id, u.fullName, u.email, c.phone)
-    from CandidateProfile c join User u on c.user.id = u.id
-            """)
+            select new com.hiringportal.dto.ApplicantResponse(c.id, u.fullName, u.email, c.phone)
+            from CandidateProfile c join User u on c.user.id = u.id
+                    """)
     List<ApplicantResponse> findFirstFiveApplicant(PageRequest pageRequest);
+
+    @Query(value = """
+            select new com.hiringportal.dto.CandidateProfileQuery(u.fullName, c.birthDate, u.gender, c.id) from CandidateProfile c join User u on c.user.id = u.id where c.id in :idCandidateProfiles
+            """)
+    List<CandidateProfileQuery> findAllCandidateProfileInListId(List<Integer> idCandidateProfiles);
 }
