@@ -1,5 +1,6 @@
 package com.hiringportal.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.hiringportal.enums.Gender;
@@ -14,6 +15,7 @@ import java.sql.Date;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Builder
 public class CandidateProfileRequest {
+    @JsonIgnore
     private Integer id;
     @NotBlank
     private String phone;
