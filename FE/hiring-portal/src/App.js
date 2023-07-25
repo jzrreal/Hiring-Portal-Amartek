@@ -67,7 +67,6 @@ import EditQuestion from './pages/trainer/question/edit';
 
 // Auth
 import EmailVerification from './pages/emailVerification';
-import EmailVerification from './pages/emailVerification';
 import HumanResource from './pages/HumanResource';
 // Auth
 
