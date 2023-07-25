@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import redirectManager from './UserRedirect';
 
 function Login() {
     const navigate = useNavigate();
@@ -37,7 +38,19 @@ function Login() {
         .then(response => {
             if(response.data.status == 200){
                 localStorage.setItem("authToken", response.data.data)
-                window.location.replace("http://localhost:3000/human-resource/dashboard")
+
+                axios({
+                    method: "GET",
+                    url: process.env.REACT_APP_API_URL + "/api/profiles",
+                    headers: {
+                        Authorization : "Bearer " + localStorage.getItem("authToken")
+                    }
+                })
+                .then(response => {
+                    localStorage.setItem("role", response.data.data.role)
+                })
+
+                redirectManager(localStorage.getItem("role"))
             }
         })
         .catch((error) => {

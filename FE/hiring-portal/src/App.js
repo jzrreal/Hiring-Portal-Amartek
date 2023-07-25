@@ -37,6 +37,7 @@ import AddJobFunction from './pages/human-resource/job-function/add';
 import EditJobFunction from './pages/human-resource/job-function/edit';
 // Job Function
 import EmailVerification from './pages/emailVerification';
+import HumanResource from './pages/HumanResource';
 // Human Resource
 
 function App() {
@@ -50,7 +51,7 @@ function App() {
         <Route path='/email-verification' element={<EmailVerification />} />
 
         {/* Human Resource */}
-        <Route path='human-resource'>
+        <Route path='human-resource' element={<HumanResource />}>
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='profile' element={<Profile />} />
           <Route path='role'>
