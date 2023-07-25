@@ -19,9 +19,9 @@ public class GetApplicationByJobPostResponse {
 
     private Integer id;
     private String name;
-    private String lastEducationLevel;
     private String major;
     private String schoolName;
+    private String status;
     private Integer age;
     private Gender gender;
     private Date applyDate;
