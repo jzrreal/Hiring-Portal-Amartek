@@ -16,19 +16,21 @@ export default function HumanResource () {
             }
         })
         .then(response => {
-            console.log(response)
+            if(response.data.status === 200) {
+                setTokenValidation(true)
+            }
         })
         .catch(err => console.log(err))
     }, [])
 
-    if(!localStorage.getItem("authToken")) {
+    if(!localStorage.getItem("authToken") && tokenValidation) {
         return <Navigate to="/login" />;
     }
     
     else {
         return (
             <div>
-                <Outlet />
+                <Outlet context={localStorage.getItem("authToken")}/>
             </div>
         )
     }
