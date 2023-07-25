@@ -48,6 +48,11 @@ public class JobPostServiceImpl implements JobPostService {
 
     @Override
     public Boolean delete(Integer id) {
+        jobPostRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job Post ID " + id + " not found")
+                );
+
         jobPostRepository.deleteById(id);
 
         return jobPostRepository
