@@ -33,7 +33,7 @@ public class JobApplication {
 
     @ManyToOne
     @JoinColumn(name = "application_status_id")
-    private JobApplicationStatus jobApplicationStatus;
+    private ApplicationStatus applicationStatus;
 
     @OneToOne(mappedBy = "jobApplication")
     private Test test;
