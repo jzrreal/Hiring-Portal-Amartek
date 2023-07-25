@@ -36,8 +36,6 @@ function Login() {
           })
         .then(response => {
             if(response.data.status == 200){
-                console.log(response.data.data)
-                localStorage.removeItem("authToken")
                 localStorage.setItem("authToken", response.data.data)
                 window.location.replace("http://localhost:3000/human-resource/dashboard")
             }
@@ -94,7 +92,7 @@ function Login() {
                                 </div>
                             </div>
                             <button type="submit" className="btn btn-primary btn-block">Sign In</button>
-                            <Link to="/register" className="btn btn-outline-primary btn-block">Register</Link>
+                            <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
                     </div>
                 </div>

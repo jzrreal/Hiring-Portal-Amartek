@@ -1,23 +1,19 @@
 package com.hiringportal.dto;
 
-import com.hiringportal.entities.Choice;
-import com.hiringportal.enums.Segment;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ChoiceDTO {
-    private Integer choiceId;
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+public class ChoiceResponse {
+    private Integer id;
     private String choice;
-    private Integer questionId;
     private Boolean correct;
-
 }

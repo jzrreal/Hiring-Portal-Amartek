@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_m_application_status")
-public class JobApplicationStatus {
+public class ApplicationStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "application_status_id")
@@ -30,6 +30,6 @@ public class JobApplicationStatus {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobApplicationStatus")
+    @OneToMany(mappedBy = "applicationStatus")
     public List<JobApplication> jobApplications;
 }

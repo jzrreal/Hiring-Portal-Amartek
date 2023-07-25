@@ -55,7 +55,11 @@ public class EmailServiceImpl implements EmailService{
         return "Hello " + name + ", your account has been created";
     }
 
+    // private String generateVerifyEmailUrl(String token){
+    //     return host + "/api/auth/verify-email?token=" + token;
+    // }
+
     private String generateVerifyEmailUrl(String token){
-        return host + "/api/auth/verify-email?token=" + token;
+        return "http://localhost:3000/email-verification?token=" + token;
     }
 }
