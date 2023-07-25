@@ -30,6 +30,6 @@ public class ApplicationStatus {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "jobApplicationStatus")
+    @OneToMany(mappedBy = "applicationStatus")
     public List<JobApplication> jobApplications;
 }
