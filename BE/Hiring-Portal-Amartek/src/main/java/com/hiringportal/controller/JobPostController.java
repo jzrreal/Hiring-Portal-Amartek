@@ -4,8 +4,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.hiringportal.entities.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,7 +51,9 @@ public class JobPostController {
     }
     // add
     @PostMapping("")
-    public ResponseEntity<Object> post(@RequestBody JobPostRequest jobPostRequest) {
+    public ResponseEntity<Object> post(@RequestBody JobPostRequest jobPostRequest, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        jobPostRequest.setUser_id(user.getId());
         JobPost newJobPost = jobPostProcess(jobPostRequest);
         newJobPost.setPost_at(new Date(System.currentTimeMillis()));
         jobPostService.save(newJobPost);
