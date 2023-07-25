@@ -36,8 +36,6 @@ function Login() {
           })
         .then(response => {
             if(response.data.status == 200){
-                console.log(response.data.data)
-                localStorage.removeItem("authToken")
                 localStorage.setItem("authToken", response.data.data)
                 window.location.replace("http://localhost:3000/human-resource/dashboard")
             }
