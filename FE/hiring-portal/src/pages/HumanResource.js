@@ -8,22 +8,23 @@ export default function HumanResource () {
     const [tokenValidation, setTokenValidation] = useState(false)
 
     useEffect( () => {
-        axios({
-            method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/tokens",
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("authToken")
-            }
-        })
-        .then(response => {
-            if(response.data.status === 200) {
-                setTokenValidation(true)
-            }
-        })
-        .catch(err => console.log(err))
+        if(localStorage.getItem("authToken")) {
+            axios({
+                method: "GET",
+                url: process.env.REACT_APP_API_URL + "/api/tokens",
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("authToken")
+                }
+            })
+            .then(response => {
+                if(response.data.status === 200) {
+                    setTokenValidation(true)
+                }
+            })
+        }
     }, [])
 
-    if(!localStorage.getItem("authToken") && tokenValidation) {
+    if(!localStorage.getItem("authToken") && !tokenValidation) {
         return <Navigate to="/login" />;
     }
     
