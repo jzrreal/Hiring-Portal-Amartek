@@ -17,7 +17,6 @@ export default function EmailVerification() {
       setContentTitle(response.data.message)
     })
     .catch(err => {
-      setTokenExist(false)
       setContentTitle(err.response.data.message)
     })
   }, []);
