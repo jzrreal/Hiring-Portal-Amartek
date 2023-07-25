@@ -3,6 +3,7 @@ package com.hiringportal.controller;
 import java.sql.Date;
 import java.util.List;
 
+import com.hiringportal.dto.CandidateProfileResponse;
 import com.hiringportal.dto.GetApplicationByJobPostResponse;
 import com.hiringportal.entities.User;
 import org.springframework.http.HttpStatus;
@@ -29,12 +30,12 @@ public class ApplicationController {
     public ResponseEntity<Object> post(@PathVariable(required = true) Integer jobId, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         JobApplication jobApplication = JobApplication
-            .builder()
-            .apply_date(new Date(System.currentTimeMillis()))
-            .jobPost(jobPostService.getById(jobId))
-            .candidateProfile(jobApplicationService.getCandidateProfileByEmail(user.getEmail()))
-            .applicationStatus(jobApplicationService.getJobApplicationStatusById(1)) // default, 1 = submitted
-            .build();
+                .builder()
+                .apply_date(new Date(System.currentTimeMillis()))
+                .jobPost(jobPostService.getById(jobId))
+                .candidateProfile(jobApplicationService.getCandidateProfileByEmail(user.getEmail()))
+                .applicationStatus(jobApplicationService.getJobApplicationStatusById(1)) // default, 1 = submitted
+                .build();
         jobApplicationService.save(jobApplication);
         return CustomResponse.generateResponse("Success save", HttpStatus.OK);
     }
@@ -52,13 +53,24 @@ public class ApplicationController {
     @GetMapping("{jobPostId}/job-post")
     public ResponseEntity<Object> getAllApplicantOnSpecificJobPost(
             @PathVariable(name = "jobPostId") Integer jobPostId
-    ){
+    ) {
         List<GetApplicationByJobPostResponse> responses = jobApplicationService.getApplicantsByJobPost(jobPostId);
 
         return CustomResponse.generateResponse(
                 "Data found with total amount : " + responses.size(),
                 HttpStatus.OK,
                 responses
+        );
+    }
+
+    @GetMapping("{jobApplicationId}/profiles")
+    public ResponseEntity<Object> getCandidateProfileById(@PathVariable(name = "jobApplicationId") Integer jobApplicationId) {
+        CandidateProfileResponse response = jobApplicationService.getProfileByJobApplicationId(jobApplicationId);
+
+        return CustomResponse.generateResponse(
+                "Data found",
+                HttpStatus.OK,
+                response
         );
     }
 }
