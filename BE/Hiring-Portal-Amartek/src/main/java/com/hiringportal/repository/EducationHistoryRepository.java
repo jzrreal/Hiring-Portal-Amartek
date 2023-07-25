@@ -17,5 +17,6 @@ public interface EducationHistoryRepository extends JpaRepository<EducationHisto
                 where er.candidateProfile.id in :idCandidateProfiles and er.level = 'S1'
             """)
     List<EducationHistoryQuery> findAllEducationHistoryInListCandidateIdWhereS1(List<Integer> idCandidateProfiles);
+    List<EducationHistory> findByCandidateProfileId(Integer candidateId);
 
 }
