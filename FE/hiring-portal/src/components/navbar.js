@@ -17,6 +17,7 @@ function Navbar() {
     .then(response => {
       if(response.data.status == 200){
         localStorage.removeItem("authToken")
+        localStorage.removeItem("role")
         window.location.replace("http://localhost:3000/login")
       }
     })
