@@ -1,6 +1,7 @@
 package com.hiringportal.service.JobApplication;
 
 import com.hiringportal.dto.CandidateProfileQuery;
+import com.hiringportal.dto.CandidateProfileResponse;
 import com.hiringportal.dto.EducationHistoryQuery;
 import com.hiringportal.dto.GetApplicationByJobPostResponse;
 import com.hiringportal.entities.ApplicationStatus;
@@ -140,10 +141,36 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                             .name(candidateProfile.getFullName())
                             .schoolName(schoolName)
                             .applyDate(jobApplication.getApply_date())
-                            .id(jobApplication.getCandidateProfile().getId())
+                            .jobApplicationId(jobApplication.getId())
                             .status(applicationStatus.get(jobApplication.getApplicationStatus().getId()))
                             .build();
                 }).toList();
 
+    }
+
+    @Override
+    public CandidateProfileResponse getProfileByJobApplicationId(Integer jobApplicationId) {
+        JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job Application with Id : " + jobApplicationId + " not found")
+        );
+
+        //If status submitted, when HR see applicant detail, the status change to reviewed
+        if (jobApplication.getApplicationStatus().getId() == 1){
+            jobApplication.setApplicationStatus(applicationStatusRepository.findById(2).orElse(null));
+            jobApplicationRepository.save(jobApplication);
+        }
+
+        CandidateProfile candidateProfile = candidateProfileRepository.findById(jobApplication.getCandidateProfile().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Applicant with Id : " + jobApplication.getCandidateProfile().getId() + " not found"));
+
+        return CandidateProfileResponse.builder()
+                .id(candidateProfile.getId())
+                .birthDate(candidateProfile.getBirthDate())
+                .phone(candidateProfile.getPhone())
+                .summary(candidateProfile.getSummary())
+                .fullName(candidateProfile.getUser().getFullName())
+                .email(candidateProfile.getUser().getEmail())
+                .gender(candidateProfile.getUser().getGender())
+                .build();
     }
 }

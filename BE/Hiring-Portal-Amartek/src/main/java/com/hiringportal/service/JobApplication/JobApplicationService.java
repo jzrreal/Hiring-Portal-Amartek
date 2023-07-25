@@ -1,5 +1,6 @@
 package com.hiringportal.service.JobApplication;
 
+import com.hiringportal.dto.CandidateProfileResponse;
 import com.hiringportal.dto.GetApplicationByJobPostResponse;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ public interface JobApplicationService extends GenericService<JobApplication, In
     CandidateProfile getCandidateProfileByEmail(String email);
 
     List<GetApplicationByJobPostResponse> getApplicantsByJobPost(Integer jobPostId);
+
+    CandidateProfileResponse getProfileByJobApplicationId(Integer jobApplicationId);
 }

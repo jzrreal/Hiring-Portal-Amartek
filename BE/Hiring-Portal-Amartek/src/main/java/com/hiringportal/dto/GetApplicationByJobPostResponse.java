@@ -17,7 +17,7 @@ import java.sql.Date;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GetApplicationByJobPostResponse {
 
-    private Integer id;
+    private Integer jobApplicationId;
     private String name;
     private String major;
     private String schoolName;
