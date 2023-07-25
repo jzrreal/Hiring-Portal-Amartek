@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hiringportal.dto.CustomResponse;
 import com.hiringportal.dto.JobPostRequest;
 import com.hiringportal.entities.JobPost;
+import com.hiringportal.entities.User;
 import com.hiringportal.service.jobFunction.JobFunctionService;
 import com.hiringportal.service.jobLevel.JobLevelService;
 import com.hiringportal.service.jobPost.JobPostService;

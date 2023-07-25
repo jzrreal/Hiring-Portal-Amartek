@@ -82,11 +82,6 @@ function Profile() {
                                         <p class="font-weight-bold">Institute Technology Bandung</p>
                                         <hr />
                                         <span className="text-muted">
-                                            <i class="fas fa-map-marker-alt mr-1"></i> Location
-                                        </span>
-                                        <p class="font-weight-bold">Bandung, East Java</p>
-                                        <hr />
-                                        <span className="text-muted">
                                             <i class="fas fa-phone mr-1"></i> Phone Number
                                         </span>
                                         <p class="font-weight-bold">+62 895 1439 1356</p>
@@ -152,7 +147,7 @@ function Profile() {
                                     </div>
                                     <div class="card-body">
                                         <div class="tab-content">
-                                            <div class="tab-pane" id="education-histories">
+                                            <div class="tab-pane active" id="education-histories">
                                                 <ul class="products-list product-list-in-card px-2">
                                                     <li class="item py-3">
                                                         <div class="product-img">

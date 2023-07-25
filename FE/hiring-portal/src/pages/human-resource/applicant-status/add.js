@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
-    const [inputData, setInputData] = useState({ name: '', point: '' })
+    const [inputData, setInputData] = useState({ name: '' })
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -28,14 +28,14 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: process.env.REACT_APP_API_URL + "/api/question-levels",
+            url: process.env.REACT_APP_API_URL + "/api/application-status",
             data: inputData
         }).then(
             Toast.fire({
                 icon: 'success',
                 title: 'Success save data'
             }),
-            navigate('/human-resource/question-level', { replace: true })
+            navigate('/human-resource/applicant-status', { replace: true })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -57,13 +57,13 @@ function Add() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Create a New Question Level</h1>
+                                    <h1 className="m-0">Create a New Applicant Status</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
                                         <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/question-level">Question Level</NavLink></li>
-                                        <li className="breadcrumb-item active">Add Question Level</li>
+                                        <li className="breadcrumb-item"><NavLink to="/human-resource/applicant-status">Applicant Status</NavLink></li>
+                                        <li className="breadcrumb-item active">Add Applicant Status</li>
                                     </ol>
                                 </div>
                             </div>
@@ -80,14 +80,10 @@ function Add() {
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Question Level Name" />
-                                            </div>
-                                            <div className="form-group">
-                                                <label for="point">Point</label>
-                                                <input type="number" className="form-control" id="point" onChange={e => setInputData({ ...inputData, point: e.target.value })} placeholder="Point" />
+                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Applicant Status Name" />
                                             </div>
                                             <div className="float-right">
-                                                <NavLink to="/human-resource/question-level" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                <NavLink to="/human-resource/applicant-status" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                                                 <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
