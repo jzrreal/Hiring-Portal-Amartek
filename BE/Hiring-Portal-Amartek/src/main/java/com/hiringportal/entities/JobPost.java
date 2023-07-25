@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,15 +33,17 @@ public class JobPost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_post_id")
     private Integer id;
-
+    @NotBlank
     private String title;
     @Column(columnDefinition = "text")
     private String description;
     @Column(columnDefinition = "text")
     private String requirement;
     private Date post_at;
+    @NotNull
     private Date open_until;
     private Date updated_at;
+    @NotNull
     private Integer vacancy;
     private Boolean closed;
 

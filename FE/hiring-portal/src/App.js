@@ -67,6 +67,8 @@ import EditQuestion from './pages/trainer/question/edit';
 
 // Auth
 import EmailVerification from './pages/emailVerification';
+import EmailVerification from './pages/emailVerification';
+import HumanResource from './pages/HumanResource';
 // Auth
 
 function App() {
@@ -80,7 +82,7 @@ function App() {
         <Route path='/email-verification' element={<EmailVerification />} />
 
         {/* Human Resource */}
-        <Route path='human-resource'>
+        <Route path='human-resource' element={<HumanResource />}>
           <Route path='dashboard' element={<DashboardHumanResource />} />
           <Route path='profile' element={<ProfileHumanResource />} />
           {/* Master Data */}

@@ -45,7 +45,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         log.info("Token : {}", jwtToken);
         try {
             userEmail = jwtService.extractUsername(jwtToken);
-        }catch (ExpiredJwtException | SignatureException exception){
+        }catch (Exception exception){
             userEmail = null;
         }
 

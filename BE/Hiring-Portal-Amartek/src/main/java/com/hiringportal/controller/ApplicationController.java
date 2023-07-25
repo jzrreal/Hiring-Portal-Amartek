@@ -1,7 +1,9 @@
 package com.hiringportal.controller;
 
 import java.sql.Date;
+import java.util.List;
 
+import com.hiringportal.dto.GetApplicationByJobPostResponse;
 import com.hiringportal.entities.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,6 +53,12 @@ public class ApplicationController {
     public ResponseEntity<Object> getAllApplicantOnSpecificJobPost(
             @PathVariable(name = "jobPostId") Integer jobPostId
     ){
-        return null;
+        List<GetApplicationByJobPostResponse> responses = jobApplicationService.getApplicantsByJobPost(jobPostId);
+
+        return CustomResponse.generateResponse(
+                "Data found with total amount : " + responses.size(),
+                HttpStatus.OK,
+                responses
+        );
     }
 }
