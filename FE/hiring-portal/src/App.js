@@ -14,8 +14,12 @@ import EditRole from './pages/human-resource/role/edit';
 // Candidate Profile
 import IndexCandidateProfile from './pages/human-resource/candidate-profile';
 import DetailCandidateProfile from './pages/human-resource/candidate-profile/detail';
-import EditCandidateProfile from './pages/human-resource/candidate-profile/edit';
 // Candidate Profile
+// Applicant Status
+import IndexApplicantStatus from './pages/human-resource/applicant-status';
+import AddApplicantStatus from './pages/human-resource/applicant-status/add';
+import EditApplicantStatus from './pages/human-resource/applicant-status/edit';
+// Applicant Status
 // Skill Level
 import IndexSkillLevel from './pages/human-resource/skill-level';
 import AddSkillLevel from './pages/human-resource/skill-level/add';
@@ -36,8 +40,20 @@ import IndexJobFunction from './pages/human-resource/job-function';
 import AddJobFunction from './pages/human-resource/job-function/add';
 import EditJobFunction from './pages/human-resource/job-function/edit';
 // Job Function
-import EmailVerified from './pages/emailVerified';
+// Test Parameter
+import IndexTestParameter from './pages/human-resource/test-parameter';
+import AddTestParameter from './pages/human-resource/test-parameter/add';
+import EditTestParameter from './pages/human-resource/test-parameter/edit';
+// Test Parameter
+
+// Job Post
+import IndexJobPost from './pages/human-resource/job-post';
+// Job Post
+// Job Applicant
+import IndexJobApplicant from './pages/human-resource/job-applicant';
+// Job Applicant
 // Human Resource
+import EmailVerified from './pages/emailVerified';
 
 function App() {
   return (
@@ -53,6 +69,7 @@ function App() {
         <Route path='human-resource'>
           <Route path='dashboard' element={<Dashboard />} />
           <Route path='profile' element={<Profile />} />
+          {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
             <Route path='add' element={<AddRole />} />
@@ -61,7 +78,11 @@ function App() {
           <Route path='applicant'>
             <Route index element={<IndexCandidateProfile />} />
             <Route path='detail/:id' element={<DetailCandidateProfile />} />
-            <Route path='edit/:id' element={<EditCandidateProfile />} />
+          </Route>
+          <Route path='applicant-status'>
+            <Route index element={<IndexApplicantStatus />} />
+            <Route path='add' element={<AddApplicantStatus />} />
+            <Route path='edit/:id' element={<EditApplicantStatus />} />
           </Route>
           <Route path='skill-level'>
             <Route index element={<IndexSkillLevel />} />
@@ -83,6 +104,20 @@ function App() {
             <Route path='add' element={<AddJobFunction />} />
             <Route path='edit/:id' element={<EditJobFunction />} />
           </Route>
+          <Route path='test-parameter'>
+            <Route index element={<IndexTestParameter />} />
+            <Route path='add' element={<AddTestParameter />} />
+            <Route path='edit/:id' element={<EditTestParameter />} />
+          </Route>
+          {/* Master Data */}
+          {/* Job */}
+          <Route path='job-post'>
+            <Route index element={<IndexJobPost />} />
+          </Route>
+          <Route path='job-applicant'>
+            <Route index element={<IndexJobApplicant />} />
+          </Route>
+          {/* Job */}
         </Route>
         {/* Human Resource */}
       </Routes>

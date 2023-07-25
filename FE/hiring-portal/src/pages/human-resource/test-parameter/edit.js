@@ -29,7 +29,7 @@ function Edit() {
     useEffect(() => {
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/applicants/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/test-parameter/" + id,
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -43,14 +43,14 @@ function Edit() {
     function handleSubmit() {
         axios({
             method: "PUT",
-            url: process.env.REACT_APP_API_URL + "/api/applicants/" + id,
+            url: process.env.REACT_APP_API_URL + "/api/test-parameter/" + id,
             data: data
         }).then(
             Toast.fire({
                 icon: 'success',
                 title: 'Success update data'
             }),
-            navigate('/human-resource/applicant', { replace: true })
+            navigate('/human-resource/test-parameter', { replace: true })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -72,13 +72,13 @@ function Edit() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Edit Applicant</h1>
+                                    <h1 className="m-0">Edit Test Parameter</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
                                         <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/applicant">Applicant</NavLink></li>
-                                        <li className="breadcrumb-item active">Edit Applicant</li>
+                                        <li className="breadcrumb-item"><NavLink to="/human-resource/test-parameter">Test Parameter</NavLink></li>
+                                        <li className="breadcrumb-item active">Edit Test Parameter</li>
                                     </ol>
                                 </div>
                             </div>
@@ -94,31 +94,15 @@ function Edit() {
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <label for="name">ID Applicant</label>
+                                                <label for="name">ID Test Parameter</label>
                                                 <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
                                             </div>
                                             <div className="form-group">
-                                                <label for="fullname">Fullname</label>
-                                                <input type="text" className="form-control" id="fullname" value={data.full_name} onChange={e => setData({ ...data, full_name: e.target.value })} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="email" className="form-control" id="email" value={data.email} onChange={e => setData({ ...data, email: e.target.value })} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label for="phone">Phone Number</label>
-                                                <input type="text" className="form-control" id="phone" value={data.phone} onChange={e => setData({ ...data, phone: e.target.value })} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label for="birthdate">Birth Date</label>
-                                                <input type="date" className="form-control" id="birthdate" value={data.birthdate} onChange={e => setData({ ...data, birthdate: e.target.value })} />
-                                            </div>
-                                            <div className="form-group">
-                                                <label for="summary">Summary</label>
-                                                <textarea className="form-control" id="summary" value={data.summary} onChange={e => setData({ ...data, summary: e.target.value })} />
+                                                <label for="name">Name</label>
+                                                <input type="text" className="form-control" id="name" value={data.name} onChange={e => setData({ ...data, name: e.target.value })} />
                                             </div>
                                             <div className="float-right">
-                                                <NavLink to="/human-resource/applicant" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                                                 <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
