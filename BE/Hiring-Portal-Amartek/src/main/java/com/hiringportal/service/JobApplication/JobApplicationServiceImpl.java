@@ -1,7 +1,10 @@
 package com.hiringportal.service.JobApplication;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
+import com.hiringportal.dto.GetApplicationByJobPostResponse;
 import com.hiringportal.repository.EducationHistoryRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -35,10 +38,10 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     @Override
     public JobApplication getById(Integer id) {
         return jobApplicationRepository
-            .findById(id)
-            .orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job application Id : " + id + " not found")
-            );
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job application Id : " + id + " not found")
+                );
     }
 
     @Override
@@ -60,28 +63,28 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         jobApplicationRepository.deleteById(id);
 
         return jobApplicationRepository
-            .findById(id)
-            .isEmpty();
+                .findById(id)
+                .isEmpty();
     }
 
     @Override
     public CandidateProfile getCandidateProfileById(Integer id) {
         return candidateProfileRepository
-            .findById(id)
-            .orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Applicant with Id : " + id + " not found")
-            );
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Applicant with Id : " + id + " not found")
+                );
     }
 
     @Override
     public ApplicationStatus getJobApplicationStatusById(Integer id) {
         return applicationStatusRepository
-            .findById(id)
-            .orElseThrow(
-                () -> new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Application status with Id : " + id + " not found")
-            );
+                .findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(
+                                HttpStatus.NOT_FOUND,
+                                "Application status with Id : " + id + " not found")
+                );
     }
 
     @Override
@@ -91,7 +94,20 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
-    public void getApplicantsByJobPost(Integer jobPostId) {
+    public List<GetApplicationByJobPostResponse> getApplicantsByJobPost(Integer jobPostId) {
+
+        Map<Integer, String> applicationStatus =
+                applicationStatusRepository.findAll().stream()
+                        .collect(Collectors.toMap(ApplicationStatus::getId, ApplicationStatus::getName));
+
+        List<JobApplication> jobApplications = jobApplicationRepository.findAllByJobPostId(jobPostId);
+
+        List<Integer> idCandidateProfiles =
+                jobApplications.stream().map(jobApplication -> jobApplication.getCandidateProfile().getId()).toList();
+
+        System.out.println(idCandidateProfiles);
+
+        return null;
 
     }
 }
