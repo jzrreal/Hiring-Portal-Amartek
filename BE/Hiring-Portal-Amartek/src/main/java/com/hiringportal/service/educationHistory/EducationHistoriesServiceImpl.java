@@ -63,7 +63,6 @@ public class EducationHistoriesServiceImpl implements EducationHistoriesService 
                         .candidateId(educationList.getCandidateProfile().getId())
                         .build())
                 .collect(Collectors.toList());
-
         return educationHistoriesResponses;
     }
 
