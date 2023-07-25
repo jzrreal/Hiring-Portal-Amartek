@@ -94,7 +94,7 @@ function Sidebar() {
             {/* Master Data */}
 
             {/* Job Post */}
-            <li class="nav-header mt-2">JOB</li>
+            <li className="nav-header mt-2">JOB</li>
             <li className="nav-item">
               <NavLink to="/human-resource/job-post" className="nav-link">
                 <i className="nav-icon fas fa-briefcase mr-2"></i>
