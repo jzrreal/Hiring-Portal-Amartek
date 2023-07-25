@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hiringportal.dto.CustomResponse;
 import com.hiringportal.dto.JobPostRequest;
 import com.hiringportal.entities.JobPost;
+import com.hiringportal.entities.User;
 import com.hiringportal.service.jobFunction.JobFunctionService;
 import com.hiringportal.service.jobLevel.JobLevelService;
 import com.hiringportal.service.jobPost.JobPostService;
@@ -49,7 +51,9 @@ public class JobPostController {
     }
     // add
     @PostMapping("")
-    public ResponseEntity<Object> post(@RequestBody JobPostRequest jobPostRequest) {
+    public ResponseEntity<Object> post(@RequestBody JobPostRequest jobPostRequest, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+        jobPostRequest.setUser_id(user.getId());
         JobPost newJobPost = jobPostProcess(jobPostRequest);
         newJobPost.setPost_at(new Date(System.currentTimeMillis()));
         jobPostService.save(newJobPost);
