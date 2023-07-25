@@ -24,7 +24,7 @@ public class JobLevelServiceImpl implements JobLevelService{
     @Override
     public JobLevel getById(Integer id) {
         return jobLevelRepository.findById(id).orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job Function with Id " + id + " not found")
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job Level with Id " + id + " not found")
         );
     }
 

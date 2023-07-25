@@ -4,6 +4,7 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,18 +24,18 @@ public class JobApplication {
 
     private Date apply_date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_post_id")
     private JobPost jobPost;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_profile_id")
     private CandidateProfile candidateProfile;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "application_status_id")
     private ApplicationStatus applicationStatus;
 
-    @OneToOne(mappedBy = "jobApplication")
+    @OneToOne(mappedBy = "jobApplication", fetch = FetchType.LAZY)
     private Test test;
 }
