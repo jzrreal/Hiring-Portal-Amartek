@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -7,9 +7,10 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 import Swal from 'sweetalert2';
 
-function Add() {
+function Edit() {
     const navigate = useNavigate()
-    const [inputData, setInputData] = useState({ name: '', point: '' })
+    const { id } = useParams();
+    const [data, setData] = useState([])
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -24,18 +25,32 @@ function Add() {
         }
     })
 
-    // Add Data
+    // Get Data
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
+        })
+            .then(function (response) {
+                setData(response.data.data);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }, [])
+
+    // Edit Data
     function handleSubmit() {
         axios({
-            method: "POST",
-            url: process.env.REACT_APP_API_URL + "/api/question-levels",
-            data: inputData
+            method: "PUT",
+            url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
+            data: data
         }).then(
             Toast.fire({
                 icon: 'success',
-                title: 'Success save data'
+                title: 'Success update data'
             }),
-            navigate('/human-resource/question-level', { replace: true })
+            navigate('/human-resource/test-parameter', { replace: true })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -57,13 +72,13 @@ function Add() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Create a New Question Level</h1>
+                                    <h1 className="m-0">Edit Test Parameter</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
                                         <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/question-level">Question Level</NavLink></li>
-                                        <li className="breadcrumb-item active">Add Question Level</li>
+                                        <li className="breadcrumb-item"><NavLink to="/human-resource/test-parameter">Test Parameter</NavLink></li>
+                                        <li className="breadcrumb-item active">Edit Test Parameter</li>
                                     </ol>
                                 </div>
                             </div>
@@ -79,15 +94,19 @@ function Add() {
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Question Level Name" />
+                                                <label for="name">ID Test Parameter</label>
+                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
                                             </div>
                                             <div className="form-group">
-                                                <label for="point">Point</label>
-                                                <input type="number" className="form-control" id="point" onChange={e => setInputData({ ...inputData, point: e.target.value })} placeholder="Point" />
+                                                <label for="expiration_hour">Expired Hours</label>
+                                                <input type="number" className="form-control" id="expiration_hour" value={data.expiration_hour} onChange={e => setData({ ...data, expiration_hour: e.target.value })} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label for="test_time_minute">Test Time (in Minute)</label>
+                                                <input type="number" className="form-control" id="test_time_minute" value={data.test_time_minute} onChange={e => setData({ ...data, test_time_minute: e.target.value })} />
                                             </div>
                                             <div className="float-right">
-                                                <NavLink to="/human-resource/question-level" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                                                 <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
@@ -108,4 +127,4 @@ function Add() {
     )
 }
 
-export default Add
+export default Edit

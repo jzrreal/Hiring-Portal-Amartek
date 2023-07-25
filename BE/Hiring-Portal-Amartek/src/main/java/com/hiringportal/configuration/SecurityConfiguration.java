@@ -3,6 +3,7 @@ package com.hiringportal.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -27,6 +28,9 @@ public class SecurityConfiguration {
                 .antMatchers("/api/test").authenticated()
                 .antMatchers("/api/profiles").authenticated()
                 .antMatchers("/api/dashboards").authenticated()
+                .antMatchers("/api/tokens").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/job-posts").hasAnyAuthority("human resource")
+                .antMatchers("/api/applications/*").authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()

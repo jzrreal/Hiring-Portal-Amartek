@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import axios from "axios";
 
 function Sidebar() {
+  const [username, setUsername] = useState("")
+  const [role, setRole] = useState("")
+
+  useEffect(()=>{
+    axios({
+      method: "GET",
+      url: process.env.REACT_APP_API_URL + "/api/profiles",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("authToken")
+      }
+    })
+    .then(response => {
+      setUsername(response.data.data.full_name)
+      setRole(response.data.data.role)
+    })
+  }, [])
+
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
@@ -19,8 +37,8 @@ function Sidebar() {
           <img src="/assets/dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
         </div>
         <div className="info ml-2">
-          <NavLink to="/human-resource/profile" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>Alexander Pierce</NavLink>
-          <span href="#" className="d-block text-secondary">Human Resource</span>
+          <NavLink to="/human-resource/profile" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</NavLink>
+          <span href="#" className="d-block text-secondary">{role}</span>
         </div>
       </div>
       {/* User */}
@@ -66,6 +84,12 @@ function Sidebar() {
                   </NavLink>
                 </li>
                 <li className="nav-item">
+                  <NavLink to="/human-resource/applicant-status" className="nav-link">
+                    <i className="far fa-circle nav-icon mr-2"></i>
+                    <p>Applicant Status</p>
+                  </NavLink>
+                </li>
+                <li className="nav-item">
                   <NavLink to="/human-resource/skill-level" className="nav-link">
                     <i className="far fa-circle nav-icon mr-2"></i>
                     <p>Skill Level</p>
@@ -89,12 +113,19 @@ function Sidebar() {
                     <p>Job Function</p>
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink to="/human-resource/test-parameter" className="nav-link">
+                    <i className="far fa-circle nav-icon mr-2"></i>
+                    <p>Test Parameter</p>
+                  </NavLink>
+                </li>
               </ul>
             </li>
             {/* Master Data */}
 
+            {/* Job */}
+            <li class="nav-header mt-2">JOB</li>
             {/* Job Post */}
-            <li className="nav-header mt-2">JOB</li>
             <li className="nav-item">
               <NavLink to="/human-resource/job-post" className="nav-link">
                 <i className="nav-icon fas fa-briefcase mr-2"></i>
@@ -102,6 +133,27 @@ function Sidebar() {
               </NavLink>
             </li>
             {/* Job Post */}
+            {/* Job Applicant */}
+            <li className="nav-item">
+              <NavLink to="/human-resource/job-applicant" className="nav-link">
+                <i className="nav-icon fas fa-briefcase mr-2"></i>
+                <p>Job Applicant</p>
+              </NavLink>
+              {/* Job Applicant */}
+            </li>
+            {/* Job */}
+
+            {/* Test */}
+            <li class="nav-header mt-2">TEST</li>
+            {/* Question */}
+            <li className="nav-item">
+              <NavLink to="/trainer/question" className="nav-link">
+                <i className="nav-icon fas fa-briefcase mr-2"></i>
+                <p>Question</p>
+              </NavLink>
+            </li>
+            {/* Question */}
+            {/* Test */}
           </ul>
         </nav>
       </div>

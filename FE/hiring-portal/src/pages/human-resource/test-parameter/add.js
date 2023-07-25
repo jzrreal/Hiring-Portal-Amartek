@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
-    const [inputData, setInputData] = useState({ name: '', point: '' })
+    const [inputData, setInputData] = useState({ expiration_hour: '', test_time_minute: '' })
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -28,14 +28,14 @@ function Add() {
     function handleSubmit() {
         axios({
             method: "POST",
-            url: process.env.REACT_APP_API_URL + "/api/question-levels",
+            url: process.env.REACT_APP_API_URL + "/api/test-parameters",
             data: inputData
         }).then(
             Toast.fire({
                 icon: 'success',
                 title: 'Success save data'
             }),
-            navigate('/human-resource/question-level', { replace: true })
+            navigate('/human-resource/test-parameter', { replace: true })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -57,13 +57,13 @@ function Add() {
                         <div className="container-fluid">
                             <div className="row mb-2">
                                 <div className="col-sm-6">
-                                    <h1 className="m-0">Create a New Question Level</h1>
+                                    <h1 className="m-0">Create a New Test Parameter</h1>
                                 </div>
                                 <div className="col-sm-6">
                                     <ol className="breadcrumb float-sm-right">
                                         <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/question-level">Question Level</NavLink></li>
-                                        <li className="breadcrumb-item active">Add Question Level</li>
+                                        <li className="breadcrumb-item"><NavLink to="/human-resource/test-parameter">Test Parameter</NavLink></li>
+                                        <li className="breadcrumb-item active">Add Test Parameter</li>
                                     </ol>
                                 </div>
                             </div>
@@ -79,15 +79,15 @@ function Add() {
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
-                                                <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Question Level Name" />
+                                                <label for="expiration_hour">Expired Hours</label>
+                                                <input type="number" className="form-control" id="expiration_hour" onChange={e => setInputData({ ...inputData, expiration_hour: e.target.value })} placeholder="Set Expired Hours" />
                                             </div>
                                             <div className="form-group">
-                                                <label for="point">Point</label>
-                                                <input type="number" className="form-control" id="point" onChange={e => setInputData({ ...inputData, point: e.target.value })} placeholder="Point" />
+                                                <label for="test_time_minute">Test Time (in Minute)</label>
+                                                <input type="number" className="form-control" id="test_time_minute" onChange={e => setInputData({ ...inputData, test_time_minute: e.target.value })} placeholder="Set Test Time in Minute" />
                                             </div>
                                             <div className="float-right">
-                                                <NavLink to="/human-resource/question-level" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                                                 <button className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>

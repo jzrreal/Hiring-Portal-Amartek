@@ -38,7 +38,7 @@ public class Test {
     @Column(name = "test_token")
     private String testToken;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_application_id", referencedColumnName = "job_application_id")
     private JobApplication jobApplication;
 
