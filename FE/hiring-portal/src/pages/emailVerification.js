@@ -5,7 +5,6 @@ export default function EmailVerification() {
 
   const token = new URLSearchParams(window.location.search).get("token")
 
-  const [tokenExist, setTokenExist] = useState(false)
   const [contentTitle, setContentTitle] = useState("")
   
   useEffect(()=>{
