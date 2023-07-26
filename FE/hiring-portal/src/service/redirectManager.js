@@ -7,7 +7,7 @@ function redirectManager(role) {
     } else if (role === "Applicant") {
         return "/applicant/dashboard"
     } else if (role === "Administrator") {
-        return "/adminsitrator/dashboard"
+        return "/administrator/dashboard"
     } else {
         return "/login"
     }
