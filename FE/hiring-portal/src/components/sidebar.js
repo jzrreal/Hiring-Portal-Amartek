@@ -155,7 +155,7 @@ function Sidebar() {
             {
               role == "Human Resource" ?
                 <>
-                  <li class="nav-header mt-2">JOB</li>
+                  <li className="nav-header mt-2">JOB</li>
                   {/* Job Post */}
                   <li className="nav-item">
                     <NavLink to="/human-resource/job-post" className="nav-link">
@@ -199,20 +199,15 @@ function Sidebar() {
             {/* Job */}
 
             {/* Test */}
-            {
-              role === "Trainer" ?
-                <>
-                  <li class="nav-header mt-2">TEST</li>
-                  {/* Question */}
-                  <li className="nav-item">
-                    <NavLink to="/trainer/question" className="nav-link">
-                      <i className="nav-icon fas fa-briefcase mr-2"></i>
-                      <p>Question</p>
-                    </NavLink>
-                  </li>
-                  {/* Question */}
-                </>
-                : null}
+            <li class="nav-header mt-2">TEST</li>
+            {/* Question */}
+            <li className="nav-item">
+              <NavLink to="/trainer/question" className="nav-link">
+                <i className="nav-icon fas fa-briefcase mr-2"></i>
+                <p>Question</p>
+              </NavLink>
+            </li>
+            {/* Question */}
             {/* Test */}
           </ul>
         </nav>

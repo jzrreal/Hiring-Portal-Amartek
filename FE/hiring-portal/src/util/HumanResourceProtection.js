@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
+import redirectManager from "../service/redirectManager";
 
-export default function HumanResource () {
+export default function HumanResourceProtection () {
 
     const [tokenValidation, setTokenValidation] = useState(false)
 
@@ -21,11 +22,17 @@ export default function HumanResource () {
                     setTokenValidation(true)
                 }
             })
+            .catch(() => {
+                return <Navigate to={redirectManager(localStorage.getItem("role"))} />
+            })
         }
     }, [])
 
     if(!localStorage.getItem("authToken") && !tokenValidation) {
         return <Navigate to="/login" />;
+    }
+    if(localStorage.getItem("role") !== "Human Resource") {
+        return <Navigate to={redirectManager(localStorage.getItem("role"))} />
     }
     
     else {

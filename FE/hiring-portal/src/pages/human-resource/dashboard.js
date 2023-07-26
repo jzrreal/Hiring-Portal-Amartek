@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
+import { useOutletContext } from "react-router-dom";
 
 function Dashboard() {
   const [totalJobs, setTotalJobs] = useState(0);
   const [totalApplicants, setTotalApplicants] = useState(0);
+  const token = useOutletContext()
 
-  useEffect(() => {
-
+  useEffect( () => {
+    
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/dashboards",

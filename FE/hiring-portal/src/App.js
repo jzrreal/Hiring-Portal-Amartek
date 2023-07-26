@@ -70,8 +70,9 @@ import ProfileApplicant from "./pages/applicant/profile";
 // Aplicant
 
 // Auth
-import EmailVerification from './pages/emailVerification';
-import HumanResource from './pages/HumanResource';
+import EmailVerification from './pages/EmailVerification';
+import HumanResourceProtection from './util/HumanResourceProtection';
+import TrainerProtection from './util/TrainerProtection';
 // Auth
 
 function App() {
@@ -85,7 +86,7 @@ function App() {
         <Route path='/email-verification' element={<EmailVerification />} />
 
         {/* Human Resource */}
-        <Route path='human-resource' element={<HumanResource />}>
+        <Route path='human-resource' element={<HumanResourceProtection />}>
           <Route path='dashboard' element={<DashboardHumanResource />} />
           {/* Master Data */}
           <Route path='role'>
@@ -142,7 +143,7 @@ function App() {
         {/* Human Resource */}
 
         {/* Trainer */}
-        <Route path='trainer'>
+        <Route path='trainer' element={<TrainerProtection />}>
           <Route path='dashboard' element={<DashboardTrainer />} />
           {/* Question */}
           <Route path='question'>
