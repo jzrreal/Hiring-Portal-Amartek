@@ -32,6 +32,8 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.POST, "/api/job-posts").hasAnyAuthority("human resource")
                 .antMatchers("/api/applications/*").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/applications").hasAnyAuthority("applicant")
+                .antMatchers(HttpMethod.POST, "/api/education-histories").hasAnyAuthority("applicant")
+                .antMatchers(HttpMethod.PUT, "/api/education-histories/*").hasAnyAuthority("applicant")
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
