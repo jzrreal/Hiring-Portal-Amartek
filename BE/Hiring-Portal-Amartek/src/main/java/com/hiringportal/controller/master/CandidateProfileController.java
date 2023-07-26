@@ -1,4 +1,4 @@
-package com.hiringportal.controller;
+package com.hiringportal.controller.master;
 
 import com.hiringportal.dto.CandidateProfileRequest;
 import com.hiringportal.dto.CandidateProfileResponse;

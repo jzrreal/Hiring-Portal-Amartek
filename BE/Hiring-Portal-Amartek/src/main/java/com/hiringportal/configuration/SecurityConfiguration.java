@@ -26,11 +26,12 @@ public class SecurityConfiguration {
         http
                 .authorizeHttpRequests()
                 .antMatchers("/api/test").authenticated()
-                .antMatchers("/api/profiles").authenticated()
+                .antMatchers("/api/profiles/**").authenticated()
                 .antMatchers("/api/dashboards").authenticated()
                 .antMatchers("/api/tokens").authenticated()
                 .antMatchers(HttpMethod.POST, "/api/job-posts").hasAnyAuthority("human resource")
                 .antMatchers("/api/applications/*").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/applications").hasAnyAuthority("applicant")
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
