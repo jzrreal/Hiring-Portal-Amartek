@@ -73,7 +73,7 @@ public class ApplicationController {
     /**
      * See all applicants on the job post
      */
-    @GetMapping("{jobPostId}/job-post")
+    @GetMapping("job-post/{jobPostId}")
     public ResponseEntity<Object> getAllApplicantOnSpecificJobPost(
             @PathVariable(name = "jobPostId") Integer jobPostId
     ) {
