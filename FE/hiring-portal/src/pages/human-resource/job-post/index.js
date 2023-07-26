@@ -30,12 +30,14 @@ function Index() {
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts",
     })
-      .then(function (response) {
+      .then((response) => {
+        console.log(response.data.data)
         setData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
+      console.log(data);
   }, [])
 
   // Delete Data
@@ -118,9 +120,9 @@ function Index() {
                           return (
                             <tr>
                               <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.jobLevel?.name}</td>
-                              <td className="text-capitalize">{data.jobFunction?.name}</td>
-                              <td className="text-capitalize">{data.vacancy}</td>
+                              <td className="text-capitalize">{data.job_level}</td>
+                              <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">"MISSING API RESPONSE"</td>
                               <td className="text-capitalize">{data.open_until}</td>
                               <td>
                                 <NavLink to={`/human-resource/job-post/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
