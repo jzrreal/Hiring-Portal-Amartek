@@ -29,7 +29,8 @@ function Add() {
     })
 
     // Add Data
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/job-posts",
@@ -117,14 +118,14 @@ function Add() {
                                             <div className='row'>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="open_until">Open Until</label>
-                                                        <input type="date" className="form-control" id="open_until" onChange={e => setInputData({ ...inputData, open_until: e.target.value })} />
+                                                        <label for="vacancy">Vacancy</label>
+                                                        <input type="number" className="form-control" id="vacancy" onChange={e => setInputData({ ...inputData, vacancy: e.target.value })} />
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="closed">Job Close</label>
-                                                        <input type="date" className="form-control" id="closed" onChange={e => setInputData({ ...inputData, closed: e.target.value })} />
+                                                        <label for="open_until">Open Until</label>
+                                                        <input type="date" className="form-control" id="open_until" onChange={e => setInputData({ ...inputData, open_until: e.target.value })} />
                                                     </div>
                                                 </div>
                                             </div>
