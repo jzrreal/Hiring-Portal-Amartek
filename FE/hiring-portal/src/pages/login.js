@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import redirectManager from '../service/redirectManager';
@@ -36,7 +36,7 @@ function Login() {
           data: body
           })
         .then(response => {
-            if(response.data.status == 200){
+            if(response.data.status === 200){
                 localStorage.setItem("authToken", response.data.data)
 
                 axios({
@@ -106,6 +106,9 @@ function Login() {
                             <button type="submit" className="btn btn-primary btn-block">Sign In</button>
                             <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
+                        <div>
+                            <Link to="/register">Resend email verification?</Link>
+                        </div>
                     </div>
                 </div>
             </div>
