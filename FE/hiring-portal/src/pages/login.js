@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import redirectManager from './UserRedirect';
+import redirectManager from '../service/redirectManager';
 
 function Login() {
     const navigate = useNavigate();
@@ -48,9 +48,8 @@ function Login() {
                 })
                 .then(response => {
                     localStorage.setItem("role", response.data.data.role)
+                    navigate(redirectManager(localStorage.getItem("role")))
                 })
-
-                redirectManager(localStorage.getItem("role"))
             }
         })
         .catch((error) => {
