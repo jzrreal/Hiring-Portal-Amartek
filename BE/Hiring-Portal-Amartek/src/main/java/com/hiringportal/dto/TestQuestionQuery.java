@@ -9,4 +9,5 @@ public class TestQuestionQuery {
 
     private Integer testQuestionId;
     private Integer questionId;
+    private Integer answer;
 }
