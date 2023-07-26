@@ -29,4 +29,11 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
             where ja.jobPost.id = :jobPostId
             """)
     List<JobApplication> findAllByJobPostId(Integer jobPostId);
+    @Query(value = """
+            select ja from JobApplication ja
+            join ApplicationStatus aps on ja.applicationStatus.id = aps.id
+            join CandidateProfile cp on ja.candidateProfile.id = cp.id
+            where ja.candidateProfile.id = :candidateProfileId
+            """)
+    List<JobApplication> findAllByCandidateProfileId(Integer candidateProfileId);
 }

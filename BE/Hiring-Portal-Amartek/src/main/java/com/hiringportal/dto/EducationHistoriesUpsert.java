@@ -1,43 +1,35 @@
-package com.hiringportal.entities;
+package com.hiringportal.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.hiringportal.enums.EducationLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-@Table(name = "tb_tr_education_histories")
-public class EducationHistory {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "education_history_id")
-    private Integer id;
-
-    @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "enum")
-    private EducationLevel level;
-    private String name;
-    private String major;
-
-    @Column(columnDefinition = "year")
-    private Integer yearStart;
-
-    @Column(columnDefinition = "year")
-    private Integer yearEnd;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "candidate_profile_id")
+public class EducationHistoriesUpsert {
     @JsonIgnore
-    private CandidateProfile candidateProfile;
-
+    private Integer id;
+    @NotNull
+    private EducationLevel level;
+    @NotBlank
+    private String name;
+    @NotNull
+    private String major;
+    @NotNull
+    private Integer yearStart;
+    private Integer yearEnd;
+    @JsonIgnore
+    private Integer candidateId;
 }

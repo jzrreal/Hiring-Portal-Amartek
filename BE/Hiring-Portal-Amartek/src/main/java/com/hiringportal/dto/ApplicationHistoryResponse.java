@@ -2,7 +2,6 @@ package com.hiringportal.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
-import com.hiringportal.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,14 +14,13 @@ import java.sql.Date;
 @NoArgsConstructor
 @Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class GetApplicationByJobPostResponse {
+public class ApplicationHistoryResponse {
 
     private Integer jobApplicationId;
-    private String name;
-    private String major;
-    private String schoolName;
-    private String status;
-    private Integer age;
-    private Gender gender;
+    private String title;
     private Date applyDate;
+    private String jobLevel;
+    private String jobFunction;
+    private String status;
+    private Integer jobPostId;
 }

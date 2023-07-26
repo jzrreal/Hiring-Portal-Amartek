@@ -1,25 +1,23 @@
 package com.hiringportal.service.JobApplication;
 
-import com.hiringportal.dto.CandidateProfileQuery;
-import com.hiringportal.dto.EducationHistoryQuery;
-import com.hiringportal.dto.GetApplicationByJobPostResponse;
+import com.hiringportal.dto.*;
 import com.hiringportal.entities.ApplicationStatus;
 import com.hiringportal.entities.CandidateProfile;
+import com.hiringportal.entities.EducationHistory;
 import com.hiringportal.entities.JobApplication;
+import com.hiringportal.enums.EducationLevel;
 import com.hiringportal.repository.ApplicationStatusRepository;
 import com.hiringportal.repository.CandidateProfileRepository;
 import com.hiringportal.repository.EducationHistoryRepository;
 import com.hiringportal.repository.JobApplicationRepository;
 import com.hiringportal.service.ValidationService;
+import com.hiringportal.utils.DateUtil;
+import com.hiringportal.utils.WordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -132,18 +130,70 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                     EducationHistoryQuery educationHistoryQuery = educationHistoryMap.get(jobApplication.getCandidateProfile().getId());
                     String major = educationHistoryQuery != null ? educationHistoryQuery.getMajor() : null;
                     String schoolName = educationHistoryQuery != null ? educationHistoryQuery.getName() : null;
-                    LocalDate localDate = Instant.ofEpochMilli(candidateProfile.getBirthDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+                    Integer age = DateUtil.getAge(candidateProfile.getBirthDate());
                     return GetApplicationByJobPostResponse.builder()
-                            .age(Period.between(localDate, LocalDate.now()).getYears())
+                            .age(age)
                             .major(major)
                             .gender(candidateProfile.getGender())
                             .name(candidateProfile.getFullName())
                             .schoolName(schoolName)
                             .applyDate(jobApplication.getApply_date())
-                            .id(jobApplication.getCandidateProfile().getId())
+                            .jobApplicationId(jobApplication.getId())
                             .status(applicationStatus.get(jobApplication.getApplicationStatus().getId()))
                             .build();
                 }).toList();
 
+    }
+
+    @Override
+    public DetailCandidateProfileResponse getProfileByJobApplicationId(Integer jobApplicationId) {
+        JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job Application with Id : " + jobApplicationId + " not found")
+        );
+
+        //If status submitted, when HR see applicant detail, the status change to reviewed
+        if (jobApplication.getApplicationStatus().getId() == 1) {
+            jobApplication.setApplicationStatus(applicationStatusRepository.findById(2).orElse(null));
+            jobApplicationRepository.save(jobApplication);
+        }
+
+        CandidateProfile candidateProfile = candidateProfileRepository.findById(jobApplication.getCandidateProfile().getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Applicant with Id : " + jobApplication.getCandidateProfile().getId() + " not found"));
+
+        Map<EducationLevel, EducationHistory> educationHistoryMap =
+                educationHistoryRepository.findAllByCandidateProfile_Id(candidateProfile.getId())
+                        .stream().collect(Collectors.toMap(EducationHistory::getLevel, value -> value));
+
+        return DetailCandidateProfileResponse.builder()
+                .id(candidateProfile.getId())
+                .age(DateUtil.getAge(candidateProfile.getBirthDate()))
+                .lastEducation(WordUtil.getLastEducation(educationHistoryMap))
+                .birthDate(candidateProfile.getBirthDate())
+                .phone(candidateProfile.getPhone())
+                .summary(candidateProfile.getSummary())
+                .fullName(candidateProfile.getUser().getFullName())
+                .email(candidateProfile.getUser().getEmail())
+                .gender(WordUtil.capitalizeEachLetter(candidateProfile.getUser().getGender().toString().toLowerCase()))
+                .build();
+    }
+
+    @Override
+    public List<ApplicationHistoryResponse> getAllApplicationHistory(Integer candidateProfileId) {
+        //Query all application status and transform into map with id as key
+        Map<Integer, String> applicationStatus =
+                applicationStatusRepository.findAll().stream()
+                        .collect(Collectors.toMap(ApplicationStatus::getId, ApplicationStatus::getName));
+
+        return jobApplicationRepository.findAllByCandidateProfileId(candidateProfileId).stream()
+                .map(jobApplication -> ApplicationHistoryResponse.builder()
+                        .jobFunction(jobApplication.getJobPost().getJobFunction().getName())
+                        .jobLevel(jobApplication.getJobPost().getJobLevel().getName())
+                        .title(jobApplication.getJobPost().getTitle())
+                        .jobPostId(jobApplication.getJobPost().getId())
+                        .status(applicationStatus.get(jobApplication.getApplicationStatus().getId()))
+                        .jobApplicationId(jobApplication.getId())
+                        .applyDate(jobApplication.getApply_date())
+                        .build()
+                ).toList();
     }
 }
