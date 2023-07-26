@@ -1,18 +1,15 @@
-package com.hiringportal.controller;
+package com.hiringportal.controller.transactional;
 
 import java.sql.Date;
 import java.util.List;
 
-import com.hiringportal.dto.ApplicationHistoryResponse;
-import com.hiringportal.dto.CandidateProfileResponse;
-import com.hiringportal.dto.GetApplicationByJobPostResponse;
+import com.hiringportal.dto.*;
 import com.hiringportal.entities.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import com.hiringportal.dto.CustomResponse;
 import com.hiringportal.entities.JobApplication;
 import com.hiringportal.service.JobApplication.JobApplicationService;
 import com.hiringportal.service.jobPost.JobPostService;
@@ -91,7 +88,7 @@ public class ApplicationController {
 
     @GetMapping("{jobApplicationId}/profiles")
     public ResponseEntity<Object> getCandidateProfileById(@PathVariable(name = "jobApplicationId") Integer jobApplicationId) {
-        CandidateProfileResponse response = jobApplicationService.getProfileByJobApplicationId(jobApplicationId);
+        DetailCandidateProfileResponse response = jobApplicationService.getProfileByJobApplicationId(jobApplicationId);
 
         return CustomResponse.generateResponse(
                 "Data found",

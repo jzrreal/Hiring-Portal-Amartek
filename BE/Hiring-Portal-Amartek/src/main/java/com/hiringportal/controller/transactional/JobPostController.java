@@ -1,4 +1,4 @@
-package com.hiringportal.controller;
+package com.hiringportal.controller.transactional;
 
 import java.sql.Date;
 import java.sql.Timestamp;

@@ -1,4 +1,4 @@
-package com.hiringportal.controller;
+package com.hiringportal.controller.master;
 
 import java.util.List;
 
@@ -15,47 +15,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hiringportal.dto.CustomResponse;
-import com.hiringportal.entities.JobLevel;
-import com.hiringportal.service.jobLevel.JobLevelService;
+import com.hiringportal.entities.Role;
+import com.hiringportal.service.role.RoleService;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000/")
-@RequestMapping("/api/job-levels")
-public class JobLevelController {
-    private final JobLevelService jobLevelService;
+@RequestMapping("api/roles")
+public class RoleController {
+    private final RoleService roleService;
 
+    // Get all
     @GetMapping("")
     public ResponseEntity<Object> get() {
-        List<JobLevel> jobLevels = jobLevelService.getAll();
-        return CustomResponse.generateResponse("Data found with total amount : " + jobLevels.size(), HttpStatus.OK,
-                jobLevels);
+        List<Role> roles = roleService.getAll();
+        return CustomResponse.generateResponse("Data found with total amount : " + roles.size(), HttpStatus.OK, roles);
     }
 
+    // get by id
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getId(@PathVariable(required = true) Integer id) {
-        JobLevel jobLevel = jobLevelService.getById(id);
-        return CustomResponse.generateResponse("Data Found", HttpStatus.OK, jobLevel);
+    public ResponseEntity<Object> get(@PathVariable(required = true) Integer id) {
+        Role role = roleService.getById(id);
+        return CustomResponse.generateResponse("Data found", HttpStatus.OK, role);
     }
 
+    // add role
     @PostMapping("")
-    public ResponseEntity<Object> post(@RequestBody JobLevel jobLevel) {
-        jobLevelService.save(jobLevel);
+    public ResponseEntity<Object> post(@RequestBody Role role) {
+        roleService.save(role);
         return CustomResponse.generateResponse("Success save data", HttpStatus.OK);
     }
 
+    // update
     @PutMapping("/{id}")
-    public ResponseEntity<Object> put(@PathVariable(required = true) Integer id, @RequestBody JobLevel jobLevel) {
-        jobLevel.setId(id);
-        jobLevelService.update(jobLevel);
+    public ResponseEntity<Object> put(
+            @PathVariable(required = true) Integer id,
+            @RequestBody Role role) {
+        role.setId(id);
+        roleService.update(role);
         return CustomResponse.generateResponse("Success update data", HttpStatus.OK);
     }
 
+    // delete
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> delete(@PathVariable(required = true) Integer id) {
-        jobLevelService.delete(id);
+        roleService.delete(id);
         return CustomResponse.generateResponse("Success delete data", HttpStatus.OK);
     }
 }
