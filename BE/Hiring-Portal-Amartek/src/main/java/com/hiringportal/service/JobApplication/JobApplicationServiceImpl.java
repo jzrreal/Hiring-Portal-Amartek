@@ -3,21 +3,21 @@ package com.hiringportal.service.JobApplication;
 import com.hiringportal.dto.*;
 import com.hiringportal.entities.ApplicationStatus;
 import com.hiringportal.entities.CandidateProfile;
+import com.hiringportal.entities.EducationHistory;
 import com.hiringportal.entities.JobApplication;
+import com.hiringportal.enums.EducationLevel;
 import com.hiringportal.repository.ApplicationStatusRepository;
 import com.hiringportal.repository.CandidateProfileRepository;
 import com.hiringportal.repository.EducationHistoryRepository;
 import com.hiringportal.repository.JobApplicationRepository;
 import com.hiringportal.service.ValidationService;
+import com.hiringportal.utils.DateUtil;
+import com.hiringportal.utils.WordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -130,9 +130,9 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                     EducationHistoryQuery educationHistoryQuery = educationHistoryMap.get(jobApplication.getCandidateProfile().getId());
                     String major = educationHistoryQuery != null ? educationHistoryQuery.getMajor() : null;
                     String schoolName = educationHistoryQuery != null ? educationHistoryQuery.getName() : null;
-                    LocalDate localDate = Instant.ofEpochMilli(candidateProfile.getBirthDate().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+                    Integer age = DateUtil.getAge(candidateProfile.getBirthDate());
                     return GetApplicationByJobPostResponse.builder()
-                            .age(Period.between(localDate, LocalDate.now()).getYears())
+                            .age(age)
                             .major(major)
                             .gender(candidateProfile.getGender())
                             .name(candidateProfile.getFullName())
@@ -146,7 +146,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
     }
 
     @Override
-    public CandidateProfileResponse getProfileByJobApplicationId(Integer jobApplicationId) {
+    public DetailCandidateProfileResponse getProfileByJobApplicationId(Integer jobApplicationId) {
         JobApplication jobApplication = jobApplicationRepository.findById(jobApplicationId).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Job Application with Id : " + jobApplicationId + " not found")
         );
@@ -160,14 +160,20 @@ public class JobApplicationServiceImpl implements JobApplicationService {
         CandidateProfile candidateProfile = candidateProfileRepository.findById(jobApplication.getCandidateProfile().getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Applicant with Id : " + jobApplication.getCandidateProfile().getId() + " not found"));
 
-        return CandidateProfileResponse.builder()
+        Map<EducationLevel, EducationHistory> educationHistoryMap =
+                educationHistoryRepository.findAllByCandidateProfile_Id(candidateProfile.getId())
+                        .stream().collect(Collectors.toMap(EducationHistory::getLevel, value -> value));
+
+        return DetailCandidateProfileResponse.builder()
                 .id(candidateProfile.getId())
+                .age(DateUtil.getAge(candidateProfile.getBirthDate()))
+                .lastEducation(WordUtil.getLastEducation(educationHistoryMap))
                 .birthDate(candidateProfile.getBirthDate())
                 .phone(candidateProfile.getPhone())
                 .summary(candidateProfile.getSummary())
                 .fullName(candidateProfile.getUser().getFullName())
                 .email(candidateProfile.getUser().getEmail())
-                .gender(candidateProfile.getUser().getGender())
+                .gender(WordUtil.capitalizeEachLetter(candidateProfile.getUser().getGender().toString().toLowerCase()))
                 .build();
     }
 
