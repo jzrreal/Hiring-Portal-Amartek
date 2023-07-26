@@ -1,7 +1,5 @@
 function redirectManager(role) {
 
-    console.log(role)
-
     if (role === "Human Resource") {
         return "/human-resource/dashboard"
     } else if (role === "Trainer") {
