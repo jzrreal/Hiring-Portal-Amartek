@@ -18,5 +18,6 @@ public class QuestionTestResponse {
     private Integer testQuestionId;
     private Integer questionId;
     private String question;
+    private Integer answer;
     private List<ChoiceTestResponse> choices;
 }

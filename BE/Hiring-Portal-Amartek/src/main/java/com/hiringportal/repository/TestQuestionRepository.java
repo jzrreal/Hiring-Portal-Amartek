@@ -15,7 +15,7 @@ public interface TestQuestionRepository extends JpaRepository<TestQuestion, Inte
                 """)
     void deleteAllTesQuestionByTestId(Integer testId);
     @Query(value = """
-            select new com.hiringportal.dto.TestQuestionQuery(tq.testQuestionId, q.questionId)
+            select new com.hiringportal.dto.TestQuestionQuery(tq.testQuestionId, q.questionId, tq.answer)
             from TestQuestion tq
             join Questions q on tq.questions.questionId = q.questionId
             where tq.test.testId = :testId

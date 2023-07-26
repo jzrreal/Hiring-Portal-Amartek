@@ -166,6 +166,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
                             .testQuestionId(testQuestion.getTestQuestionId())
                             .questionId(testQuestion.getQuestionId())
                             .question(questionMap.get(testQuestion.getQuestionId()))
+                            .answer(testQuestion.getAnswer())
                             .build();
                 }
         ).toList();
