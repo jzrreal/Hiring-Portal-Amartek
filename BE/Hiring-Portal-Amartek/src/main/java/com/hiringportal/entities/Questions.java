@@ -36,7 +36,7 @@ public class Questions {
     @Column(name = "created_at", nullable = false)
     private Timestamp createdAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_level_id", referencedColumnName = "question_level_id")
     private QuestionLevel questionLevel;
 

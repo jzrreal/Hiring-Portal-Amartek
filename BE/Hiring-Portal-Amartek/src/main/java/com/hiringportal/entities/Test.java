@@ -33,6 +33,8 @@ public class Test {
 
     @Column(name = "result")
     private Integer result;
+    @Column(name = "end_test")
+    private Date endTest;
 
     @NotNull
     @Column(name = "test_token")
