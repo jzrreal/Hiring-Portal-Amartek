@@ -40,7 +40,7 @@ public class ProfileController {
         );
     }
 
-    @GetMapping("detail")
+    @GetMapping("applicants")
     public ResponseEntity<Object> getDetailProfileByToken(Authentication authentication){
         User user = (User) authentication.getPrincipal();
 

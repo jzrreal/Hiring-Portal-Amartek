@@ -1,4 +1,4 @@
-package com.hiringportal.controller.transactional;
+package com.hiringportal.controller.master;
 
 import com.hiringportal.dto.CustomResponse;
 import com.hiringportal.entities.ApplicationStatus;

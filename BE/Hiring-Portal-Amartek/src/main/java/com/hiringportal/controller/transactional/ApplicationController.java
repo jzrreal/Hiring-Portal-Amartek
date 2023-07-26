@@ -86,7 +86,7 @@ public class ApplicationController {
         );
     }
 
-    @GetMapping("{jobApplicationId}/profiles")
+    @GetMapping("{jobApplicationId}/applicants")
     public ResponseEntity<Object> getCandidateProfileById(@PathVariable(name = "jobApplicationId") Integer jobApplicationId) {
         DetailCandidateProfileResponse response = jobApplicationService.getProfileByJobApplicationId(jobApplicationId);
 
