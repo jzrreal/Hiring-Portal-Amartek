@@ -1,11 +1,44 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import dateFormat from 'dateformat';
 
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
 
 function Profile() {
+    const [dataProfile, setDataProfile] = useState({});
+    const [dataEducation, setDataEducation] = useState([{}]);
+
+    // Get Profile
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/profiles/applicants",
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("authToken")
+            }
+        })
+            .then(response => {
+                setDataProfile(response.data.data)
+            })
+    }, [])
+
+    // Get Education History
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/education-histories/applicants/" + 1,
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("authToken")
+            }
+        })
+            .then(response => {
+                setDataEducation(response.data.data)
+            })
+    }, [])
+
     return (
         <div className="wrapper">
             {/* Navbar */}
@@ -53,9 +86,9 @@ function Profile() {
                                             />
                                         </div>
                                         <h3 class="profile-username text-center">
-                                            Alexander Pierce
+                                            {dataProfile.full_name}
                                         </h3>
-                                        <p class="text-muted text-center">Human Resource</p>
+                                        <p class="text-muted text-center">{dataProfile.email}</p>
                                     </div>
                                 </div>
                                 <div class="card card-primary">
@@ -66,34 +99,35 @@ function Profile() {
                                         <span className="text-muted">
                                             <i class="fas fa-venus mr-1"></i> Gender
                                         </span>
-                                        <p class="font-weight-bold"> Male </p>
+                                        <p class="font-weight-bold"> {dataProfile.gender} </p>
+                                        <hr />
+                                        <span className="text-muted">
+                                            <i class="fas fa-venus mr-1"></i> Birth Date
+                                        </span>
+                                        <p class="font-weight-bold"> {dateFormat(dataProfile.birth_date, "dddd, mmmm dS yyyy")} </p>
                                         <hr />
                                         <span className="text-muted">
                                             <i class="fas fa-user mr-1"></i> Age
                                         </span>
-                                        <p class="font-weight-bold">21 Years</p>
+                                        <p class="font-weight-bold">{dataProfile.age} Years</p>
                                         <hr />
                                         <span className="text-muted">
                                             <i class="fas fa-book mr-1"></i> Last Education
                                         </span>
                                         <p class="font-weight-bold m-0">
-                                            S1 Information Technology
+                                            {dataProfile.last_education}
                                         </p>
-                                        <p class="font-weight-bold">Institute Technology Bandung</p>
                                         <hr />
                                         <span className="text-muted">
                                             <i class="fas fa-phone mr-1"></i> Phone Number
                                         </span>
-                                        <p class="font-weight-bold">+62 895 1439 1356</p>
+                                        <p class="font-weight-bold">{dataProfile.phone}</p>
                                         <hr />
                                         <span className="text-muted">
                                             <i class="fas fa-list mr-1"></i> Summary
                                         </span>
                                         <p class="font-weight-bold">
-                                            Lulusan S1 Teknik Informatika Institute Teknologi Bandung.
-                                            Memiliki pengalaman magang di IT Konsultan selama satu
-                                            tahun. Saya adalah pribadi yang bertanggung jawab serta
-                                            memiliki keinginan untuk berkembang
+                                            {dataProfile.summary}
                                         </p>
                                     </div>
                                 </div>
@@ -149,46 +183,30 @@ function Profile() {
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="education-histories">
                                                 <ul class="products-list product-list-in-card px-2">
-                                                    <li class="item py-3">
-                                                        <div class="product-img">
-                                                            <img
-                                                                src="/assets/dist/img/default-150x150.png"
-                                                                alt="Product Image"
-                                                                class="img-size-50"
-                                                            />
-                                                        </div>
-                                                        <div class="product-info">
-                                                            <h6 class="product-title m-0">
-                                                                Institute Technology Bandung
-                                                                <span class="badge badge-primary px-2 py-2 float-right">
-                                                                    2018 - 2022
-                                                                </span>
-                                                            </h6>
-                                                            <span class="text-muted">S1</span>
-                                                            <span class="text-muted mx-2">-</span>
-                                                            <span class="text-muted">Informatic Technology</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="item py-3">
-                                                        <div class="product-img">
-                                                            <img
-                                                                src="/assets/dist/img/default-150x150.png"
-                                                                alt="Product Image"
-                                                                class="img-size-50"
-                                                            />
-                                                        </div>
-                                                        <div class="product-info">
-                                                            <h6 class="product-title m-0">
-                                                                SMA Negeri 1 Bandung
-                                                                <span class="badge badge-primary px-2 py-2 float-right">
-                                                                    2015 - 2018
-                                                                </span>
-                                                            </h6>
-                                                            <span class="text-muted">IPA</span>
-                                                            <span class="text-muted mx-2">-</span>
-                                                            <span class="text-muted">IPA</span>
-                                                        </div>
-                                                    </li>
+                                                    {dataEducation.map((data) => {
+                                                        return (
+                                                            <li class="item py-3">
+                                                                <div class="product-img">
+                                                                    <img
+                                                                        src="/assets/dist/img/default-150x150.png"
+                                                                        alt="Product Image"
+                                                                        class="img-size-50"
+                                                                    />
+                                                                </div>
+                                                                <div class="product-info">
+                                                                    <h6 class="product-title m-0">
+                                                                        {data.name}
+                                                                        <span class="badge badge-primary px-2 py-2 float-right">
+                                                                           {data.yearStart} - {data.yearEnd}
+                                                                        </span>
+                                                                    </h6>
+                                                                    <span class="text-muted">{data.level}</span>
+                                                                    <span class="text-muted mx-2">-</span>
+                                                                    <span class="text-muted">{data.major}</span>
+                                                                </div>
+                                                            </li>
+                                                        );
+                                                    })}
                                                 </ul>
                                             </div>
                                             <div class="tab-pane" id="skills">

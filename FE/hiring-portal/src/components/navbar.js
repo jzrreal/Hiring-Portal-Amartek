@@ -14,16 +14,16 @@ function Navbar() {
         'Authorization': 'Bearer ' + localStorage.getItem("authToken")
       }
     })
-    .then(response => {
-      if(response.data.status == 200){
-        localStorage.removeItem("authToken")
-        localStorage.removeItem("role")
-        window.location.replace("http://localhost:3000/login")
-      }
-    })
-    .catch(err => {
-      console.log(err.response.data.message)
-    })
+      .then(response => {
+        if (response.data.status == 200) {
+          localStorage.removeItem("authToken")
+          localStorage.removeItem("role")
+          window.location.replace("http://localhost:3000/login")
+        }
+      })
+      .catch(err => {
+        console.log(err.response.data.message)
+      })
   }
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">

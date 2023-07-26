@@ -9,23 +9,23 @@ function Dashboard() {
   const [totalJobs, setTotalJobs] = useState(0);
   const [totalApplicants, setTotalApplicants] = useState(0);
 
-  useEffect( () => {
-    
+  useEffect(() => {
+
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/dashboards",
       headers: {
-        Authorization : "Bearer " + localStorage.getItem("authToken")
+        Authorization: "Bearer " + localStorage.getItem("authToken")
       }
     })
-    .then(response => {
-      setTotalJobs(response.data.data.total_job_post)
-      setTotalApplicants(response.data.data.applicant_responses.length)
-    })
-    .catch(err => {
-      setTotalJobs(0);
-      setTotalApplicants(0);
-    })
+      .then(response => {
+        setTotalJobs(response.data.data.total_job_post)
+        setTotalApplicants(response.data.data.applicant_responses.length)
+      })
+      .catch(err => {
+        setTotalJobs(0);
+        setTotalApplicants(0);
+      })
   }, []);
 
   return (
@@ -62,7 +62,6 @@ function Dashboard() {
                   <span className="info-box-text">Total Jobs</span>
                   <span className="info-box-number">
                     {totalJobs}
-                    <small>%</small>
                   </span>
                 </div>
               </div>

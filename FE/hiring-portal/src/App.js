@@ -5,7 +5,6 @@ import NotFound from "./pages/notFound";
 
 // Human Resource
 import DashboardHumanResource from "./pages/human-resource/dashboard";
-import ProfileHumanResource from "./pages/human-resource/profile";
 // Role
 import IndexRole from './pages/human-resource/role';
 import AddRole from './pages/human-resource/role/add';
@@ -65,6 +64,11 @@ import EditQuestion from './pages/trainer/question/edit';
 // Question
 // Trainer
 
+// Aplicant
+import DashboardApplicant from "./pages/applicant/dashboard";
+import ProfileApplicant from "./pages/applicant/profile";
+// Aplicant
+
 // Auth
 import EmailVerification from './pages/emailVerification';
 import HumanResource from './pages/HumanResource';
@@ -83,7 +87,6 @@ function App() {
         {/* Human Resource */}
         <Route path='human-resource' element={<HumanResource />}>
           <Route path='dashboard' element={<DashboardHumanResource />} />
-          <Route path='profile' element={<ProfileHumanResource />} />
           {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
@@ -150,8 +153,15 @@ function App() {
           {/* Question */}
         </Route>
         {/* Trainer */}
+
+        {/* Aplicant */}
+        <Route path='applicant' element={<HumanResource />}>
+          <Route path='dashboard' element={<DashboardApplicant />} />
+          <Route path='profile' element={<ProfileApplicant />} />
+        </Route>
+        {/* Aplicant */}
       </Routes>
-    </Router>
+    </Router >
   );
 }
 
