@@ -124,7 +124,7 @@ function Sidebar() {
             {/* Master Data */}
 
             {/* Job */}
-            <li class="nav-header mt-2">JOB</li>
+            <li className="nav-header mt-2">JOB</li>
             {/* Job Post */}
             <li className="nav-item">
               <NavLink to="/human-resource/job-post" className="nav-link">
@@ -144,7 +144,7 @@ function Sidebar() {
             {/* Job */}
 
             {/* Test */}
-            <li class="nav-header mt-2">TEST</li>
+            <li className="nav-header mt-2">TEST</li>
             {/* Question */}
             <li className="nav-item">
               <NavLink to="/trainer/question" className="nav-link">
