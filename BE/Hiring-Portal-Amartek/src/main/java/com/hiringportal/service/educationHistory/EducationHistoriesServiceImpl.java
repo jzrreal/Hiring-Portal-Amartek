@@ -45,6 +45,10 @@ public class EducationHistoriesServiceImpl implements EducationHistoriesService 
 
     @Override
     public Boolean delete(Integer id) {
+        educationHistoryRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Education Histories With ID  " + id + " Not Found")
+                );
         educationHistoryRepository.deleteById(id);
         return educationHistoryRepository.findById(id).isEmpty();
     }
