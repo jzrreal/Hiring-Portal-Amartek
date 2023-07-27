@@ -106,7 +106,7 @@ function Login() {
                             <button type="submit" className="btn btn-primary btn-block">Sign In</button>
                             <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
-                        <div>
+                        <div className="text-center mt-3">
                             <Link to="/register">Resend email verification?</Link>
                         </div>
                     </div>

@@ -66,6 +66,13 @@ import EditQuestion from './pages/trainer/question/edit';
 // Aplicant
 import DashboardApplicant from "./pages/applicant/dashboard";
 import ProfileApplicant from "./pages/applicant/profile";
+// Job List
+import IndexJobList from "./pages/applicant/job-list";
+import DetailJobList from "./pages/applicant/job-list/detail";
+// Job List
+// History Applicant
+import IndexHistoryApplicant from "./pages/applicant/history-applicant";
+// History Applicant
 // Aplicant
 
 // Auth
@@ -158,6 +165,17 @@ function App() {
         <Route path='applicant' element={<ApplicantProtection />}>
           <Route path='dashboard' element={<DashboardApplicant />} />
           <Route path='profile' element={<ProfileApplicant />} />
+           {/* Job List */}
+           <Route path='job-list'>
+            <Route index element={<IndexJobList />} />
+            <Route path='detail/:id' element={<DetailJobList />} />
+          </Route>
+          {/* Job List */}
+           {/* History Applicant */}
+           <Route path='history-applicant'>
+            <Route index element={<IndexHistoryApplicant />} />
+          </Route>
+          {/* History Applicant */}
         </Route>
         {/* Aplicant */}
       </Routes>

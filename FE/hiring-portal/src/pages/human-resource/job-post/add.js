@@ -127,7 +127,7 @@ function Add() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Title Job</label>
-                                                        <input type="text" className="form-control" id="title" onChange={e => setInputData({ ...inputData, title: e.target.value })} />
+                                                        <input type="text" className="form-control" id="title" onChange={e => setInputData({ ...inputData, title: e.target.value })} placeholder="Set Title Job"/>
                                                     </div>
                                                 </div>
                                                 <div className='col'>
@@ -149,17 +149,17 @@ function Add() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="description">Desctiption Job</label>
-                                                <textarea className="form-control" id="description" onChange={e => setInputData({ ...inputData, description: e.target.value })} placeholder="Description Job Name" />
+                                                <textarea className="form-control" id="description" onChange={e => setInputData({ ...inputData, description: e.target.value })} placeholder="Set Description Job" />
                                             </div>
                                             <div className="form-group">
                                                 <label for="requirement">Requirement Job</label>
-                                                <textarea className="form-control" id="requirement" onChange={e => setInputData({ ...inputData, requirements: e.target.value })} placeholder="Requirement Job Name" />
+                                                <textarea className="form-control" id="requirement" onChange={e => setInputData({ ...inputData, requirements: e.target.value })} placeholder="Set Requirement Job" />
                                             </div>
                                             <div className='row'>
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="vacancy">Vacancy</label>
-                                                        <input type="number" className="form-control" id="vacancy" onChange={e => setInputData({ ...inputData, vacancy: e.target.value })} />
+                                                        <input type="number" className="form-control" id="vacancy" onChange={e => setInputData({ ...inputData, vacancy: e.target.value })} placeholder="Set Vacancy"/>
                                                     </div>
                                                 </div>
                                                 <div className='col'>
