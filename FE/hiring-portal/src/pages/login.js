@@ -34,7 +34,7 @@ function Login() {
           method: "POST",
           url: process.env.REACT_APP_API_URL + "/api/auth/login",
           data: body
-          })
+        })
         .then(response => {
             if(response.data.status === 200){
                 localStorage.setItem("authToken", response.data.data)
@@ -48,7 +48,7 @@ function Login() {
                 })
                 .then(response => {
                     localStorage.setItem("role", response.data.data.role)
-                    navigate(redirectManager(localStorage.getItem("role")))
+                    navigate(redirectManager(localStorage.getItem("role")), {replace: true})
                 })
             }
         })
@@ -107,7 +107,7 @@ function Login() {
                             <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
                         <div>
-                            <Link to="/register">Resend email verification?</Link>
+                            <Link to="/email-verification">Resend email verification?</Link>
                         </div>
                     </div>
                 </div>
