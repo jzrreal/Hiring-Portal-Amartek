@@ -1,21 +1,26 @@
 package com.hiringportal.service.onlineTest;
 
 import com.hiringportal.dto.ChoiceTestResponse;
+import com.hiringportal.dto.QuestionAnswerQuery;
 import com.hiringportal.dto.QuestionTestResponse;
 import com.hiringportal.dto.TestQuestionQuery;
 import com.hiringportal.entities.*;
 import com.hiringportal.repository.*;
 import com.hiringportal.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OnlineTestServiceImpl implements OnlineTestService {
@@ -24,6 +29,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
     private final ChoiceRepository choiceRepository;
     private final TestQuestionRepository testQuestionRepository;
     private final QuestionRepository questionRepository;
+    private final QuestionLevelRepository questionLevelRepository;
     private final CandidateProfileRepository candidateProfileRepository;
     private final JobApplicationRepository jobApplicationRepository;
     private final TestParameterRepository testParameterRepository;
@@ -118,6 +124,10 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         Test test = testRepository.findTestByTestToken(token)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test not found"));
 
+        if (test.getResult() != null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
+        }
+
         if (!new Date(System.currentTimeMillis()).before(test.getEndAt()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
 
@@ -170,5 +180,78 @@ public class OnlineTestServiceImpl implements OnlineTestService {
                             .build();
                 }
         ).toList();
+    }
+
+    @Override
+    public LocalDateTime getEndTestByToken(String token) {
+        Test test = testRepository.findTestByTestToken(token).orElseThrow();
+        return test.getEndTest()
+                .toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+    }
+
+    @Override
+    @Async
+    public void saveEachOnlineTestAnswer(Integer testQuestionId, Integer questionId, Integer choiceId) {
+        TestQuestion testQuestion = testQuestionRepository
+                .existsByTestQuestionIdAndQuestionId(testQuestionId, questionId)
+                .orElse(null);
+
+        if (testQuestion != null) {
+            testQuestion.setAnswer(choiceId);
+            testQuestionRepository.save(testQuestion);
+        }
+    }
+
+    @Override
+    public void saveAllAnswerAndGetResult(String token) {
+        Test test = testRepository.findTestByTestToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test not found"));
+
+        if (test.getResult() != null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
+        }
+
+        Integer result = 0; //Initiate result total
+
+        //Get all question level and mapping to map with key its id and value its point
+        Map<Integer, Integer> questionLevelMap = questionLevelRepository.findAll()
+                .stream().collect(Collectors.toMap(QuestionLevel::getQuestionLevelId, QuestionLevel::getPoint));
+
+        //Get list that contains testQuestionId, questionId, and answer (choiceId)
+        List<TestQuestionQuery> testQuestions =
+                testQuestionRepository.getAllTestQuestionByTestId(test.getTestId());
+
+        //Transform data into Map<Integer, Integer> with key questionId and value its answer
+        Map<Integer, Integer> questionAnswerMap = testQuestions.stream()
+                .collect(Collectors.toMap(TestQuestionQuery::getQuestionId, TestQuestionQuery::getAnswer));
+
+        //Make list integer that contains all questionId
+        List<Integer> idQuestions = testQuestions
+                .stream().map(TestQuestionQuery::getQuestionId).toList();
+
+        //Make dto for store questionId, questionLevelId, and choiceId that the true answer base on list questionId
+        List<QuestionAnswerQuery> questionAnswerQueries =
+                questionRepository.findAllQuestionIdQuestionLevelIdCorrectChoiceIdInListQuestionId(idQuestions);
+
+        //forEach dto and compare with questionAnswerMap, and update the result variable until get final result
+        //Remember there must be null answer, when applicant not answer the following question
+        for (QuestionAnswerQuery questionAnswerQuery : questionAnswerQueries) {
+            //Compare correct answer from db with applicant answer
+            if (questionAnswerQuery.getChoiceId().equals(questionAnswerMap.get(questionAnswerQuery.getQuestionId()))){
+                result += questionLevelMap.get(questionAnswerQuery.getQuestionLevelId());
+            }
+        }
+        log.info("Result applicants with token {} is : {}", token, result);
+
+        //Update result in table test
+        test.setResult(result);
+        testRepository.save(test);
+
+        final float finalResult = (float) (result/24) * 100;
+        //Send email to applicant with custom message, in this case i make condition if result less than 15
+        //Email message contains rejection, and vice versa. Also send the final result
+
     }
 }
