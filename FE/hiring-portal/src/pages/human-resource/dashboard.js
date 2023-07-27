@@ -9,6 +9,8 @@ import { useOutletContext } from "react-router-dom";
 function Dashboard() {
   const [totalJobs, setTotalJobs] = useState(0);
   const [totalApplicants, setTotalApplicants] = useState(0);
+  const [newApplicants, setNewApplicants] = useState([{}]);
+
   const token = useOutletContext()
 
   useEffect( () => {
@@ -22,6 +24,7 @@ function Dashboard() {
     })
       .then(response => {
         setTotalJobs(response.data.data.total_job_post)
+      setNewApplicants(response.data.data.applicant_responses)
         setTotalApplicants(response.data.data.applicant_responses.length)
       })
       .catch(err => {
@@ -29,6 +32,17 @@ function Dashboard() {
         setTotalApplicants(0);
       })
   }, []);
+
+  const applicantList = (applicant) => {
+    return (
+      <tr>
+        <td><a href="pages/examples/invoice.html">{applicant.applicant_id}</a></td>
+        <td>{applicant.full_name}</td>
+        <td>{applicant.email}</td>
+        <td>{applicant.phone_number}</td>
+      </tr>
+    )
+  }
 
   return (
     <div className="wrapper">
@@ -121,36 +135,13 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
+                        {newApplicants.map(applicantList)}
+                        {/* <tr>
                           <td><a href="pages/examples/invoice.html">123</a></td>
                           <td>John Doe</td>
                           <td>john.doe@gmail.com</td>
                           <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">124</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">125</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">126</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">127</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>
