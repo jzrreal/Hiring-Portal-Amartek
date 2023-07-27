@@ -32,5 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-**/src/main/resources/application.properties
-# **/test/resources/application-test.properties
+**/main/resources/application.properties
+**/test/resources/application-test.properties
+**/test/resources/application-test.properties
+/src/main/java/com/hiringportal/dto/WebResponse.java

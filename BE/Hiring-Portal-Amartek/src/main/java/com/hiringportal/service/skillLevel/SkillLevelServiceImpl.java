@@ -40,12 +40,20 @@ public class SkillLevelServiceImpl implements SkillLevelService{
     public SkillLevel update(SkillLevel entity) {
         validationService.validate(entity);
 
-        return skillLevelRepository.save(entity);
+        SkillLevel skillLevel =skillLevelRepository.findById(entity.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Skill Level with Id " + entity.getId() + " not found"));
+
+        skillLevel.setName(entity.getName());
+
+        return skillLevelRepository.save(skillLevel);
     }
 
     @Override
     public Boolean delete(Integer id) {
+        skillLevelRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Skill Level with Id " + id + " not found"));
+
         skillLevelRepository.deleteById(id);
-        return skillLevelRepository.findById(id).isEmpty();
+        return true;
     }
 }

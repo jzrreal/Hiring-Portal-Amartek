@@ -1,7 +1,9 @@
 package com.hiringportal.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.hiringportal.enums.EducationLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,16 +23,21 @@ public class EducationHistory {
     @Column(name = "education_history_id")
     private Integer id;
 
-    private String level;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum")
+    private EducationLevel level;
     private String name;
     private String major;
-    @Column(columnDefinition = "year")
-    private Date yearStart;
-    @Column(columnDefinition = "year")
 
-    private Date yearEnd;
+    @Column(columnDefinition = "year")
+    private Integer yearStart;
 
-    @ManyToOne
+    @Column(columnDefinition = "year")
+    private Integer yearEnd;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "candidate_profile_id")
+    @JsonIgnore
     private CandidateProfile candidateProfile;
+
 }
