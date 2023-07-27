@@ -32,7 +32,10 @@ export default function HumanResourceProtection () {
         return <Navigate to="/login" />;
     }
     if(localStorage.getItem("role") !== "Human Resource") {
-        return <Navigate to={redirectManager(localStorage.getItem("role"))} />
+        return <Navigate to={redirectManager(localStorage.getItem("role"))} replace="true" />
+    }
+    if(!localStorage.getItem("role")) {
+        return <Navigate to="/login" />
     }
     
     else {
