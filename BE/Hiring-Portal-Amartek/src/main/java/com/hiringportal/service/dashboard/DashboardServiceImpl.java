@@ -1,9 +1,7 @@
 package com.hiringportal.service.dashboard;
 
-import com.hiringportal.dto.ApplicantResponse;
-import com.hiringportal.dto.DashboardIndexApplicantResponse;
-import com.hiringportal.dto.DashboardIndexResponse;
-import com.hiringportal.dto.JobApplicationResponse;
+import com.hiringportal.dto.*;
+import com.hiringportal.entities.JobPost;
 import com.hiringportal.repository.CandidateProfileRepository;
 import com.hiringportal.repository.JobApplicationRepository;
 import com.hiringportal.repository.JobPostRepository;
@@ -30,7 +28,7 @@ public class DashboardServiceImpl implements DashboardService {
         return DashboardIndexResponse.builder()
                 .applicantResponses(applicantResponses)
                 .totalApplicants(applicantResponses.size())
-                .totalJobPost(jobPostRepository.findAll().size())
+                .totalJobPost(jobPostRepository.getTotalJobPost())
                 .build();
     }
 
@@ -38,11 +36,30 @@ public class DashboardServiceImpl implements DashboardService {
     public DashboardIndexApplicantResponse getDashboardIndexDataApplicant(Integer candidateProfileId) {
         List<JobApplicationResponse> jobApplicationResponses =
                 jobApplicationRepository.findFirstFiveJobApplicationByCandidateProfileId(
-                        candidateProfileId, PageRequest.of(0, 1, Sort.Direction.DESC, "id"));
+                        candidateProfileId, PageRequest.of(0, 5, Sort.Direction.DESC, "id"));
+
+        List<JobPost> jobPosts =
+                jobPostRepository.findAllFiveNewestJobPost(
+                        PageRequest.of(0, 5, Sort.Direction.DESC, "id")
+                );
+
+        List<JobPostResponse> jobPostResponses = jobPosts.stream().map(
+                jobPost -> JobPostResponse.builder()
+                        .id(jobPost.getId())
+                        .title(jobPost.getTitle())
+                        .jobLevel(jobPost.getJobLevel().getName())
+                        .jobFunction(jobPost.getJobFunction().getName())
+                        .postAt(jobPost.getPost_at())
+                        .closed(jobPost.getClosed())
+                        .openUntil(jobPost.getOpen_until())
+                        .build()
+        ).toList();
 
         return DashboardIndexApplicantResponse.builder()
                 .totalApplyJob(jobApplicationResponses.size())
                 .jobApplicationResponses(jobApplicationResponses)
+                .totalJobPost(jobPostRepository.getTotalJobPost())
+                .jobPostResponses(jobPostResponses)
                 .build();
     }
 }
