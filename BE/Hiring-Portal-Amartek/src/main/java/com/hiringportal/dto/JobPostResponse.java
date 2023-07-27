@@ -22,4 +22,5 @@ public class JobPostResponse {
     private Date postAt;
     private Boolean closed;
     private Date openUntil;
+    private Integer vacancy;
 }
