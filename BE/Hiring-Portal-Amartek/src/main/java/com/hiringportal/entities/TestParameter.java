@@ -23,5 +23,6 @@ public class TestParameter {
     private Integer id;
     private Integer expirationHour;
     private Integer testTimeMinute;
+    private Float threshold;
 
 }

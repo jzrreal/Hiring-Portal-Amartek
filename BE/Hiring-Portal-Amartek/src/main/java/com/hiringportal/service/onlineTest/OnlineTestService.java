@@ -13,5 +13,8 @@ public interface OnlineTestService {
     List<QuestionTestResponse> getAllQuestionTestByToken(String token);
     void saveEachOnlineTestAnswer(Integer testQuestionId, Integer questionId, Integer choiceId);
     LocalDateTime getEndTestByToken(String token);
+    @Transactional
     void saveAllAnswerAndGetResult(String token);
+    @Transactional
+    void schedulingForExpiredTestToGetResult();
 }

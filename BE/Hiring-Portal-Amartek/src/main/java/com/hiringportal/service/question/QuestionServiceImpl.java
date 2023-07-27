@@ -8,6 +8,7 @@ import com.hiringportal.repository.ChoiceRepository;
 import com.hiringportal.repository.QuestionLevelRepository;
 import com.hiringportal.repository.QuestionRepository;
 import com.hiringportal.service.ValidationService;
+import com.hiringportal.utils.WordUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class QuestionServiceImpl implements QuestionService {
                         .createdAt(questions.getCreatedAt().toLocalDateTime())
                         .id(questions.getQuestionId())
                         .question(questions.getQuestion())
-                        .segment(questions.getSegment())
+                        .segment(WordUtil.capitalizeEachLetter(questions.getSegment().toString().replace("_", " ").toLowerCase()))
                         .questionLevel(questions.getQuestionLevel().getName())
                         .build())
                 .collect(Collectors.toList());
