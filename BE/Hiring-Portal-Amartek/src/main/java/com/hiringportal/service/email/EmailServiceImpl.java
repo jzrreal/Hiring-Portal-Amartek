@@ -74,12 +74,40 @@ public class EmailServiceImpl implements EmailService{
         }
     }
 
+    @Override
+    @Async
+    public void sendEmailResultTest(String name, String to, String messageResult, String additionalMessage) {
+        try {
+            Context context = new Context();
+            context.setVariables(Map.of(
+                    "message", generateMessageForTestResult(name, messageResult),
+                    "additionalMessage", additionalMessage
+            ));
+            String text = templateEngine.process("emailtemplateresult", context);
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setPriority(1);
+            helper.setSubject("Online Test Result");
+            helper.setFrom(FROM_EMAIL);
+            helper.setTo(to);
+            helper.setText(text, true);
+            javaMailSender.send(message);
+        }catch (Exception exception){
+            System.out.println(exception.getMessage());
+            throw new RuntimeException(exception.getMessage());
+        }
+    }
+
     private String generateMessageEmailVerification(String name){
         return "Hello " + name + ", your account has been created";
     }
 
     private String generateMessageOnlineTest(String name, Date before){
         return "Hello " + name + ", please finish test before " + before;
+    }
+
+    private String generateMessageForTestResult(String name, String message){
+        return "Hi " + name + ". " + message;
     }
 
     // private String generateVerifyEmailUrl(String token){

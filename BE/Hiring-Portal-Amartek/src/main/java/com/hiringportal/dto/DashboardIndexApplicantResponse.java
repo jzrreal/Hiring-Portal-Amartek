@@ -17,6 +17,8 @@ import java.util.List;
 public class DashboardIndexApplicantResponse {
 
     private Integer totalApplyJob;
+    private Integer totalJobPost;
+    private List<JobPostResponse> jobPostResponses;
     private List<JobApplicationResponse> jobApplicationResponses;
 
 }

@@ -19,7 +19,7 @@ public class QuestionResponse {
 
     private Integer id;
     private String question;
-    private Segment segment;
+    private String segment;
     private LocalDateTime createdAt;
     private String questionLevel;
 }
