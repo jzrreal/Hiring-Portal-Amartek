@@ -122,7 +122,7 @@ function Index() {
                               <td className="text-capitalize">{data.job_level}</td>
                               <td className="text-capitalize">{data.job_function}</td>
                               <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">{data.closed ? data.closed : "-"}</td>
+                              <td className="text-capitalize">{data.closed ? dateFormat(data.closed, "dd mmmm yyyy") : "-"}</td>
                               <td>
                                 <NavLink to={`/human-resource/job-post/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
                                 <NavLink to={`/human-resource/job-post/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>

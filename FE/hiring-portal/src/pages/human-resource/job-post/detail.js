@@ -142,7 +142,7 @@ function Index() {
                                 }
                               </td>
                               <td>
-                                <NavLink to={`/human-resource/job-post/detail/${data.job_application_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
+                                <NavLink to={`/human-resource/job-post/detail/applicant/${data.job_application_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
                               </td>
                             </tr>
                           );

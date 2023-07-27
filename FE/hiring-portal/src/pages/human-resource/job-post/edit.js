@@ -1,6 +1,7 @@
 import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import dateFormat from 'dateformat';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -98,13 +99,13 @@ function Edit() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="id">ID Job Post</label>
-                                                        <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} readOnly />
+                                                        <input type="text" className="form-control" id="id" value={data.id} readOnly />
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="updated_at">Update At</label>
-                                                        <input type="text" className="form-control" id="updated_at" value={data.updated_at} onChange={e => setData({ ...data, updated_at: e.target.value })} readOnly />
+                                                        <input type="text" className="form-control" id="updated_at" value={dateFormat(data.updated_at,"dd mmmm yyyy")} readOnly />
                                                     </div>
                                                 </div>
                                             </div>
