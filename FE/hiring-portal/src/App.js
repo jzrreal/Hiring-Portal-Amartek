@@ -5,7 +5,6 @@ import NotFound from "./pages/notFound";
 
 // Human Resource
 import DashboardHumanResource from "./pages/human-resource/dashboard";
-import ProfileHumanResource from "./pages/human-resource/profile";
 // Role
 import IndexRole from './pages/human-resource/role';
 import AddRole from './pages/human-resource/role/add';
@@ -48,12 +47,10 @@ import EditTestParameter from './pages/human-resource/test-parameter/edit';
 
 // Job Post
 import IndexJobPost from './pages/human-resource/job-post';
+import DetailJobPost from './pages/human-resource/job-post/detail';
 import AddJobPost from './pages/human-resource/job-post/add';
 import EditJobPost from './pages/human-resource/job-post/edit';
 // Job Post
-// Job Applicant
-import IndexJobApplicant from './pages/human-resource/job-applicant';
-// Job Applicant
 // Human Resource
 
 // Trainer
@@ -65,10 +62,16 @@ import EditQuestion from './pages/trainer/question/edit';
 // Question
 // Trainer
 
+// Aplicant
+import DashboardApplicant from "./pages/applicant/dashboard";
+import ProfileApplicant from "./pages/applicant/profile";
+// Aplicant
+
 // Auth
-import EmailVerification from './pages/EmailVerification';
+import EmailVerification from './pages/emailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
+import ApplicantProtection from './util/ApplicantProtection';
 // Auth
 
 function App() {
@@ -84,7 +87,6 @@ function App() {
         {/* Human Resource */}
         <Route path='human-resource' element={<HumanResourceProtection />}>
           <Route path='dashboard' element={<DashboardHumanResource />} />
-          <Route path='profile' element={<ProfileHumanResource />} />
           {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
@@ -130,10 +132,8 @@ function App() {
           <Route path='job-post'>
             <Route index element={<IndexJobPost />} />
             <Route path='add' element={<AddJobPost />} />
+            <Route path='detail/:id' element={<DetailJobPost />} />
             <Route path='edit/:id' element={<EditJobPost />} />
-          </Route>
-          <Route path='job-applicant'>
-            <Route index element={<IndexJobApplicant />} />
           </Route>
           {/* Job */}
         </Route>
@@ -151,8 +151,15 @@ function App() {
           {/* Question */}
         </Route>
         {/* Trainer */}
+
+        {/* Aplicant */}
+        <Route path='applicant' element={<ApplicantProtection />}>
+          <Route path='dashboard' element={<DashboardApplicant />} />
+          <Route path='profile' element={<ProfileApplicant />} />
+        </Route>
+        {/* Aplicant */}
       </Routes>
-    </Router>
+    </Router >
   );
 }
 

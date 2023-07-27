@@ -2,6 +2,7 @@ import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import dateFormat from 'dateformat'
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -31,13 +32,11 @@ function Index() {
       url: process.env.REACT_APP_API_URL + "/api/job-posts",
     })
       .then((response) => {
-        console.log(response.data.data)
         setData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
-      console.log(data);
   }, [])
 
   // Delete Data
@@ -110,8 +109,8 @@ function Index() {
                           <th>Title Job</th>
                           <th>Job Level</th>
                           <th>Job Function</th>
-                          <th>Vacancy</th>
                           <th>Open Until</th>
+                          <th>Closed</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -122,9 +121,10 @@ function Index() {
                               <td className="text-capitalize">{data.title}</td>
                               <td className="text-capitalize">{data.job_level}</td>
                               <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">{data.vacancy}</td>
-                              <td className="text-capitalize">{data.open_until}</td>
+                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
+                              <td className="text-capitalize">{data.closed ? data.closed : "-"}</td>
                               <td>
+                                <NavLink to={`/human-resource/job-post/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
                                 <NavLink to={`/human-resource/job-post/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
                               </td>

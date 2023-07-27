@@ -34,7 +34,7 @@ function Dashboard() {
           <div className="row">
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box">
-                <span className="info-box-icon bg-info elevation-1"><i className="fas fa-cog"></i></span>
+                <span className="info-box-icon bg-info elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Total Questions</span>
                   <span className="info-box-number">
@@ -45,9 +45,9 @@ function Dashboard() {
             </div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-thumbs-up"></i></span>
+                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Questions Easy</span>
+                  <span className="info-box-text">Questions Easy</span>
                   <span className="info-box-number">0</span>
                 </div>
               </div>
@@ -55,24 +55,24 @@ function Dashboard() {
             <div className="clearfix hidden-md-up"></div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-shopping-cart"></i></span>
+                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Questions Medium</span>
+                  <span className="info-box-text">Questions Medium</span>
                   <span className="info-box-number">0</span>
                 </div>
               </div>
             </div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-users"></i></span>
+                <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Questions Hard</span>
+                  <span className="info-box-text">Questions Hard</span>
                   <span className="info-box-number">0</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row mt-2">
             <div className="col">
               <div className="card">
                 <div className="card-header ui-sortable-handle">

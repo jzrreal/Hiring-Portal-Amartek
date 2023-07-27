@@ -40,7 +40,8 @@ function Edit() {
     }, [])
 
     // Edit Data
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
