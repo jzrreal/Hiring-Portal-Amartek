@@ -40,7 +40,8 @@ function Edit() {
     }, [])
 
     // Edit Data
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
@@ -102,12 +103,6 @@ function Edit() {
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="user">Create By</label>
-                                                        <input type="text" className="form-control" id="user" value={data.user?.full_name} onChange={e => setData({ ...data, user: e.target.value })} readOnly />
-                                                    </div>
-                                                </div>
-                                                <div className='col'>
-                                                    <div className="form-group">
                                                         <label for="updated_at">Update At</label>
                                                         <input type="text" className="form-control" id="updated_at" value={data.updated_at} onChange={e => setData({ ...data, updated_at: e.target.value })} readOnly />
                                                     </div>
@@ -143,13 +138,19 @@ function Edit() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="description">Desctiption Job</label>
-                                                <textarea className="form-control" id="description" value={data.description} onChange={e => setData({ ...data, description: e.target.value })} placeholder="Description Job Name" />
+                                                <textarea className="form-control" id="description" value={data.description} onChange={e => setData({ ...data, description: e.target.value })} />
                                             </div>
                                             <div className="form-group">
-                                                <label for="requirement">Requirement Job</label>
-                                                <textarea className="form-control" id="requirement" value={data.requirement} onChange={e => setData({ ...data, requirement: e.target.value })} placeholder="Requirement Job Name" />
+                                                <label for="requirements">Requirement Job</label>
+                                                <textarea className="form-control" id="requirements" value={data.requirements} onChange={e => setData({ ...data, requirements: e.target.value })} />
                                             </div>
                                             <div className='row'>
+                                                <div className='col'>
+                                                    <div className="form-group">
+                                                        <label for="vacancy">Vacancy</label>
+                                                        <input type="number" className="form-control" id="vacancy" value={data.vacancy} onChange={e => setData({ ...data, vacancy: e.target.value })} />
+                                                    </div>
+                                                </div>
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="open_until">Open Until</label>

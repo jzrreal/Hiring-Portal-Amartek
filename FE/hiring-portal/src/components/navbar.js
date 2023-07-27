@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 function Navbar() {
 
@@ -14,16 +14,16 @@ function Navbar() {
         'Authorization': 'Bearer ' + localStorage.getItem("authToken")
       }
     })
-    .then(response => {
-      if(response.data.status == 200){
-        localStorage.removeItem("authToken")
-        localStorage.removeItem("role")
-        window.location.replace("http://localhost:3000/login")
-      }
-    })
-    .catch(err => {
-      console.log(err.response.data.message)
-    })
+      .then(response => {
+        if (response.data.status == 200) {
+          localStorage.removeItem("authToken")
+          localStorage.removeItem("role")
+          window.location.replace("http://localhost:3000/login")
+        }
+      })
+      .catch(err => {
+        console.log(err.response.data.message)
+      })
   }
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
@@ -37,10 +37,10 @@ function Navbar() {
       {/* Right navbar links */}
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <Link className="nav-link text-danger" onClick={logoutEvent} >
+          <NavLink className="nav-link text-danger" onClick={logoutEvent} >
             <i className="fas fa-door-open mr-2"></i>
             <span>Logout</span>
-          </Link>
+          </NavLink>
         </li>
         <li className="nav-item">
           <a className="nav-link" data-widget="fullscreen" href="#" role="button">

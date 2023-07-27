@@ -2,6 +2,7 @@ import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import dateFormat from 'dateformat'
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -105,7 +106,10 @@ function Index() {
                     <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Name</th>
+                          <th>Question</th>
+                          <th>Segment</th>
+                          <th>Question Level</th>
+                          <th>Create At</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -113,7 +117,10 @@ function Index() {
                         {data.map((data) => {
                           return (
                             <tr>
-                              <td className="text-capitalize">{data.name}</td>
+                              <td className="text-capitalize">{data.question}</td>
+                              <td className="text-capitalize">{data.segment}</td>
+                              <td className="text-capitalize">{data.question_level}</td>
+                              <td className="text-capitalize">{dateFormat(data.created_at, "yyyy mmmm dS")}</td>
                               <td>
                                 <NavLink to={`/trainer/question/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
