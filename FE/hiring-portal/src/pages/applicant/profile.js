@@ -33,7 +33,7 @@ function Profile() {
                         setDataEducation(response.data.data)
                     })
             })
-            console.log(dataProfile);
+        console.log(dataProfile);
     }, [])
 
     return (

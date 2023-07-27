@@ -13,9 +13,9 @@ function Login() {
     const body = {
         email: email,
         password: password
-      }
-    
-      const Toast = Swal.mixin({
+    }
+
+    const Toast = Swal.mixin({
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
@@ -25,40 +25,41 @@ function Login() {
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      })
-    
-      const handleSubmit = e => {
-        e.preventDefault()
-    
-        axios({
-          method: "POST",
-          url: process.env.REACT_APP_API_URL + "/api/auth/login",
-          data: body
-          })
-        .then(response => {
-            if(response.data.status === 200){
-                localStorage.setItem("authToken", response.data.data)
+    })
 
-                axios({
-                    method: "GET",
-                    url: process.env.REACT_APP_API_URL + "/api/profiles",
-                    headers: {
-                        Authorization : "Bearer " + localStorage.getItem("authToken")
-                    }
-                })
-                .then(response => {
-                    localStorage.setItem("role", response.data.data.role)
-                    navigate(redirectManager(localStorage.getItem("role")))
-                })
-            }
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        axios({
+            method: "POST",
+            url: process.env.REACT_APP_API_URL + "/api/auth/login",
+            data: body
         })
-        .catch((error) => {
-        Toast.fire({
-            icon:"error",
-            title: error.response.data.message
+            .then(response => {
+                if (response.data.status === 200) {
+                    localStorage.setItem("authToken", response.data.data)
+
+                    axios({
+                        method: "GET",
+                        url: process.env.REACT_APP_API_URL + "/api/profiles",
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("authToken")
+                        }
+                    })
+                        .then(response => {
+                            localStorage.setItem("role", response.data.data.role)
+                            navigate(redirectManager(localStorage.getItem("role")))
+                            navigate(0)
+                        })
+                }
             })
-        });
-      }
+            .catch((error) => {
+                Toast.fire({
+                    icon: "error",
+                    title: error.response.data.message
+                })
+            });
+    }
 
     return (
         <div className="hold-transition login-page">
@@ -74,11 +75,11 @@ function Login() {
                             <div className="form-group">
                                 <label for="exampleInputEmail1">Email</label>
                                 <div className="input-group mb-3">
-                                    <input 
-                                        type="email" 
+                                    <input
+                                        type="email"
                                         value={email}
                                         onChange={e => setEmail(e.target.value)}
-                                        className="form-control" 
+                                        className="form-control"
                                         placeholder="Email" />
                                     <div className="input-group-append">
                                         <div className="input-group-text">
@@ -90,11 +91,11 @@ function Login() {
                             <div className="form-group">
                                 <label for="exampleInputEmail1">Password</label>
                                 <div className="input-group mb-3">
-                                    <input 
-                                        type="password" 
+                                    <input
+                                        type="password"
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
-                                        className="form-control" 
+                                        className="form-control"
                                         placeholder="Password" />
                                     <div className="input-group-append">
                                         <div className="input-group-text">

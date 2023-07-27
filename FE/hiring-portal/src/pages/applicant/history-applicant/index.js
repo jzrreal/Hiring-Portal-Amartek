@@ -1,7 +1,6 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
 
 import Navbar from "../../../components/navbar";
@@ -9,8 +8,8 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+
   // Get Data
   useEffect(() => {
     axios({

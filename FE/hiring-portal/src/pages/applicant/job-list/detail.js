@@ -1,7 +1,6 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import axios from 'axios';
-import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
 
 import Navbar from "../../../components/navbar";
@@ -9,22 +8,8 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Detail() {
-  const navigate = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState({});
-
-  // Alert Toast
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
 
   // Get Data
   useEffect(() => {
@@ -112,7 +97,7 @@ function Detail() {
                     </div>
                     <div className="form-group">
                       <label for="open_until">Open Until</label>
-                      <textarea className="form-control" id="open_until" value={dateFormat(data.open_until,"dd mmmm yyyy")} readOnly />
+                      <textarea className="form-control" id="open_until" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
                     </div>
                     <div className="float-right">
                       <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>
