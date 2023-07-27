@@ -122,7 +122,7 @@ function Index() {
                               <td className="text-capitalize">{data.title}</td>
                               <td className="text-capitalize">{data.job_level}</td>
                               <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">"MISSING API RESPONSE"</td>
+                              <td className="text-capitalize">{data.vacancy}</td>
                               <td className="text-capitalize">{data.open_until}</td>
                               <td>
                                 <NavLink to={`/human-resource/job-post/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
