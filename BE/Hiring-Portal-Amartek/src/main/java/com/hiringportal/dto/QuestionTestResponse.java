@@ -7,20 +7,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.List;
 
-@Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class JobPostResponse {
-    private Integer id;
-    private String title;
-    private String jobLevel;
-    private String jobFunction;
-    private Date postAt;
-    private Boolean closed;
-    private Date openUntil;
-    private Integer vacancy;
+public class QuestionTestResponse {
+    private Integer testQuestionId;
+    private Integer questionId;
+    private String question;
+    private Integer answer;
+    private List<ChoiceTestResponse> choices;
 }

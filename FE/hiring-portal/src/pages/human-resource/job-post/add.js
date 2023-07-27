@@ -10,10 +10,25 @@ import Swal from 'sweetalert2';
 function Add() {
     const navigate = useNavigate()
     const [inputData, setInputData] = useState({
-        title: '', description: '', requirement: '',
-        post_at: '', open_until: '', updated_at: '',
-        vacancy: '', closed: '', jobLevel: '', jobFunction: '', user: ''
+        title: '', description: '', requirements: '',
+        job_level_id: 1, job_function_id: 1,
+        open_until: '', vacancy: ''
     })
+
+    const [jobLevels, setJobLevels] = useState([]);
+    const [jobFunction, setJobFunction] = useState([]);
+
+    const jobLevelDropdown = (value) => {
+        return (
+            <option>{value.name}</option>
+        )
+    }
+
+    const jobFunctionDropdown = (value) => {
+        return (
+            <option>{value.name}</option>
+        )
+    }
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -34,15 +49,40 @@ function Add() {
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/job-posts",
+            headers: {
+                Authorization : "Bearer " + localStorage.getItem("authToken")
+            },
             data: inputData
-        }).then(
+        })
+        .then( (response) => {
             Toast.fire({
                 icon: 'success',
                 title: 'Success save data'
-            }),
-            navigate('/human-resource/job-post', { replace: true })
-        ).catch(function (error) { console.log(error); })
+        })
+        }
+        )
+        .catch(function (error) { console.log(error); })
     }
+
+    useEffect( () => {
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/job-levels"
+        })
+        .then((response) => {
+            console.log(response.data.data)
+            setJobLevels(response.data.data)
+        })
+
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/job-functions"
+        })
+        .then((response) => {
+            console.log(response.data.data)
+            setJobFunction(response.data.data)
+        })
+    }, [])
 
     return (
         <>
@@ -87,22 +127,22 @@ function Add() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Title Job</label>
-                                                        <input type="text" className="form-control" id="title" onChange={e => setInputData({ ...inputData, title: e.target.value })} placeholder="Title Job Name" />
+                                                        <input type="text" className="form-control" id="title" onChange={e => setInputData({ ...inputData, title: e.target.value })}/>
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Job Level</label>
-                                                        <select className='form-control' id='job_level' onChange={e => setInputData({ ...inputData, job_level: e.target.value })} >
-                                                            <option>Select Job Level</option>
+                                                        <select className='form-control' id='job_level' onChange={e => setInputData({...inputData, job_level_id: jobLevels.find(({name}) => name===e.target.value).id}) } >
+                                                            {jobLevels.map(jobLevelDropdown)}
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Job Function</label>
-                                                        <select className='form-control' id='job_level' onChange={e => setInputData({ ...inputData, job_fucntion: e.target.value })} >
-                                                            <option>Select Job Function</option>
+                                                        <select className='form-control' id='job_level' onChange={e => setInputData({ ...inputData, job_function_id: jobFunction.find( ({name}) => name===e.target.value ).id })} >
+                                                            {jobFunction.map(jobFunctionDropdown)}
                                                         </select>
                                                     </div>
                                                 </div>
@@ -113,7 +153,7 @@ function Add() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="requirement">Requirement Job</label>
-                                                <textarea className="form-control" id="requirement" onChange={e => setInputData({ ...inputData, requirement: e.target.value })} placeholder="Requirement Job Name" />
+                                                <textarea className="form-control" id="requirement" onChange={e => setInputData({ ...inputData, requirements: e.target.value })} placeholder="Requirement Job Name" />
                                             </div>
                                             <div className='row'>
                                                 <div className='col'>
@@ -131,7 +171,7 @@ function Add() {
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/job-post" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                                                <button className="btn btn-primary">Save changes</button>
+                                                <button type="submit" className="btn btn-primary">Save changes</button>
                                             </div>
                                         </form>
                                     </div>

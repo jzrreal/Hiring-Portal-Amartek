@@ -78,9 +78,67 @@ function Add() {
                                 <div className="card">
                                     <div className="card-body">
                                         <form onSubmit={handleSubmit}>
+                                            <div className='row'>
+                                                <div className='col'>
+                                                    <div className="form-group">
+                                                        <label for="segment">Segment</label>
+                                                        <select className="form-control" id="segment" onChange={e => setInputData({ ...inputData, segment: e.target.value })}>
+                                                            <option>Select Segment</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className='col'>
+                                                    <div className="form-group">
+                                                        <label for="question_level">Qustion Level</label>
+                                                        <select className="form-control" id="question_level" onChange={e => setInputData({ ...inputData, question_level: e.target.value })}>
+                                                            <option>Select Question Level</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div className="form-group">
-                                                <label for="name">Name</label>
-                                                <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Question Name" />
+                                                <label for="question">Question</label>
+                                                <textarea className="form-control" id="question" onChange={e => setInputData({ ...inputData, question: e.target.value })} placeholder="Set Question"></textarea>
+                                            </div>
+                                            <div className="form-group">
+                                                <label for="question">Choice</label>
+                                                <div className='row'>
+                                                    <div className='col'>
+                                                        <input className='form-control mb-3' placeholder='Set Choice'/>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="radio1" />
+                                                            <label class="form-check-label">True</label>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <input className='form-control mb-3' placeholder='Set Choice'/>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="radio1" />
+                                                            <label class="form-check-label">True</label>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <input className='form-control mb-3' placeholder='Set Choice'/>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="radio1" />
+                                                            <label class="form-check-label">True</label>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <input className='form-control mb-3' placeholder='Set Choice'/>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="radio1" />
+                                                            <label class="form-check-label">True</label>
+                                                        </div>
+                                                    </div>
+                                                    <div className='col'>
+                                                        <input className='form-control mb-3' placeholder='Set Choice'/>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" name="radio1" />
+                                                            <label class="form-check-label">True</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/trainer/question" type="button" className="btn btn-secondary mr-2">Back</NavLink>

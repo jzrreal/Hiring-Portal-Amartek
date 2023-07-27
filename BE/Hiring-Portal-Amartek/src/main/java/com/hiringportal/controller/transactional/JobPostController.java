@@ -141,6 +141,7 @@ public class JobPostController {
                 .postAt(jobPost.getPost_at())
                 .closed(jobPost.getClosed())
                 .openUntil(jobPost.getOpen_until())
+                .vacancy(jobPost.getVacancy())
                 .build();
     }
 }

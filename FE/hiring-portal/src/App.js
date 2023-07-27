@@ -70,9 +70,10 @@ import ProfileApplicant from "./pages/applicant/profile";
 // Aplicant
 
 // Auth
-import EmailVerification from './pages/EmailVerification';
+import EmailVerification from './pages/emailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
+import ApplicantProtection from './util/ApplicantProtection';
 // Auth
 
 function App() {
@@ -156,7 +157,7 @@ function App() {
         {/* Trainer */}
 
         {/* Aplicant */}
-        <Route path='applicant' element={<HumanResource />}>
+        <Route path='applicant' element={<ApplicantProtection />}>
           <Route path='dashboard' element={<DashboardApplicant />} />
           <Route path='profile' element={<ProfileApplicant />} />
         </Route>

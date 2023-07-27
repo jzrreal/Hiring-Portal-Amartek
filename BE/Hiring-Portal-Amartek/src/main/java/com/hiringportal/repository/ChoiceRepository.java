@@ -19,4 +19,9 @@ public interface ChoiceRepository extends JpaRepository<Choice, Integer> {
                 delete from Choice c where c.question.questionId = :questionId
             """)
     void deleteAllChoiceByQuestionId(Integer questionId);
+
+    @Query(value = """
+            select c from Choice c where c.question.questionId in :idQuestions
+            """)
+    List<Choice> findAllChoiceInListQuestionId(List<Integer> idQuestions);
 }

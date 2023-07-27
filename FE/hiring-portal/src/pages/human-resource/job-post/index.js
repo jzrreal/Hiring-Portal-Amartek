@@ -30,12 +30,14 @@ function Index() {
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts",
     })
-      .then(function (response) {
+      .then((response) => {
+        console.log(response.data.data)
         setData(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
       });
+      console.log(data);
   }, [])
 
   // Delete Data

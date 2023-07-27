@@ -97,7 +97,7 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row mt-2">
             <div className="col">
               <div className="card">
                 <div className="card-header ui-sortable-handle">

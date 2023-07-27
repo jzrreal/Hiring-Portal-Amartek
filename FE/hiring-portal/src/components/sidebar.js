@@ -199,15 +199,21 @@ function Sidebar() {
             {/* Job */}
 
             {/* Test */}
-            <li class="nav-header mt-2">TEST</li>
-            {/* Question */}
-            <li className="nav-item">
-              <NavLink to="/trainer/question" className="nav-link">
-                <i className="nav-icon fas fa-briefcase mr-2"></i>
-                <p>Question</p>
-              </NavLink>
-            </li>
-            {/* Question */}
+            {
+              role == "Trainer" ?
+                <>
+                  <li class="nav-header mt-2">TEST</li>
+                  {/* Question */}
+                  <li className="nav-item">
+                    <NavLink to="/trainer/question" className="nav-link">
+                      <i className="nav-icon fas fa-list-ol mr-2"></i>
+                      <p>Question</p>
+                    </NavLink>
+                  </li>
+                  {/* Question */}
+                </>
+                : null
+            }
             {/* Test */}
           </ul>
         </nav>

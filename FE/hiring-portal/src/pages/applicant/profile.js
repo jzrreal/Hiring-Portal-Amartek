@@ -22,20 +22,16 @@ function Profile() {
         })
             .then(response => {
                 setDataProfile(response.data.data)
-            })
-    }, [])
-
-    // Get Education History
-    useEffect(() => {
-        axios({
-            method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/education-histories/applicants/" + 1,
-            headers: {
-                Authorization: "Bearer " + localStorage.getItem("authToken")
-            }
-        })
-            .then(response => {
-                setDataEducation(response.data.data)
+                axios({
+                    method: "GET",
+                    url: process.env.REACT_APP_API_URL + "/api/education-histories/applicants/" + response.data.data.id,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("authToken")
+                    }
+                })
+                    .then(response => {
+                        setDataEducation(response.data.data)
+                    })
             })
     }, [])
 
@@ -197,7 +193,7 @@ function Profile() {
                                                                     <h6 class="product-title m-0">
                                                                         {data.name}
                                                                         <span class="badge badge-primary px-2 py-2 float-right">
-                                                                           {data.yearStart} - {data.yearEnd}
+                                                                            {data.yearStart} - {data.yearEnd}
                                                                         </span>
                                                                     </h6>
                                                                     <span class="text-muted">{data.level}</span>
