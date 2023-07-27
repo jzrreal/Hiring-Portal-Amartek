@@ -47,12 +47,10 @@ import EditTestParameter from './pages/human-resource/test-parameter/edit';
 
 // Job Post
 import IndexJobPost from './pages/human-resource/job-post';
+import DetailJobPost from './pages/human-resource/job-post/detail';
 import AddJobPost from './pages/human-resource/job-post/add';
 import EditJobPost from './pages/human-resource/job-post/edit';
 // Job Post
-// Job Applicant
-import IndexJobApplicant from './pages/human-resource/job-applicant';
-// Job Applicant
 // Human Resource
 
 // Trainer
@@ -134,10 +132,8 @@ function App() {
           <Route path='job-post'>
             <Route index element={<IndexJobPost />} />
             <Route path='add' element={<AddJobPost />} />
+            <Route path='detail/:id' element={<DetailJobPost />} />
             <Route path='edit/:id' element={<EditJobPost />} />
-          </Route>
-          <Route path='job-applicant'>
-            <Route index element={<IndexJobApplicant />} />
           </Route>
           {/* Job */}
         </Route>

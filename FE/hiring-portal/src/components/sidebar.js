@@ -164,14 +164,6 @@ function Sidebar() {
                     </NavLink>
                   </li>
                   {/* Job Post */}
-                  {/* Job Applicant */}
-                  <li className="nav-item">
-                    <NavLink to="/human-resource/job-applicant" className="nav-link">
-                      <i className="nav-icon fas fa-briefcase mr-2"></i>
-                      <p>Job Applicant</p>
-                    </NavLink>
-                  </li>
-                  {/* Job Applicant */}
                 </>
                 : (role == "Applicant" ?
                   <>
