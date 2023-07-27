@@ -1,5 +1,6 @@
 package com.hiringportal.repository;
 
+import com.hiringportal.dto.QuestionAnswerQuery;
 import com.hiringportal.entities.Questions;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,4 +50,11 @@ public interface QuestionRepository extends JpaRepository<Questions, Integer> {
             select q from Questions q where q.questionId in :idQuestions
             """)
     List<Questions> findAllQuestionInListQuestionId(List<Integer> idQuestions);
+    @Query(value = """
+            select new com.hiringportal.dto.QuestionAnswerQuery(q.questionId, ql.questionLevelId, c.choiceId) from Questions q
+            join QuestionLevel ql on q.questionLevel.questionLevelId = ql.questionLevelId
+            join Choice c on c.question.questionId = q.questionId
+            where q.questionId in :idQuestions and c.correct is true
+            """)
+    List<QuestionAnswerQuery> findAllQuestionIdQuestionLevelIdCorrectChoiceIdInListQuestionId(List<Integer> idQuestions);
 }
