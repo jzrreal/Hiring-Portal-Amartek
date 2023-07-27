@@ -250,6 +250,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         testRepository.save(test);
 
         final float finalResult = (float) (result/24) * 100;
+        log.info("Final result applicants with token {} is : {}", token, finalResult);
         //Send email to applicant with custom message, in this case i make condition if result less than 15
         //Email message contains rejection, and vice versa. Also send the final result
 
