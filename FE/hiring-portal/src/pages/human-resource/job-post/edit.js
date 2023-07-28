@@ -1,6 +1,7 @@
 import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import dateFormat from 'dateformat';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -31,6 +32,18 @@ function Edit() {
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
     })
+
+    const jobLevelDropdown = (value) => {
+        return (
+            <option className="text-capitalize">{value.name}</option>
+        )
+    }
+
+    const jobFunctionDropdown = (value) => {
+        return (
+            <option className="text-capitalize">{value.name}</option>
+        )
+    }
 
     // Get Data
     useEffect(() => {

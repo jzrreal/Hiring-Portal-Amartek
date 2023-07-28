@@ -33,7 +33,7 @@ function Profile() {
                         setDataEducation(response.data.data)
                     })
             })
-            console.log(dataProfile);
+        console.log(dataProfile);
     }, [])
 
     return (
@@ -101,7 +101,7 @@ function Profile() {
                                         <span className="text-muted">
                                             <i class="fas fa-venus mr-1"></i> Birth Date
                                         </span>
-                                        <p class="font-weight-bold"> {dateFormat(dataProfile.birth_date, "dddd, mmmm dS yyyy")} </p>
+                                        <p class="font-weight-bold"> {dateFormat(dataProfile.birth_date, "dd mmmm yyyy")} </p>
                                         <hr />
                                         <span className="text-muted">
                                             <i class="fas fa-user mr-1"></i> Age

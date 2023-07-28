@@ -96,7 +96,7 @@ function Edit() {
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">ID Question Level</label>
-                                                <input type="text" className="form-control" id="id" value={data.questionLevelId} onChange={e => setData({ ...data, questionLevelId: e.target.value })} />
+                                                <input type="text" className="form-control" id="id" value={data.questionLevelId} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="name">Name</label>

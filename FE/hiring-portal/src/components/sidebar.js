@@ -5,6 +5,7 @@ import axios from "axios";
 function Sidebar() {
   const [username, setUsername] = useState("")
   const [role, setRole] = useState("")
+  const url = window.location.origin;
 
   useEffect(() => {
     axios({
@@ -89,7 +90,7 @@ function Sidebar() {
             {
               role == "Human Resource" ?
                 <li li className="nav-item">
-                  <a href="#" className="nav-link" id="master-data">
+                  <a href="#" id="master-data" className="nav-link">
                     <i className="nav-icon fas fa-copy mr-2"></i>
                     <p>
                       Master Data
