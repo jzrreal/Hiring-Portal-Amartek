@@ -77,13 +77,13 @@ function Detail() {
                       <div className="col">
                         <div className="form-group">
                           <label for="job_level">Job Level</label>
-                          <input type="text" className="form-control" id="job_level" value={data.job_level} readOnly />
+                          <input type="text" className="form-control text-capitalize" id="job_level" value={data.job_level} readOnly />
                         </div>
                       </div>
                       <div className="col">
                         <div className="form-group">
                           <label for="job_function">Job Function</label>
-                          <input type="text" className="form-control" id="job_function" value={data.job_function} readOnly />
+                          <input type="text" className="form-control text-capitalize" id="job_function" value={data.job_function} readOnly />
                         </div>
                       </div>
                     </div>

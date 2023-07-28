@@ -76,7 +76,7 @@ import IndexHistoryApplicant from "./pages/applicant/history-applicant";
 // Aplicant
 
 // Auth
-import EmailVerification from './pages/emailVerification';
+import EmailVerification from './pages/EmailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
 import ApplicantProtection from './util/ApplicantProtection';
@@ -98,7 +98,7 @@ function App() {
           {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
-            <Route path='add' element={<AddRole />} />
+            <Route path='add'  element={<AddRole />} />
             <Route path='edit/:id' element={<EditRole />} />
           </Route>
           <Route path='applicant'>
@@ -165,14 +165,14 @@ function App() {
         <Route path='applicant' element={<ApplicantProtection />}>
           <Route path='dashboard' element={<DashboardApplicant />} />
           <Route path='profile' element={<ProfileApplicant />} />
-           {/* Job List */}
-           <Route path='job-list'>
+          {/* Job List */}
+          <Route path='job-list'>
             <Route index element={<IndexJobList />} />
             <Route path='detail/:id' element={<DetailJobList />} />
           </Route>
           {/* Job List */}
-           {/* History Applicant */}
-           <Route path='history-applicant'>
+          {/* History Applicant */}
+          <Route path='history-applicant'>
             <Route index element={<IndexHistoryApplicant />} />
           </Route>
           {/* History Applicant */}

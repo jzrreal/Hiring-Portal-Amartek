@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
-    const [inputData, setInputData] = useState({ name: '' })
+    const [inputData, setInputData] = useState({})
 
     // Alert Toast
     const Toast = Swal.mixin({

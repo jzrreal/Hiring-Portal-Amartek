@@ -3,6 +3,7 @@ import React from "react";
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
+import { NavLink } from "react-router-dom";
 
 function Dashboard() {
   return (
@@ -45,7 +46,7 @@ function Dashboard() {
             </div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-list-ol"></i></span>
+                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Questions Easy</span>
                   <span className="info-box-number">0</span>
@@ -55,7 +56,7 @@ function Dashboard() {
             <div className="clearfix hidden-md-up"></div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-list-ol"></i></span>
+                <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Questions Medium</span>
                   <span className="info-box-number">0</span>
@@ -64,7 +65,7 @@ function Dashboard() {
             </div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-list-ol"></i></span>
+                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Questions Hard</span>
                   <span className="info-box-number">0</span>
@@ -75,57 +76,23 @@ function Dashboard() {
           <div className="row mt-2">
             <div className="col">
               <div className="card">
-                <div className="card-header ui-sortable-handle">
-                  <h3 className="card-title">
-                    <i className="fas fa-users mr-2"></i>
-                    <span>New Applicants</span>
-                  </h3>
-                  <div className="card-tools">
-                    <a className="btn btn-sm btn-primary" href="#">See More Applicants</a>
+                <div className="card-body">
+                  <div className="d-flex justify-content-between">
+                    <h5><i className="fas fa-list-ol mr-2"></i> New Questions</h5>
+                    <NavLink to="/trainer/question" className="btn btn-sm btn-primary">See More Question</NavLink>
                   </div>
-                </div>
-                <div className="card-body p-0">
-                  <div className="table-responsive">
-                    <table className="table m-0 table-hover">
+                  <div className="table-responsive mt-3">
+                    <table className="table table-bordered tabled-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Applicants ID</th>
-                          <th>Fullname</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
+                          <th>Question</th>
+                          <th>Segment</th>
+                          <th>Question Level</th>
+                          <th>Created At</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">123</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">124</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">125</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">126</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">127</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
+                        
                       </tbody>
                     </table>
                   </div>

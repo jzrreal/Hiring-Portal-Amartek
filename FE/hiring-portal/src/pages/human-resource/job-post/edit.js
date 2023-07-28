@@ -12,6 +12,8 @@ function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
+    const [jobLevels, setJobLevels] = useState([]);
+    const [jobFunction, setJobFunction] = useState([]);
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -26,6 +28,18 @@ function Edit() {
         }
     })
 
+    const jobLevelDropdown = (value) => {
+        return (
+            <option className="text-capitalize">{value.name}</option>
+        )
+    }
+
+    const jobFunctionDropdown = (value) => {
+        return (
+            <option className="text-capitalize">{value.name}</option>
+        )
+    }
+
     // Get Data
     useEffect(() => {
         axios({
@@ -37,7 +51,22 @@ function Edit() {
             })
             .catch(function (error) {
                 console.log(error);
-            });
+            })
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/job-levels"
+        })
+            .then((response) => {
+                setJobLevels(response.data.data)
+            })
+
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/job-functions"
+        })
+            .then((response) => {
+                setJobFunction(response.data.data)
+            })
     }, [])
 
     // Edit Data
@@ -105,7 +134,7 @@ function Edit() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="updated_at">Update At</label>
-                                                        <input type="text" className="form-control" id="updated_at" value={dateFormat(data.updated_at,"dd mmmm yyyy")} readOnly />
+                                                        <input type="text" className="form-control" id="updated_at" value={dateFormat(data.updated_at, "dd mmmm yyyy")} readOnly />
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,17 +151,17 @@ function Edit() {
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="title">Job Level</label>
-                                                        <select className='form-control' id='job_level' value={data.jobLevel} onChange={e => setData({ ...data, job_level: e.target.value })} >
-                                                            <option>Select Job Level</option>
+                                                        <label for="job_level">Job Level</label>
+                                                        <select className='form-control text-capitalize' id='job_level' value={data.job_level} onChange={e => setData({ ...data, job_level_id: jobLevels.find(({ name }) => name === e.target.value).id })} >
+                                                            {jobLevels.map(jobLevelDropdown)}
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="title">Job Function</label>
-                                                        <select className='form-control' id='job_level' value={data.jobFunction} onChange={e => setData({ ...data, job_function: e.target.value })} >
-                                                            <option>Select Job Function</option>
+                                                        <label for="job_function">Job Function</label>
+                                                        <select className='form-control text-capitalize' id='job_function' value={data.job_function} onChange={e => setData({ ...data, job_function_id: jobFunction.find(({ name }) => name === e.target.value).id })} >
+                                                            {jobFunction.map(jobFunctionDropdown)}
                                                         </select>
                                                     </div>
                                                 </div>
