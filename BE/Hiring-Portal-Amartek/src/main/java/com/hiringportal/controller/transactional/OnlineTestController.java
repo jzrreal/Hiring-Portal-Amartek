@@ -1,6 +1,7 @@
 package com.hiringportal.controller.transactional;
 
 import com.hiringportal.dto.CustomResponse;
+import com.hiringportal.dto.PaginationResultResponse;
 import com.hiringportal.dto.QuestionTestResponse;
 import com.hiringportal.service.onlineTest.OnlineTestService;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +83,21 @@ public class OnlineTestController {
         return CustomResponse.generateResponse(
                 "Success finish test",
                 HttpStatus.OK
+        );
+    }
+
+    @GetMapping("pagination")
+    public ResponseEntity<Object> getOnlineTestQuestionPerPage(
+            @RequestParam(name = "token") String token,
+            @RequestParam(name = "number", defaultValue = "1") Integer page
+    ) {
+        PaginationResultResponse<QuestionTestResponse> resultResponse =
+                onlineTestService.getQuestionTestByTokenPerPage((page - 1), token);
+
+        return CustomResponse.generateResponse(
+                "Question number : " + page,
+                HttpStatus.OK,
+                resultResponse
         );
     }
 }

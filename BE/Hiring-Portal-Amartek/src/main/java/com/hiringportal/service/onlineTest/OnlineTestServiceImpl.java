@@ -1,15 +1,15 @@
 package com.hiringportal.service.onlineTest;
 
-import com.hiringportal.dto.ChoiceTestResponse;
-import com.hiringportal.dto.QuestionAnswerQuery;
-import com.hiringportal.dto.QuestionTestResponse;
-import com.hiringportal.dto.TestQuestionQuery;
+import com.hiringportal.dto.*;
 import com.hiringportal.entities.*;
 import com.hiringportal.repository.*;
 import com.hiringportal.service.email.EmailService;
+import com.hiringportal.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -210,6 +210,59 @@ public class OnlineTestServiceImpl implements OnlineTestService {
     @Override
     public void checkTokenExpired(String token) {
         getTestFromTokenAndCheck(token);
+    }
+
+    @Override
+    public PaginationResultResponse<QuestionTestResponse> getQuestionTestByTokenPerPage(Integer page, String token) {
+        TestParameter testParameter = testParameterRepository.findById(1).orElseThrow();
+        Test test = getTestFromTokenAndCheck(token);
+
+        if (test.getEndTest() == null) {
+            test.setEndTest(
+                    new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(testParameter.getTestTimeMinute()))
+            );
+            testRepository.save(test);
+        }
+
+        PageRequest pageable;
+
+        try {
+            //Set PageRequest to get 1 question every page and order ascending
+            pageable = PageRequest.of(page, 1, Sort.Direction.ASC, "testQuestionId");
+        }catch (IllegalArgumentException exception){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+        }
+
+        Page<TestQuestionQuery> pageResult = testQuestionRepository.getPageAllTestQuestionByTestId(test.getTestId(), pageable);
+
+        TestQuestionQuery testQuestion = pageResult.stream().findAny().orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "no question number " + page)
+        );
+
+        Questions questions = questionRepository.findById(testQuestion.getQuestionId()).orElseThrow();
+
+        List<ChoiceTestResponse> choices = choiceRepository.findAllByQuestionId(testQuestion.getQuestionId())
+                .stream().map(
+                        choice -> ChoiceTestResponse.builder()
+                                .choiceId(choice.getChoiceId())
+                                .choice(choice.getChoice())
+                                .build()
+                ).toList();
+
+        QuestionTestResponse result = QuestionTestResponse.builder()
+                .answer(testQuestion.getAnswer())
+                .testQuestionId(testQuestion.getTestQuestionId())
+                .questionId(testQuestion.getQuestionId())
+                .question(questions.getQuestion())
+                .choices(choices)
+                .build();
+
+        return PaginationUtil.createResultPageResponse(
+                result, //The data
+                (int) pageResult.getTotalElements(), //Number of element total
+                pageResult.getTotalPages(), //Number of page
+                page + 1 //Current page
+        );
     }
 
     @Scheduled(fixedRate = 3600000) //Every one hour do this job
