@@ -40,7 +40,8 @@ function Edit() {
     }, [])
 
     // Edit Data
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
@@ -95,7 +96,7 @@ function Edit() {
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">ID Applicant Status</label>
-                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
+                                                <input type="text" className="form-control" id="id" value={data.id} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="name">Name</label>

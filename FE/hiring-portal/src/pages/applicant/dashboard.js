@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import dateFormat from "dateformat";
 
@@ -8,32 +8,32 @@ import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
 
 function Dashboard() {
-  const [totalJobs, setTotalJobs] = useState(0);
-  const [totalApplicants, setTotalApplicants] = useState(0);
-  const [dataNewApplicant, setDataNewApplicant] = useState([{}]);
-  const [dataNewJobs, setDataNewJobs] = useState([{}]);
-  const token = useOutletContext()
+  const [dataJobList, setDataJobList] = useState([{}]);
+  const [dataHistoryApplicant, setDataHistoryApplicant] = useState([{}]);
+  const [totalApplyJob, setTotalApplyJob] = useState(0);
+  const [totalJob, setTotalJob] = useState(0);
 
+  // Get Data
   useEffect(() => {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/dashboards",
       headers: {
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + localStorage.getItem("authToken")
       }
     })
-      .then(response => {
+      .then(function (response) {
         console.log(response.data.data);
-        setTotalJobs(response.data.data.total_job_post)
-        setTotalApplicants(response.data.data.total_applicants_apply)
-        setDataNewApplicant(response.data.data.applicants_apply_responses)
-        setDataNewJobs(response.data.data.job_post_responses)
+        setTotalApplyJob(response.data.data.total_apply_job);
+        setDataHistoryApplicant(response.data.data.job_application_responses);
+        setTotalJob(response.data.data.total_job_post);
+        setDataJobList(response.data.data.job_post_responses);
       })
-      .catch(err => {
-        setTotalJobs(0);
-        setTotalApplicants(0);
-      })
-  }, []);
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }, [])
 
   return (
     <div className="wrapper">
@@ -67,18 +67,16 @@ function Dashboard() {
                 <span className="info-box-icon bg-info elevation-1"><i className="fas fa-briefcase"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Total Jobs</span>
-                  <span className="info-box-number">
-                    {totalJobs}
-                  </span>
+                  <span className="info-box-number">{totalJob ? totalJob : 0}</span>
                 </div>
               </div>
             </div>
             <div className="col-12 col-sm-6 col-md-6">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-users"></i></span>
+                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-check-double"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Applicants Apply Job</span>
-                  <span className="info-box-number">{totalApplicants}</span>
+                  <span className="info-box-text">Your Applicant</span>
+                  <span className="info-box-number">{totalApplyJob ? totalApplyJob : 0}</span>
                 </div>
               </div>
             </div>
@@ -87,28 +85,69 @@ function Dashboard() {
             <div className="col">
               <div className="card">
                 <div className="card-body">
-                  <h5><i className="fas fa-users mr-2"></i> New Applicants Apply Job</h5>
+                  <div className="d-flex justify-content-between">
+                    <h5><i className="fas fa-briefcase mr-2"></i> New Availabe Job</h5>
+                    <NavLink to="/applicant/job-list" className="btn btn-sm btn-primary">See More Availabe Job</NavLink>
+                  </div>
                   <div className="table-responsive mt-3">
                     <table className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Fullname</th>
                           <th>Job Title</th>
                           <th>Job Level</th>
                           <th>Job Function</th>
-                          <th>Apply At</th>
+                          <th>Open Until</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dataJobList.map((data) => {
+                          return (
+                            <tr>
+                              <td className="text-capitalize">{data.title}</td>
+                              <td className="text-capitalize">{data.job_level}</td>
+                              <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
+                              <td>
+                                <NavLink to={`/applicant/job-list/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row mt-3">
+            <div className="col">
+              <div className="card">
+                <div className="card-body">
+                  <div className="d-flex justify-content-between">
+                    <h5><i className="fas fa-clock mr-2"></i><span>New History Applicant</span></h5>
+                    <NavLink to="/applicant/history-applicant" className="btn btn-sm btn-primary" >See More Availabe Job</NavLink>
+                  </div>
+                  <div className="table-responsive mt-3">
+                    <table className="table table-bordered table-striped table-hover">
+                      <thead>
+                        <tr>
+                          <th>Job Title</th>
+                          <th>Job Level</th>
+                          <th>Job Function</th>
+                          <th>Apply Date</th>
                           <th>Status</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {dataNewApplicant.map((data) => {
+                        {dataHistoryApplicant.map((data) => {
                           return (
                             <tr>
-                              <td className="text-capitalize">{data.applicant_name}</td>
-                              <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">{data.job_name}</td>
                               <td className="text-capitalize">{data.job_level}</td>
-                              <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
+                              <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">
                                 {
                                   data.status == "submitted" ?
@@ -126,48 +165,6 @@ function Dashboard() {
                                         )
                                       )
                                     )
-                                }
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col">
-              <div className="card">
-                <div className="card-body">
-                  <h5><i className="fas fa-users mr-2"></i> New Job Post</h5>
-                  <div className="table-responsive mt-3">
-                    <table className="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th>Job Title</th>
-                          <th>Job Level</th>
-                          <th>Job Function</th>
-                          <th>Post At</th>
-                          <th>Open Until</th>
-                          <th>Closed</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataNewJobs.map((data) => {
-                          return (
-                            <tr>
-                              <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.job_level}</td>
-                              <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">
-                                {data.closed === null || data.closed === "false" ?
-                                  <span className="badge badge-success">False</span>
-                                  : <span className="badge badge-danger">True</span>
                                 }
                               </td>
                             </tr>

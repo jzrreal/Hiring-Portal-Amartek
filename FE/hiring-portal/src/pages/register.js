@@ -101,6 +101,7 @@ function Register() {
         timeLeft -= 1
       }, 1000)
     })
+    .catch(window.alert("Something went wrong!"))
   }
 
   return (

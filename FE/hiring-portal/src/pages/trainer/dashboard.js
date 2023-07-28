@@ -1,10 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useOutletContext, NavLink } from "react-router-dom";
+import axios from "axios";
+import dateFormat from "dateformat";
 
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
 
 function Dashboard() {
+  const [total_easy_questions, set_total_easy_questions] = useState(0);
+  const [total_medium_questions, set_total_medium_questions] = useState(0);
+  const [total_hard_questions, set_total_hard_questions] = useState(0);
+  const [data_question_responses, set_question_responses] = useState([{}]);
+  const token = useOutletContext()
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: process.env.REACT_APP_API_URL + "/api/dashboards",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+      .then(response => {
+        set_total_easy_questions(response.data.data.total_easy_questions);
+        set_total_medium_questions(response.data.data.total_medium_questions);
+        set_total_hard_questions(response.data.data.total_hard_questions);
+        set_question_responses(response.data.data.question_responses);
+      })
+      .catch(err => {
+        set_total_easy_questions(0);
+        set_total_medium_questions(0);
+        set_total_hard_questions(0);
+      })
+  }, []);
+
   return (
     <div className="wrapper">
       {/* Navbar */}
@@ -34,7 +64,7 @@ function Dashboard() {
           <div className="row">
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box">
-                <span className="info-box-icon bg-info elevation-1"><i className="fas fa-cog"></i></span>
+                <span className="info-box-icon bg-info elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Total Questions</span>
                   <span className="info-box-number">
@@ -45,87 +75,62 @@ function Dashboard() {
             </div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-thumbs-up"></i></span>
+                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Questions Easy</span>
-                  <span className="info-box-number">0</span>
+                  <span className="info-box-text">Questions Easy</span>
+                  <span className="info-box-number">{total_easy_questions}</span>
                 </div>
               </div>
             </div>
             <div className="clearfix hidden-md-up"></div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-success elevation-1"><i className="fas fa-shopping-cart"></i></span>
+                <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Questions Medium</span>
-                  <span className="info-box-number">0</span>
+                  <span className="info-box-text">Questions Medium</span>
+                  <span className="info-box-number">{total_medium_questions}</span>
                 </div>
               </div>
             </div>
             <div className="col-12 col-sm-6 col-md-3">
               <div className="info-box mb-3">
-                <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-users"></i></span>
+                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
-                  <span className="info-box-text">Total Questions Hard</span>
-                  <span className="info-box-number">0</span>
+                  <span className="info-box-text">Questions Hard</span>
+                  <span className="info-box-number">{total_hard_questions}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row mt-2">
             <div className="col">
               <div className="card">
-                <div className="card-header ui-sortable-handle">
-                  <h3 className="card-title">
-                    <i className="fas fa-users mr-2"></i>
-                    <span>New Applicants</span>
-                  </h3>
-                  <div className="card-tools">
-                    <a className="btn btn-sm btn-primary" href="#">See More Applicants</a>
+                <div className="card-body">
+                  <div className="d-flex justify-content-between">
+                    <h5><i className="fas fa-list-ol mr-2"></i> New Questions</h5>
+                    <NavLink to="/trainer/question" className="btn btn-sm btn-primary">See More Question</NavLink>
                   </div>
-                </div>
-                <div className="card-body p-0">
-                  <div className="table-responsive">
-                    <table className="table m-0 table-hover">
+                  <div className="table-responsive mt-3">
+                    <table className="table table-bordered tabled-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Applicants ID</th>
-                          <th>Fullname</th>
-                          <th>Email</th>
-                          <th>Phone Number</th>
+                          <th>Question</th>
+                          <th>Segment</th>
+                          <th>Question Level</th>
+                          <th>Created At</th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">123</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">124</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">125</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">126</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
-                        <tr>
-                          <td><a href="pages/examples/invoice.html">127</a></td>
-                          <td>John Doe</td>
-                          <td>john.doe@gmail.com</td>
-                          <td>089123123123</td>
-                        </tr>
+                        {data_question_responses.map((data) => {
+                          return (
+                            <tr>
+                              <td className="text-capitalize">{data.question}</td>
+                              <td className="text-capitalize">{data.segment}</td>
+                              <td className="text-capitalize">{data.question_level}</td>
+                              <td className="text-capitalize">{dateFormat(data.created_at, "dd mmmm yyyy")}</td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>

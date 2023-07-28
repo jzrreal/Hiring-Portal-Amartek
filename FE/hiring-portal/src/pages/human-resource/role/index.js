@@ -8,7 +8,6 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  console.log(process.env.REACT_APP_API_URL + "/api/roles");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
 
@@ -58,7 +57,6 @@ function Index() {
             icon: 'success',
             title: 'Success delete data'
           }),
-          setData(data),
           navigate('/human-resource/role', { replace: true })
         ).catch(function (error) { console.log(error); })
       }

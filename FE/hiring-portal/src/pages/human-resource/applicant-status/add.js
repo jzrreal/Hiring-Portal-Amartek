@@ -25,7 +25,8 @@ function Add() {
     })
 
     // Add Data
-    function handleSubmit() {
+    function handleSubmit(e) {
+        e.preventDefault()
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/application-status",
