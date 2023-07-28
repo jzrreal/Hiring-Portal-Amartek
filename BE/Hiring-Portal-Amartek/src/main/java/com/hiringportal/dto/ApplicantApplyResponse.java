@@ -7,18 +7,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.sql.Date;
 
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DashboardIndexResponse {
-
-    private Integer totalJobPost;
-    private Integer totalApplicantsApply;
-    private List<ApplicantApplyResponse> applicantsApplyResponses;
-    private List<JobPostResponse> jobPostResponses;
-
+public class ApplicantApplyResponse {
+    private Integer jobApplicationId;
+    private String applicantName;
+    private String title;
+    private Date applyDate;
+    private String jobLevel;
+    private String jobFunction;
+    private String status;
+    private Integer jobPostId;
 }

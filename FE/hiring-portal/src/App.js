@@ -41,7 +41,7 @@ import EditJobFunction from './pages/human-resource/job-function/edit';
 // Job Function
 // Test Parameter
 import IndexTestParameter from './pages/human-resource/test-parameter';
-import AddTestParameter from './pages/human-resource/test-parameter/add';
+// import AddTestParameter from './pages/human-resource/test-parameter/add';
 import EditTestParameter from './pages/human-resource/test-parameter/edit';
 // Test Parameter
 
@@ -132,7 +132,7 @@ function App() {
           </Route>
           <Route path='test-parameter'>
             <Route index element={<IndexTestParameter />} />
-            <Route path='add' element={<AddTestParameter />} />
+            {/* <Route path='add' element={<AddTestParameter />} /> */}
             <Route path='edit/:id' element={<EditTestParameter />} />
           </Route>
           {/* Master Data */}

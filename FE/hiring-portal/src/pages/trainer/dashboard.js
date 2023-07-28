@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useOutletContext, NavLink } from "react-router-dom";
+import axios from "axios";
+import dateFormat from "dateformat";
 
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
-import { NavLink } from "react-router-dom";
 
 function Dashboard() {
+  const [total_easy_questions, set_total_easy_questions] = useState(0);
+  const [total_medium_questions, set_total_medium_questions] = useState(0);
+  const [total_hard_questions, set_total_hard_questions] = useState(0);
+  const [data_question_responses, set_question_responses] = useState([{}]);
+  const token = useOutletContext()
+
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: process.env.REACT_APP_API_URL + "/api/dashboards",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+      .then(response => {
+        set_total_easy_questions(response.data.data.total_easy_questions);
+        set_total_medium_questions(response.data.data.total_medium_questions);
+        set_total_hard_questions(response.data.data.total_hard_questions);
+        set_question_responses(response.data.data.question_responses);
+      })
+      .catch(err => {
+        set_total_easy_questions(0);
+        set_total_medium_questions(0);
+        set_total_hard_questions(0);
+      })
+  }, []);
+
   return (
     <div className="wrapper">
       {/* Navbar */}
@@ -49,7 +78,7 @@ function Dashboard() {
                 <span className="info-box-icon bg-success elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Questions Easy</span>
-                  <span className="info-box-number">0</span>
+                  <span className="info-box-number">{total_easy_questions}</span>
                 </div>
               </div>
             </div>
@@ -59,7 +88,7 @@ function Dashboard() {
                 <span className="info-box-icon bg-warning elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Questions Medium</span>
-                  <span className="info-box-number">0</span>
+                  <span className="info-box-number">{total_medium_questions}</span>
                 </div>
               </div>
             </div>
@@ -68,7 +97,7 @@ function Dashboard() {
                 <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Questions Hard</span>
-                  <span className="info-box-number">0</span>
+                  <span className="info-box-number">{total_hard_questions}</span>
                 </div>
               </div>
             </div>
@@ -92,7 +121,16 @@ function Dashboard() {
                         </tr>
                       </thead>
                       <tbody>
-                        
+                        {data_question_responses.map((data) => {
+                          return (
+                            <tr>
+                              <td className="text-capitalize">{data.question}</td>
+                              <td className="text-capitalize">{data.segment}</td>
+                              <td className="text-capitalize">{data.question_level}</td>
+                              <td className="text-capitalize">{dateFormat(data.created_at, "dd mmmm yyyy")}</td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>

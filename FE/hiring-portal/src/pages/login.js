@@ -25,15 +25,32 @@ function Login() {
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-    })
+      })
 
-    const handleSubmit = e => {
+      const handleSubmit = e => {
         e.preventDefault()
 
         axios({
-            method: "POST",
-            url: process.env.REACT_APP_API_URL + "/api/auth/login",
-            data: body
+          method: "POST",
+          url: process.env.REACT_APP_API_URL + "/api/auth/login",
+          data: body
+        })
+        .then(response => {
+            if(response.data.status === 200){
+                localStorage.setItem("authToken", response.data.data)
+
+                axios({
+                    method: "GET",
+                    url: process.env.REACT_APP_API_URL + "/api/profiles",
+                    headers: {
+                        Authorization : "Bearer " + localStorage.getItem("authToken")
+                    }
+                })
+                .then(response => {
+                    localStorage.setItem("role", response.data.data.role)
+                    navigate(redirectManager(localStorage.getItem("role")), {replace: true})
+                })
+            }
         })
             .then(response => {
                 if (response.data.status === 200) {
@@ -108,7 +125,7 @@ function Login() {
                             <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
                         </form>
                         <div className="text-center mt-3">
-                            <Link to="/register">Resend email verification?</Link>
+                            <Link to="/email-verification">Resend email verification?</Link>
                         </div>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ export default function TrainerProtection () {
                 }
             })
             .catch(() => {
-                return <Navigate to={redirectManager(localStorage.getItem("role"))} />
+                return <Navigate to={redirectManager(localStorage.getItem("role"))} replace="true" />
             })
         }
     }, [])
@@ -33,6 +33,9 @@ export default function TrainerProtection () {
     }
     if(localStorage.getItem("role") !== "Trainer") {
         return <Navigate to={redirectManager(localStorage.getItem("role"))} />
+    }
+    if(!localStorage.getItem("role")) {
+        return <Navigate to="/login" />
     }
     
     else {
