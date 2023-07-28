@@ -13,13 +13,13 @@ function Dashboard() {
 
   const token = useOutletContext()
 
-  useEffect( () => {
+  useEffect( () => {    
     
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/dashboards",
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("authToken")
+        Authorization: "Bearer " + token
       }
     })
       .then(response => {
