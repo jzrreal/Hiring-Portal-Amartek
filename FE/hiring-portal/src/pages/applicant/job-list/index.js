@@ -1,34 +1,20 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import dateFormat from 'dateformat'
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  const navigate = useNavigate();
   const [data, setData] = useState([{}]);
-
-  // Alert Toast
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
 
   // Get Data
   useEffect(() => {
     axios({
       method: "GET",
-      url: process.env.REACT_APP_API_URL + "/api/roles",
+      url: process.env.REACT_APP_API_URL + "/api/job-posts",
     })
       .then(function (response) {
         setData(response.data.data);
@@ -37,31 +23,6 @@ function Index() {
         console.log(error);
       });
   }, [])
-
-  // Delete Data
-  function deleteData(id) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete Now!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios({
-          method: "DELETE",
-          url: process.env.REACT_APP_API_URL + "/api/roles/" + id,
-        }).then(
-          Toast.fire({
-            icon: 'success',
-            title: 'Success delete data'
-          }),
-          navigate('/human-resource/role', { replace: true })
-        ).catch(function (error) { console.log(error); })
-      }
-    })
-  }
 
   return (
     <>
@@ -81,12 +42,12 @@ function Index() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1 className="m-0">List of Role</h1>
+                  <h1 className="m-0">List of Job</h1>
                 </div>
                 <div className="col-sm-6">
                   <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                    <li className="breadcrumb-item active">Role</li>
+                    <li className="breadcrumb-item"><NavLink to="/applicant/dashboard">Dashboard</NavLink></li>
+                    <li className="breadcrumb-item active">Job List</li>
                   </ol>
                 </div>
               </div>
@@ -100,11 +61,13 @@ function Index() {
               <div className="col-12">
                 <div className="card">
                   <div className="card-body">
-                    <NavLink to="/human-resource/role/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Role</NavLink>
                     <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
-                          <th>Name</th>
+                          <th>Job Title</th>
+                          <th>Job Level</th>
+                          <th>Job Function</th>
+                          <th>Open Until</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -112,10 +75,12 @@ function Index() {
                         {data.map((data) => {
                           return (
                             <tr>
-                              <td className="text-capitalize">{data.name}</td>
+                              <td className="text-capitalize">{data.title}</td>
+                              <td className="text-capitalize">{data.job_level}</td>
+                              <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
                               <td>
-                                <NavLink to={`/human-resource/role/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
-                                <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+                                <NavLink to={`/applicant/job-list/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
                               </td>
                             </tr>
                           );

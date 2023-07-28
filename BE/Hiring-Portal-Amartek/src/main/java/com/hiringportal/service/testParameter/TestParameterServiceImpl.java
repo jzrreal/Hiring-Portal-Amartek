@@ -44,6 +44,7 @@ public class TestParameterServiceImpl implements TestParameterService {
 
         testParameter.setTestTimeMinute(entity.getTestTimeMinute());
         testParameter.setExpirationHour(entity.getExpirationHour());
+        testParameter.setThreshold(entity.getThreshold());
 
         return testParameterRepository.save(testParameter);
     }

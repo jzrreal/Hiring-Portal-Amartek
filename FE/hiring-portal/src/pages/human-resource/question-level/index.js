@@ -115,7 +115,7 @@ function Index() {
                           return (
                             <tr>
                               <td className="text-capitalize">{data.name}</td>
-                              <td className="text-capitalize">{data.point}</td>
+                              <td className="text-capitalize">{data.point + " Point"}</td>
                               <td>
                                 <NavLink to={`/human-resource/question-level/edit/${data.questionLevelId}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.questionLevelId)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
