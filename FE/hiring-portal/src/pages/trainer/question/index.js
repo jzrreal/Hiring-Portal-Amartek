@@ -59,7 +59,7 @@ function Index() {
             title: 'Success delete data'
           }),
           setData(data),
-          navigate('/trainer/question', { replace: true })
+          navigate('/trainer/question', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
     })
