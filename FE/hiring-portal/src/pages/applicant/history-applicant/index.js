@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink } from 'react-router-dom';
+import {NavLink, useOutletContext} from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
@@ -9,6 +9,7 @@ import Footer from "../../../components/footer";
 
 function Index() {
   const [data, setData] = useState([{}]);
+  const token = useOutletContext();
 
   // Get Data
   useEffect(() => {
