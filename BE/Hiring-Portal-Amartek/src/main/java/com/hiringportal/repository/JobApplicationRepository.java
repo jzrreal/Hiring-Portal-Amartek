@@ -1,5 +1,6 @@
 package com.hiringportal.repository;
 
+import com.hiringportal.dto.ApplicationHistoryResponse;
 import com.hiringportal.dto.JobApplicationResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,4 +37,16 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
             where ja.candidateProfile.id = :candidateProfileId
             """)
     List<JobApplication> findAllByCandidateProfileId(Integer candidateProfileId);
+    @Query(value = """
+            select count(ja.id) from JobApplication ja
+            """)
+    Integer getTotalApply();
+    @Query(value = """
+            select ja
+            from JobApplication ja
+            join JobPost jp on ja.jobPost.id = jp.id
+            join CandidateProfile cp on ja.candidateProfile.id = cp.id
+            join ApplicationStatus jas on ja.applicationStatus.id = jas.id
+                """)
+    List<JobApplication> findFirstFiveJobApplication(PageRequest pageRequest);
 }
