@@ -123,19 +123,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
     @Override
     public List<QuestionTestResponse> getAllQuestionTestByToken(String token) {
         TestParameter testParameter = testParameterRepository.findById(1).orElseThrow();
-        Test test = testRepository.findTestByTestToken(token)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test not found"));
-
-        if (test.getResult() != null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
-        }
-
-        if (!new Date(System.currentTimeMillis()).before(test.getEndAt()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
-
-        if (test.getEndTest() != null && !new Date(System.currentTimeMillis()).before(test.getEndTest())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
-        }
+        Test test = getTestFromTokenAndCheck(token);
 
         if (test.getEndTest() == null) {
             test.setEndTest(
@@ -219,6 +207,11 @@ public class OnlineTestServiceImpl implements OnlineTestService {
 
     }
 
+    @Override
+    public void checkTokenExpired(String token) {
+        getTestFromTokenAndCheck(token);
+    }
+
     @Scheduled(fixedRate = 3600000) //Every one hour do this job
     public void schedulingForExpiredTestToGetResult() {
         log.info("Time : {}", LocalDateTime.now());
@@ -234,6 +227,28 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         if (tests.isEmpty()) return;
 
         tests.forEach(test -> getResultSaveToTestAndSendEmail(test, test.getTestToken()));
+    }
+
+    private Test getTestFromTokenAndCheck(String token) {
+        if (token.isBlank()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token must not be blank");
+        }
+
+        Test test = testRepository.findTestByTestToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test not found"));
+
+        if (test.getResult() != null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
+        }
+
+        if (!new Date(System.currentTimeMillis()).before(test.getEndAt()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
+
+        if (test.getEndTest() != null && !new Date(System.currentTimeMillis()).before(test.getEndTest())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
+        }
+
+        return test;
     }
 
     private void getResultSaveToTestAndSendEmail(Test test, String token) {

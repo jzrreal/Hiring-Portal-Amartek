@@ -46,6 +46,19 @@ public class OnlineTestController {
         );
     }
 
+    @GetMapping("check")
+    public ResponseEntity<Object> checkTestExpiredOrNot(
+            @RequestParam(name = "token") String token
+    ) {
+
+        onlineTestService.checkTokenExpired(token);
+
+        return CustomResponse.generateResponse(
+                "Valid",
+                HttpStatus.OK
+        );
+    }
+
     @PutMapping("test-questions/{testQuestionId}/questions/{questionId}/choices/{choiceId}")
     public ResponseEntity<Object> updateAnswer(
             @PathVariable(name = "testQuestionId") Integer testQuestionId,

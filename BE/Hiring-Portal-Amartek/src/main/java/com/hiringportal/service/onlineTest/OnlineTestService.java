@@ -17,4 +17,5 @@ public interface OnlineTestService {
     void saveAllAnswerAndGetResult(String token);
     @Transactional
     void schedulingForExpiredTestToGetResult();
+    void checkTokenExpired(String token);
 }
