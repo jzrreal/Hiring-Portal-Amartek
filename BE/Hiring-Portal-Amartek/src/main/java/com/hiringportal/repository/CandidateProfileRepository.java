@@ -32,11 +32,11 @@ public interface CandidateProfileRepository extends JpaRepository<CandidateProfi
 
     Optional<CandidateProfile> findCandidateProfileByUser_Email(String email);
 
-    @Query(value = """
-            select new com.hiringportal.dto.ApplicantResponse(c.id, u.fullName, u.email, c.phone)
-            from CandidateProfile c join User u on c.user.id = u.id
-                    """)
-    List<ApplicantResponse> findFirstFiveApplicant(PageRequest pageRequest);
+//    @Query(value = """
+//            select new com.hiringportal.dto.ApplicantResponse(c.id, u.fullName, u.email, c.phone)
+//            from CandidateProfile c join User u on c.user.id = u.id
+//                    """)
+//    List<ApplicantResponse> findFirstFiveApplicant(PageRequest pageRequest);
 
     @Query(value = """
             select new com.hiringportal.dto.CandidateProfileQuery(u.fullName, c.birthDate, u.gender, c.id) from CandidateProfile c join User u on c.user.id = u.id where c.id in :idCandidateProfiles
