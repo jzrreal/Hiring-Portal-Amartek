@@ -43,10 +43,10 @@ public class SecurityConfiguration {
                 .antMatchers(HttpMethod.GET, "/api/applications", "/api/profiles/applicants").hasAuthority("applicant")
                 //Need authentication with role HR
                 .antMatchers(HttpMethod.POST, "/api/job-posts", "/api/online-tests/applications/*", "api/job-functions", "/api/skill-levels", "/api/question-levels", "/api/job-levels").hasAuthority("human resource")
-                .antMatchers(HttpMethod.PUT, "/api/job-posts/*", "api/job-functions/*", "/api/skill-levels/*", "/api/question-levels/*", "/api/job-levels/*").hasAuthority("human resource")
-                .antMatchers(HttpMethod.DELETE, "/api/job-posts/*", "api/job-functions/*", "/api/skill-levels/*", "/api/question-levels/*", "/api/job-levels/*").hasAuthority("human resource")
-                .antMatchers(HttpMethod.GET, "/api/applications/job-post/*", "/api/applications/*/applicants", "api/job-functions/*", "/api/skill-levels/*", "/api/question-levels/*", "/api/job-levels/*").hasAuthority("human resource")
-                .antMatchers("/api/application-status/**", "/api/roles/**", "api/test-parameters/**", "/api/applicants/**","/api/users/**").hasAuthority("human resource")
+                .antMatchers(HttpMethod.PUT, "/api/job-posts/*", "/api/job-functions/*", "/api/skill-levels/*", "/api/question-levels/*", "/api/job-levels/*").hasAuthority("human resource")
+                .antMatchers(HttpMethod.DELETE, "/api/job-posts/*", "/api/job-functions/*", "/api/skill-levels/*", "/api/question-levels/*", "/api/job-levels/*").hasAuthority("human resource")
+                .antMatchers(HttpMethod.GET, "/api/applications/job-post/*", "/api/applications/*/applicants", "/api/job-functions/*", "/api/skill-levels/*", "/api/question-levels/*", "/api/job-levels/*").hasAuthority("human resource")
+                .antMatchers("/api/application-status/**", "/api/roles/**", "/api/test-parameters/**", "/api/applicants/**","/api/users/**").hasAuthority("human resource")
                 //Need authentication with role Trainer
                 .antMatchers(HttpMethod.POST, "/api/questions").hasAuthority("trainer")
                 .antMatchers(HttpMethod.PUT, "/api/questions/*").hasAuthority("trainer")
