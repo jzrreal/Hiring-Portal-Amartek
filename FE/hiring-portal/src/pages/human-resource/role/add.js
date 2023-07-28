@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext} from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 function Add() {
     const navigate = useNavigate()
     const [inputData, setInputData] = useState({})
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -30,7 +31,10 @@ function Add() {
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/roles",
-            data: inputData
+            data: inputData,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         }).then(
             Toast.fire({
                 icon: 'success',

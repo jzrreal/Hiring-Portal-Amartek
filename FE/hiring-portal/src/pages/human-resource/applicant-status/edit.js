@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -11,6 +11,7 @@ function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -30,6 +31,9 @@ function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -45,7 +49,10 @@ function Edit() {
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
-            data: data
+            data: data,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         }).then(
             Toast.fire({
                 icon: 'success',

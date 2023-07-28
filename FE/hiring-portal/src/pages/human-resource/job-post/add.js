@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext} from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -12,6 +12,7 @@ function Add() {
     const [inputData, setInputData] = useState({})
     const [jobLevels, setJobLevels] = useState([]);
     const [jobFunction, setJobFunction] = useState([]);
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -40,7 +41,10 @@ function Add() {
     useEffect(() => {
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-levels"
+            url: process.env.REACT_APP_API_URL + "/api/job-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then((response) => {
                 setJobLevels(response.data.data)
@@ -48,7 +52,10 @@ function Add() {
 
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-functions"
+            url: process.env.REACT_APP_API_URL + "/api/job-functions",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then((response) => {
                 setJobFunction(response.data.data)

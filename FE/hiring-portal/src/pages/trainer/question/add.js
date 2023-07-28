@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext} from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -20,6 +20,7 @@ function Add() {
     const [bool4, setBool4] = useState(false)
     const [choice5, setChoice5] = useState("")
     const [bool5, setBool5] = useState(false)
+    const token = useOutletContext();
 
     const [inputData, setInputData] = useState({
         question: '', segment: 'DATABASE', question_level_id: 1, 
@@ -56,7 +57,10 @@ function Add() {
     useEffect( () => {
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/question-levels"
+            url: process.env.REACT_APP_API_URL + "/api/question-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then(response => {
             setQuestionLevels(response.data.data)
@@ -81,7 +85,10 @@ function Add() {
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/questions",
-            data: inputData
+            data: inputData,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         }).then(
             Toast.fire({
                 icon: 'success',

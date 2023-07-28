@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -21,6 +21,7 @@ function Edit() {
     const [bool4, setBool4] = useState(false)
     const [choice5, setChoice5] = useState("")
     const [bool5, setBool5] = useState(false)
+    const token = useOutletContext();
 
     const [inputData, setInputData] = useState({
         // question: '', segment: 'DATABASE', question_level_id: 1, 
@@ -59,6 +60,9 @@ function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then(function (response) {
             console.log(response.data.data);
@@ -73,7 +77,10 @@ function Edit() {
     
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/question-levels"
+            url: process.env.REACT_APP_API_URL + "/api/question-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then(response => {
             console.log(response.data.data);
@@ -99,7 +106,7 @@ function Edit() {
 
     // Edit Data
     const handleSubmit = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
 
         inputData.choices[0].choice = choice1;
         inputData.choices[1].choice = choice2;
@@ -130,7 +137,10 @@ function Edit() {
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
-            data: inputData
+            data: inputData,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         }).
         then((reso) => {
             console.log(reso);
@@ -213,35 +223,35 @@ function Edit() {
                                                     <div className='col'>
                                                         <input className='form-control mb-3' placeholder='Set Choice' value={choice1} onChange={e => setChoice1(e.target.value)}/>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="radio1" onChange={e => {setBool1(true); setBool2(false); setBool3(false); setBool4(false); setBool5(false)}}/>
+                                                            <input class="form-check-input" type="radio" name="radio1" checked={bool1} onChange={e => {setBool1(true); setBool2(false); setBool3(false); setBool4(false); setBool5(false)}}/>
                                                             <label class="form-check-label">True</label>
                                                         </div>
                                                     </div>
                                                     <div className='col'>
                                                         <input className='form-control mb-3' placeholder='Set Choice' value={choice2} onChange={e => setChoice2(e.target.value)}/>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="radio1" onChange={e => {setBool1(false); setBool2(true); setBool3(false); setBool4(false); setBool5(false)}}/>
+                                                            <input class="form-check-input" type="radio" name="radio1" checked={bool2} onChange={e => {setBool1(false); setBool2(true); setBool3(false); setBool4(false); setBool5(false)}}/>
                                                             <label class="form-check-label">True</label>
                                                         </div>
                                                     </div>
                                                     <div className='col'>
                                                         <input className='form-control mb-3' placeholder='Set Choice' value={choice3} onChange={e => setChoice3(e.target.value)}/>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="radio1" onChange={e => {setBool1(false); setBool2(false); setBool3(true); setBool4(false); setBool5(false)}}/>
+                                                            <input class="form-check-input" type="radio" name="radio1" checked={bool3} onChange={e => {setBool1(false); setBool2(false); setBool3(true); setBool4(false); setBool5(false)}}/>
                                                             <label class="form-check-label">True</label>
                                                         </div>
                                                     </div>
                                                     <div className='col'>
                                                         <input className='form-control mb-3' placeholder='Set Choice' value={choice4} onChange={e => setChoice4(e.target.value)}/>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="radio1" onChange={e => {setBool1(false); setBool2(false); setBool3(false); setBool4(true); setBool5(false)}}/>
+                                                            <input class="form-check-input" type="radio" name="radio1" checked={bool4} onChange={e => {setBool1(false); setBool2(false); setBool3(false); setBool4(true); setBool5(false)}}/>
                                                             <label class="form-check-label">True</label>
                                                         </div>
                                                     </div>
                                                     <div className='col'>
                                                         <input className='form-control mb-3' placeholder='Set Choice' value={choice5} onChange={e => setChoice5(e.target.value)}/>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="radio" name="radio1" onChange={e => {setBool1(false); setBool2(false); setBool3(false); setBool4(false); setBool5(true)}}/>
+                                                            <input class="form-check-input" type="radio" name="radio1" checked={bool5} onChange={e => {setBool1(false); setBool2(false); setBool3(false); setBool4(false); setBool5(true)}}/>
                                                             <label class="form-check-label">True</label>
                                                         </div>
                                                     </div>

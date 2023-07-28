@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
@@ -13,18 +13,25 @@ function Index() {
   const { id } = useParams();
   const [dataJobPost, setDataJobPost] = useState([{}]);
   const [dataApplicant, setDatadataApplicant] = useState([{}]);
+  const token = useOutletContext();
 
   // Get Data
   useEffect(() => {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setDataJobPost(response.data.data);
         axios({
           method: "GET",
           url: process.env.REACT_APP_API_URL + "/api/applications/job-post/" + response.data.data.id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         })
           .then(function (response) {
             setDatadataApplicant(response.data.data);

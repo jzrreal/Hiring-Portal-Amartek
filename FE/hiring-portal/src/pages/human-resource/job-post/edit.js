@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import {NavLink, useNavigate, useOutletContext, useParams} from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat';
 
@@ -16,6 +16,7 @@ function Edit() {
         job_level: '', job_function: '',
         open_until: '', vacancy: '', closed: '', job_function_id: 0, job_level_id: 0
     })
+    const token = useOutletContext();
 
     const [jobLevels, setJobLevels] = useState([])
     const [jobFunctions, setJobFunctions] = useState([])
@@ -50,6 +51,9 @@ function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then(function (response) {
             setJobResponse(response.data.data);
@@ -61,7 +65,10 @@ function Edit() {
 
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-levels"
+            url: process.env.REACT_APP_API_URL + "/api/job-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then((response) => {
             // console.log(response.data.data)
@@ -71,7 +78,10 @@ function Edit() {
 
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-functions"
+            url: process.env.REACT_APP_API_URL + "/api/job-functions",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
         .then((response) => {
             // console.log(response.data.data)
