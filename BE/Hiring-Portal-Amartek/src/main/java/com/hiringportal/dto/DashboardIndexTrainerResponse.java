@@ -9,16 +9,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class DashboardIndexResponse {
-
-    private Integer totalJobPost;
-    private Integer totalApplicantsApply;
-    private List<ApplicantApplyResponse> applicantsApplyResponses;
-    private List<JobPostResponse> jobPostResponses;
-
+public class DashboardIndexTrainerResponse {
+    private Integer totalEasyQuestions;
+    private Integer totalMediumQuestions;
+    private Integer totalHardQuestions;
+    private List<QuestionResponse> questionResponses;
 }
