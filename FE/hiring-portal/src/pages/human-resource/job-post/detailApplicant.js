@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat';
 
@@ -11,11 +11,15 @@ import Swal from 'sweetalert2';
 function Add() {
   const { id } = useParams();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: process.env.REACT_APP_API_URL + "/api/applications/" + id + "/applicants"
+      url: process.env.REACT_APP_API_URL + "/api/applications/" + id + "/applicants",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then((response) => {
         setData(response.data.data)

@@ -1,5 +1,6 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useOutletContext, useParams } from 'react-router-dom';
+
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
@@ -10,12 +11,16 @@ import Footer from "../../../components/footer";
 function Detail() {
   const { id } = useParams();
   const [data, setData] = useState({});
+  const token = useOutletContext()
 
   // Get Data
   useEffect(() => {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setData(response.data.data);

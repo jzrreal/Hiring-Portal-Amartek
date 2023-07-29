@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import dateFormat from 'dateformat';
 
@@ -10,6 +10,7 @@ import Footer from "../../components/footer";
 function Profile() {
     const [dataProfile, setDataProfile] = useState({});
     const [dataEducation, setDataEducation] = useState([{}]);
+    const token = useOutletContext()
 
     // Get Profile
     useEffect(() => {
@@ -17,7 +18,7 @@ function Profile() {
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/profiles/applicants",
             headers: {
-                Authorization: "Bearer " + localStorage.getItem("authToken")
+                Authorization: "Bearer " + token
             }
         })
             .then(response => {
@@ -26,7 +27,7 @@ function Profile() {
                     method: "GET",
                     url: process.env.REACT_APP_API_URL + "/api/education-histories/applicants/" + response.data.data.id,
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("authToken")
+                        Authorization: "Bearer " + token
                     }
                 })
                     .then(response => {

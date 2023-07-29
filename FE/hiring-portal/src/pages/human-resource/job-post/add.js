@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -9,9 +9,12 @@ import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
-    const [inputData, setInputData] = useState({})
+    const [inputData, setInputData] = useState({
+      job_function_id: 1, job_level_id: 1
+    })
     const [jobLevels, setJobLevels] = useState([]);
     const [jobFunction, setJobFunction] = useState([]);
+    const token = useOutletContext()
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -40,7 +43,10 @@ function Add() {
     useEffect(() => {
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-levels"
+            url: process.env.REACT_APP_API_URL + "/api/job-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then((response) => {
                 setJobLevels(response.data.data)
@@ -48,7 +54,10 @@ function Add() {
 
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-functions"
+            url: process.env.REACT_APP_API_URL + "/api/job-functions",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then((response) => {
                 setJobFunction(response.data.data)
@@ -62,7 +71,7 @@ function Add() {
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/job-posts",
             headers: {
-                Authorization: "Bearer " + localStorage.getItem("authToken")
+                Authorization: "Bearer " + token
             },
             data: inputData
         })
@@ -71,7 +80,7 @@ function Add() {
                     icon: 'success',
                     title: 'Success save data'
                 })
-                navigate('/human-resource/job-post', { replace: true })
+                navigate('/human-resource/job-post', { replace: false })
             }
             )
             .catch(function (error) { console.log(error); })

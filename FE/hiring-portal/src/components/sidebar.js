@@ -26,7 +26,7 @@ function Sidebar() {
       <Link to="/human-resource/dashboard" className="brand-link">
         <img src="https://www.amartek.id/i/favicon.png" className="img-fuild" />
         <span className="brand-text font-weight-bold font-weight-light ml-3">
-          Portal Hiring
+          Hiring Portal
         </span>
       </Link>
       {/* Brand Logo */}

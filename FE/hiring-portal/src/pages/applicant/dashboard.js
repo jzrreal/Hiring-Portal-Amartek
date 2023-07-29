@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import dateFormat from "dateformat";
 
@@ -12,6 +12,7 @@ function Dashboard() {
   const [dataHistoryApplicant, setDataHistoryApplicant] = useState([{}]);
   const [totalApplyJob, setTotalApplyJob] = useState(0);
   const [totalJob, setTotalJob] = useState(0);
+  const token = useOutletContext()
 
   // Get Data
   useEffect(() => {
@@ -19,11 +20,10 @@ function Dashboard() {
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/dashboards",
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("authToken")
+        Authorization: "Bearer " + token
       }
     })
       .then(function (response) {
-        console.log(response.data.data);
         setTotalApplyJob(response.data.data.total_apply_job);
         setDataHistoryApplicant(response.data.data.job_application_responses);
         setTotalJob(response.data.data.total_job_post);
@@ -96,6 +96,7 @@ function Dashboard() {
                           <th>Job Title</th>
                           <th>Job Level</th>
                           <th>Job Function</th>
+                          <th>Post At</th>
                           <th>Open Until</th>
                           <th>Actions</th>
                         </tr>
@@ -107,6 +108,7 @@ function Dashboard() {
                               <td className="text-capitalize">{data.title}</td>
                               <td className="text-capitalize">{data.job_level}</td>
                               <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
                               <td>
                                 <NavLink to={`/applicant/job-list/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
