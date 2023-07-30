@@ -39,7 +39,7 @@ function Sidebar() {
         <div className="info ml-2">
           {
             role == "Applicant" ?
-              <NavLink to="/applicant/profile" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</NavLink>
+              <NavLink to="/applicant/profile/personal-information" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</NavLink>
               :
               <a href="#" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</a>
           }
@@ -89,7 +89,7 @@ function Sidebar() {
             {/* Master Data */}
             {
               role == "Human Resource" ?
-                <li li className="nav-item">
+                <li className="nav-item">
                   <a href="#" id="master-data" className="nav-link">
                     <i className="nav-icon fas fa-copy mr-2"></i>
                     <p>
