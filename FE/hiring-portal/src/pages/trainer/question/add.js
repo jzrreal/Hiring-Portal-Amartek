@@ -98,49 +98,6 @@ function Add() {
         ).catch(function (error) { console.log(error); })
     }
 
-    // const checkHandler = e => {
-    //     e.preventDefault()
-
-    //     setChecje
-    // }
-
-    // const choicesList = (index, data) => {
-    //     return (
-    //         <div className='col' key={index}>
-    //             <input className='form-control mb-3' placeholder={data.choice} />
-    //             <div class="form-check">
-    //                 <input class="form-check-input" type="radio" name="radio1" />
-    //                 <label class="form-check-label">True</label>
-    //             </div>
-    //         </div>
-    //     )
-    // }
-
-    // function clickHandler (e, id) {
-    //     e.preventDefault()
-
-    //     setBool1(false)
-    //     setBool1((id) => {id==="choice1" ? true : false})
-    //     setBool2((id) => {id==="choice2" ? true : false})
-    //     setBool3((id) => {id==="choice3" ? true : false})
-    //     setBool4((id) => {id==="choice4" ? true : false})
-    //     setBool5((id) => {id==="choice5" ? true : false})
-
-    //     inputData.choice_requests[0].choice = choice1;
-    //     inputData.choice_requests[1].choice = choice2;
-    //     inputData.choice_requests[2].choice = choice3;
-    //     inputData.choice_requests[3].choice = choice4;
-    //     inputData.choice_requests[4].choice = choice5;
-
-    //     inputData.choice_requests[0].correct = bool1;
-    //     inputData.choice_requests[1].correct = bool2;
-    //     inputData.choice_requests[2].correct = bool3;
-    //     inputData.choice_requests[3].correct = bool4;
-    //     inputData.choice_requests[4].correct = bool5;
-
-    //     console.log(inputData)
-    // }
-
     return (
         <>
             <div className="wrapper">
