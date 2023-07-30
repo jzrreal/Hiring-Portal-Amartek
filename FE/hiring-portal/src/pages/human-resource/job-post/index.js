@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
@@ -11,6 +11,7 @@ import Footer from "../../../components/footer";
 function Index() {
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Alert Toast
   const Toast = Swal.mixin({
@@ -30,6 +31,9 @@ function Index() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then((response) => {
         setData(response.data.data);
@@ -53,13 +57,16 @@ function Index() {
         axios({
           method: "DELETE",
           url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         }).then(
           Toast.fire({
             icon: 'success',
             title: 'Success delete data'
           }),
           setData(data),
-          navigate('/human-resource/job-post', { replace: true })
+          navigate('/human-resource/job-post', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
     })
@@ -109,6 +116,7 @@ function Index() {
                           <th>Title Job</th>
                           <th>Job Level</th>
                           <th>Job Function</th>
+                          <th>Post At</th>
                           <th>Open Until</th>
                           <th>Closed</th>
                           <th>Actions</th>
@@ -121,8 +129,14 @@ function Index() {
                               <td className="text-capitalize">{data.title}</td>
                               <td className="text-capitalize">{data.job_level}</td>
                               <td className="text-capitalize">{data.job_function}</td>
+                              <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">{data.closed ? dateFormat(data.closed, "dd mmmm yyyy") : "-"}</td>
+                              <td className="text-capitalize">
+                                {data.closed === null || data.closed === false ?
+                                  <span className="badge badge-success">Open</span>
+                                  : <span className="badge badge-danger">Closed</span>
+                                }
+                              </td>
                               <td>
                                 <NavLink to={`/human-resource/job-post/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
                                 <NavLink to={`/human-resource/job-post/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>

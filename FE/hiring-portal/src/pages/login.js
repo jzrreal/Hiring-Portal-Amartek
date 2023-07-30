@@ -5,6 +5,9 @@ import Swal from 'sweetalert2';
 import redirectManager from '../service/redirectManager';
 
 function Login() {
+    // Title Page
+    document.title = "Login | Hiring Portal";
+    // Title Page
     const navigate = useNavigate();
 
     const [email, setEmail] = useState()
@@ -25,37 +28,18 @@ function Login() {
             toast.addEventListener('mouseenter', Swal.stopTimer)
             toast.addEventListener('mouseleave', Swal.resumeTimer)
         }
-      })
+    })
 
-      const handleSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault()
-
         axios({
-          method: "POST",
-          url: process.env.REACT_APP_API_URL + "/api/auth/login",
-          data: body
-        })
-        .then(response => {
-            if(response.data.status === 200){
-                localStorage.setItem("authToken", response.data.data)
-
-                axios({
-                    method: "GET",
-                    url: process.env.REACT_APP_API_URL + "/api/profiles",
-                    headers: {
-                        Authorization : "Bearer " + localStorage.getItem("authToken")
-                    }
-                })
-                .then(response => {
-                    localStorage.setItem("role", response.data.data.role)
-                    navigate(redirectManager(localStorage.getItem("role")), {replace: true})
-                })
-            }
+            method: "POST",
+            url: process.env.REACT_APP_API_URL + "/api/auth/login",
+            data: body
         })
             .then(response => {
                 if (response.data.status === 200) {
                     localStorage.setItem("authToken", response.data.data)
-
                     axios({
                         method: "GET",
                         url: process.env.REACT_APP_API_URL + "/api/profiles",

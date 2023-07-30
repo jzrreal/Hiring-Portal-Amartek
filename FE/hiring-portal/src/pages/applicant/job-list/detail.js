@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
@@ -10,14 +10,19 @@ import Footer from "../../../components/footer";
 function Detail() {
   const { id } = useParams();
   const [data, setData] = useState({});
+  const token = useOutletContext()
 
   // Get Data
   useEffect(() => {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
+        console.log(response.data.data);
         setData(response.data.data);
       })
       .catch(function (error) {
@@ -64,9 +69,41 @@ function Detail() {
                 <div className="card">
                   <div className="card-body">
                     <div className="form-group">
-                      <label for="name">ID Applicant Status</label>
+                      <label for="name">ID Job Post</label>
                       <input type="text" className="form-control" id="id" value={data.id} readOnly />
                     </div>
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-group">
+                          <label for="job_title">Post At</label>
+                          <input type="text" className="form-control" id="job_title" value={dateFormat(data.post_at, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <label for="job_level">Open Until</label>
+                          <input type="text" className="form-control text-capitalize" id="job_level" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <label for="job_function">Updated At</label>
+                          <input type="text" className="form-control text-capitalize" id="job_function" value={dateFormat(data.updated_at, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label for="id">Closed</label>
+                      {
+                        (data.closed === null || data.closed === false) ?
+                          <input type="text" className="form-control bg-success" id="id" value="Open" />
+                          : <input type="text" className="form-control bg-danger" id="id" value="Closed" />
+                      }
+                    </div>
+                  </div>
+                </div>
+                <div className="card">
+                  <div className="card-body">
                     <div className="row">
                       <div className="col">
                         <div className="form-group">
@@ -94,10 +131,6 @@ function Detail() {
                     <div className="form-group">
                       <label for="job_requirement">Job Requirement</label>
                       <textarea className="form-control" id="job_requirement" value={data.requirements} readOnly />
-                    </div>
-                    <div className="form-group">
-                      <label for="open_until">Open Until</label>
-                      <textarea className="form-control" id="open_until" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
                     </div>
                     <div className="float-right">
                       <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>

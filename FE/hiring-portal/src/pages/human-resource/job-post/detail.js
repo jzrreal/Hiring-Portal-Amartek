@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
@@ -13,18 +13,26 @@ function Index() {
   const { id } = useParams();
   const [dataJobPost, setDataJobPost] = useState([{}]);
   const [dataApplicant, setDatadataApplicant] = useState([{}]);
+  const token = useOutletContext()
 
   // Get Data
   useEffect(() => {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setDataJobPost(response.data.data);
+        console.log(response.data.data);
         axios({
           method: "GET",
           url: process.env.REACT_APP_API_URL + "/api/applications/job-post/" + response.data.data.id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         })
           .then(function (response) {
             setDatadataApplicant(response.data.data);
@@ -79,6 +87,26 @@ function Index() {
                     <div className='row'>
                       <div className='col'>
                         <div className="form-group">
+                          <label for="id">Post At</label>
+                          <input type="text" className="form-control" id="id" value={dateFormat(dataJobPost.post_at, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                      <div className='col'>
+                        <div className="form-group">
+                          <label for="id">Open Until</label>
+                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.open_until, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                      <div className='col'>
+                        <div className="form-group">
+                          <label for="id">Updated At</label>
+                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.updated_at, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                    </div>
+                    <div className='row'>
+                      <div className='col'>
+                        <div className="form-group">
                           <label for="id">Job Title</label>
                           <input type="text" className="form-control" id="id" value={dataJobPost.title} readOnly />
                         </div>
@@ -93,6 +121,18 @@ function Index() {
                         <div className="form-group">
                           <label for="id">Job Level</label>
                           <input type="text" className="form-control text-capitalize" id="id" value={dataJobPost.job_level} readOnly />
+                        </div>
+                      </div>
+                    </div>
+                    <div className='row'>
+                      <div className='col'>
+                        <div className="form-group">
+                          <label for="id">Closed</label>
+                          {
+                            (dataJobPost.closed === null || dataJobPost.closed === false) ?
+                              <input type="text" className="form-control bg-success" id="id" value="Open" />
+                              : <input type="text" className="form-control bg-danger" id="id" value="Closed" />
+                          }
                         </div>
                       </div>
                     </div>
