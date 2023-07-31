@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -26,7 +27,9 @@ public class EducationHistory {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum")
     private EducationLevel level;
+    @NotBlank
     private String name;
+    @NotBlank
     private String major;
 
     @Column(columnDefinition = "year")
