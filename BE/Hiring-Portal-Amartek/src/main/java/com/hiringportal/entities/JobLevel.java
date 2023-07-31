@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,7 +27,7 @@ public class JobLevel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "job_level_id")
     private Integer id;
-
+    @NotBlank
     private String name;
 
     @JsonIgnore

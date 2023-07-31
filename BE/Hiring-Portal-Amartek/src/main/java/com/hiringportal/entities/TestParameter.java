@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @AllArgsConstructor
@@ -21,8 +22,11 @@ public class TestParameter {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "test_parameter_id")
     private Integer id;
+    @NotNull
     private Integer expirationHour;
+    @NotNull
     private Integer testTimeMinute;
+    @NotNull
     private Float threshold;
 
 }
