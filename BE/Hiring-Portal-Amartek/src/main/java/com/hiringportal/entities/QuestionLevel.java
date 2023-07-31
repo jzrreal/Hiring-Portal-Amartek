@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
@@ -23,6 +25,7 @@ public class QuestionLevel {
     private Integer questionLevelId;
 
     @Column(name = "name", nullable = false, length = 100)
+    @NotBlank
     private String name;
 
     @Column(name = "point", nullable = false)
