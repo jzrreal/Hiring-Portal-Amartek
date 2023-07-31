@@ -7,7 +7,7 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 import Swal from 'sweetalert2';
 
-function Edit() {
+export default function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const token = useOutletContext()
@@ -23,16 +23,7 @@ function Edit() {
     const [choice5, setChoice5] = useState("")
     const [bool5, setBool5] = useState(false)
 
-    const [inputData, setInputData] = useState({
-        // question: '', segment: 'DATABASE', question_level_id: 1, 
-        // choice_requests: [
-        //     { choice: "", correct: false},
-        //     { choice: "", correct: false},
-        //     { choice: "", correct: false},
-        //     { choice: "", correct: false},
-        //     { choice: "", correct: false}
-        // ]
-    })
+    const [inputData, setInputData] = useState({})
 
     const [questionLevels , setQuestionLevels] = useState([{}])
 
@@ -103,7 +94,7 @@ function Edit() {
 
     // Edit Data
     const handleSubmit = (e) => {
-        // e.preventDefault()
+        e.preventDefault()
 
         inputData.choices[0].choice = choice1;
         inputData.choices[1].choice = choice2;
@@ -120,31 +111,21 @@ function Edit() {
         inputData.question_level_id = questionLevels.find(({name}) => name===inputData.question_level).questionLevelId
         inputData.choice_requests = inputData.choices
 
-        for (let index = 0; index < inputData.choice_requests.length; index++) {
-            delete inputData.choice_requests[index].id;
-            
-        }
-        // delete inputData.choice_requests[0].id
-        // delete inputData.question_level;
-        // delete inputData.choices
-        
-        console.log(inputData);
-        // inputData.question_level_id = questionLevels.find(({name}) => name===inputData.question_level_id).questionLevelId
-        // setInputData({...inputData, question_level_id: questionLevels.find(({name}) => name===inputData.question_level_id).questionLevelId})
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
             data: inputData
-        }).
-        then((reso) => {
+        })
+        .then((reso) => {
             console.log(reso);
             Toast.fire({
                 icon: 'success',
                 title: 'Success update data'
             })
-            navigate('/trainer/question', { replace: true })
+            navigate('/trainer/question', { replace: false })
         }
-        ).catch(function (error) { console.log(error); })
+        )
+        .catch(function (error) { console.log(error); })
     }
 
     return (
@@ -273,5 +254,3 @@ function Edit() {
         </>
     )
 }
-
-export default Edit
