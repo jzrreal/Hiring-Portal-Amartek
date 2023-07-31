@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,5 +20,6 @@ public class QuestionTestResponse {
     private Integer questionId;
     private String question;
     private Integer answer;
+    private LocalDateTime expiredTime;
     private List<ChoiceTestResponse> choices;
 }
