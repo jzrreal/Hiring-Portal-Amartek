@@ -35,13 +35,20 @@ function Add() {
                 Authorization: "Bearer " + token
             },
             data: inputData
-        }).then(
+        }).then(response => {
+            if (response.data.status === 200) {
+                Toast.fire({
+                    icon: "success",
+                    title: response.data.message
+                })
+                navigate("/human-resource/question-level", { replace: false })
+            }
+        }).catch((error) => {
             Toast.fire({
-                icon: 'success',
-                title: 'Success save data'
-            }),
-            navigate('/human-resource/question-level', { replace: false })
-        ).catch(function (error) { console.log(error); })
+                icon: "error",
+                title: error.response.data.message
+            })
+        });
     }
 
     return (

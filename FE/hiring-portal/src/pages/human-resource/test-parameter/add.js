@@ -31,13 +31,20 @@ function Add() {
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/test-parameters",
             data: inputData
-        }).then(
+        }).then(response => {
+            if (response.data.status === 200) {
+                Toast.fire({
+                    icon: "success",
+                    title: response.data.message
+                })
+                navigate("/human-resource/test-parameter", { replace: false })
+            }
+        }).catch((error) => {
             Toast.fire({
-                icon: 'success',
-                title: 'Success save data'
-            }),
-            navigate('/human-resource/test-parameter', { replace: true })
-        ).catch(function (error) { console.log(error); })
+                icon: "error",
+                title: error.response.data.message
+            })
+        });
     }
 
     return (

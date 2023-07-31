@@ -112,8 +112,8 @@ function Detail() {
                       </div>
                       <div className="col">
                         <div className="form-group">
-                          <label for="job_level">Open Until</label>
-                          <input type="text" className="form-control text-capitalize" id="job_level" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
+                          <label for="vacancy">Vacancy</label>
+                          <input type="text" className="form-control text-capitalize" id="vacancy" value={data.vacancy + " People"} readOnly />
                         </div>
                       </div>
                       <div className="col">
@@ -123,13 +123,23 @@ function Detail() {
                         </div>
                       </div>
                     </div>
-                    <div className="form-group">
-                      <label for="id">Closed</label>
-                      {
-                        (data.closed === null || data.closed === false) ?
-                          <input type="text" className="form-control bg-success" id="id" value="Open" />
-                          : <input type="text" className="form-control bg-danger" id="id" value="Closed" />
-                      }
+                    <div className="row">
+                      <div className="col">
+                        <div className="form-group">
+                          <label for="job_level">Open Until</label>
+                          <input type="text" className="form-control text-capitalize" id="job_level" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                      <div className="col">
+                        <div className="form-group">
+                          <label for="id">Closed</label>
+                          {
+                            (data.closed === null || data.closed === false) ?
+                              <input type="text" className="form-control bg-success" id="id" value="Open" />
+                              : <input type="text" className="form-control bg-danger" id="id" value="Closed" />
+                          }
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -162,10 +172,6 @@ function Detail() {
                     <div className="form-group">
                       <label for="job_requirement">Job Requirement</label>
                       <textarea className="form-control" id="job_requirement" value={data.requirements} readOnly />
-                    </div>
-                    <div className="form-group">
-                      <label for="vacancy">Vacancy</label>
-                      <input type="text" className="form-control text-capitalize" id="vacancy" value={data.vacancy} readOnly />
                     </div>
                     <div className="float-right">
                       <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>

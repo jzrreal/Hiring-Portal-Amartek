@@ -92,14 +92,14 @@ function Index() {
                       </div>
                       <div className='col'>
                         <div className="form-group">
-                          <label for="id">Open Until</label>
-                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.open_until, "dd mmmm yyyy")} readOnly />
+                          <label for="id">Updated At</label>
+                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.updated_at, "dd mmmm yyyy")} readOnly />
                         </div>
                       </div>
                       <div className='col'>
                         <div className="form-group">
-                          <label for="id">Updated At</label>
-                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.updated_at, "dd mmmm yyyy")} readOnly />
+                          <label for="id">Vacancy</label>
+                          <input type="text" className="form-control" id="id" value={dataJobPost.vacancy + " People"} readOnly />
                         </div>
                       </div>
                     </div>
@@ -126,6 +126,12 @@ function Index() {
                     <div className='row'>
                       <div className='col'>
                         <div className="form-group">
+                          <label for="id">Open Until</label>
+                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.open_until, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
+                      <div className='col'>
+                        <div className="form-group">
                           <label for="id">Closed</label>
                           {
                             (dataJobPost.closed === null || dataJobPost.closed === false) ?
@@ -149,6 +155,7 @@ function Index() {
                           <th>School / University</th>
                           <th>Apply At</th>
                           <th>Status</th>
+                          <th>Test Result</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -176,6 +183,19 @@ function Index() {
                                             : null
                                           )
                                         )
+                                      )
+                                    )
+                                }
+                              </td>
+                              <td className="text-capitalize">
+                                {
+                                  data.test_result == "Waiting" ?
+                                    <span class="badge badge-warning">{data.test_result}</span>
+                                    : (data.test_result == "Passed" ?
+                                      <span class="badge badge-success">{data.test_result}</span>
+                                      : (data.test_result == "Failed" ?
+                                        <span class="badge badge-danger">{data.test_result}</span>
+                                        : null
                                       )
                                     )
                                 }

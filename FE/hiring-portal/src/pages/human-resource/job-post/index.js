@@ -26,22 +26,24 @@ function Index() {
     }
   })
 
-  // Get Data
   useEffect(() => {
+    getData()
+  }, [])
+
+  // Get Data
+  function getData() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/job-posts",
       headers: {
         Authorization: "Bearer " + token
       }
-    })
-      .then((response) => {
-        setData(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, [])
+    }).then((response) => {
+      setData(response.data.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
   // Delete Data
   function deleteData(id) {
@@ -65,7 +67,7 @@ function Index() {
             icon: 'success',
             title: 'Success delete data'
           }),
-          setData(data),
+          getData(),
           navigate('/human-resource/job-post', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
