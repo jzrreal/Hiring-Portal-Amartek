@@ -67,9 +67,7 @@ function Dashboard() {
                 <span className="info-box-icon bg-info elevation-1"><i className="fas fa-list-ol"></i></span>
                 <div className="info-box-content">
                   <span className="info-box-text">Total Questions</span>
-                  <span className="info-box-number">
-                    0
-                  </span>
+                  <span className="info-box-number">{total_easy_questions + total_medium_questions + total_hard_questions}</span>
                 </div>
               </div>
             </div>

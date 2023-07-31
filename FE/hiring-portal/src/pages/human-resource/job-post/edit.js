@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat';
 
@@ -19,6 +19,7 @@ function Edit() {
 
     const [jobLevels, setJobLevels] = useState([])
     const [jobFunctions, setJobFunctions] = useState([])
+    const token = useOutletContext()
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -50,35 +51,44 @@ function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
-        .then(function (response) {
-            setJobResponse(response.data.data);
-            // console.log(response.data.data)
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .then(function (response) {
+                setJobResponse(response.data.data);
+                // console.log(response.data.data)
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
 
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-levels"
+            url: process.env.REACT_APP_API_URL + "/api/job-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
-        .then((response) => {
-            // console.log(response.data.data)
-            setJobLevels(response.data.data)
-            jobResponse.job_level_id = 1
-        });
+            .then((response) => {
+                // console.log(response.data.data)
+                setJobLevels(response.data.data)
+                jobResponse.job_level_id = 1
+            });
 
         axios({
             method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-functions"
+            url: process.env.REACT_APP_API_URL + "/api/job-functions",
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
-        .then((response) => {
-            // console.log(response.data.data)
-            setJobFunctions(response.data.data)
-            jobResponse.job_function_id = 1
-            // delete jobResponse["job_function"]
-        })
+            .then((response) => {
+                // console.log(response.data.data)
+                setJobFunctions(response.data.data)
+                jobResponse.job_function_id = 1
+                // delete jobResponse["job_function"]
+            })
     }, [])
 
     const jobLevelOptions = (jobLevel) => {
@@ -97,8 +107,8 @@ function Edit() {
     function handleSubmit(e) {
         // e.preventDefault()
 
-        jobResponse.job_level_id = jobLevels.find(({name}) => name===jobResponse.job_level).id
-        jobResponse.job_function_id = jobFunctions.find(({name}) => name===jobResponse.job_function).id
+        jobResponse.job_level_id = jobLevels.find(({ name }) => name === jobResponse.job_level).id
+        jobResponse.job_function_id = jobFunctions.find(({ name }) => name === jobResponse.job_function).id
         // setJobResponse({...jobResponse, job_level_id: jobResponse.job_level},)
         // delete jobResponse["job_level"]
         // delete jobResponse["job_function"]
@@ -108,13 +118,16 @@ function Edit() {
         console.log(jobResponse);
         // console.log(jobLevels);
         // setJobRequest(jobResponse)
-        
+
         // setJobRequest({...jobRequest, job_level: jobLevels.find(({name}) => name===jobResponse.job_level).id})
         // setJobRequest({...jobRequest, job_function: jobFunctions.find(({name}) => name===jobResponse.job_function).id})
         // console.log(jobRequest);
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/job-posts/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            },
             data: jobResponse
         }).then(
             Toast.fire({
@@ -192,7 +205,7 @@ function Edit() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Job Level</label>
-                                                        <select className='form-control' id='job_level' value={jobResponse.job_level} onChange={e => setJobResponse({ ...jobResponse, job_level: jobLevels.find(({name}) => name===e.target.value).name})} >
+                                                        <select className='form-control text-capitalize' id='job_level' value={jobResponse.job_level} onChange={e => setJobResponse({ ...jobResponse, job_level: jobLevels.find(({ name }) => name === e.target.value).name })} >
                                                             {jobLevels.map(jobLevelOptions)}
                                                         </select>
                                                     </div>
@@ -200,7 +213,7 @@ function Edit() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Job Function</label>
-                                                        <select className='form-control' id='job_level' value={jobResponse.job_function} onChange={e => setJobResponse({ ...jobResponse, job_function: jobFunctions.find(({name}) => name===e.target.value).name })} >
+                                                        <select className='form-control text-capitalize' id='job_level' value={jobResponse.job_function} onChange={e => setJobResponse({ ...jobResponse, job_function: jobFunctions.find(({ name }) => name === e.target.value).name })} >
                                                             {jobFunctions.map(jobFunctionOptions)}
                                                         </select>
                                                     </div>
@@ -229,8 +242,8 @@ function Edit() {
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="open_until">Open Until</label>
-                                                        <select className='form-control' id='job_level' value={jobResponse.closed} onChange={e => setJobResponse({ ...jobResponse, closed: e.target.value })} >
+                                                        <label for="open_until">Closed</label>
+                                                        <select className='form-control' id='job_level' value={jobResponse.closed ? true : false} onChange={e => setJobResponse({ ...jobResponse, closed: e.target.value })} >
                                                             <option value={true} >True</option>
                                                             <option value={false}>False</option>
                                                         </select>

@@ -65,7 +65,29 @@ import EditQuestion from './pages/trainer/question/edit';
 
 // Aplicant
 import DashboardApplicant from "./pages/applicant/dashboard";
-import ProfileApplicant from "./pages/applicant/profile";
+// Profile
+// Personal Information
+import PersonalInformationProfileApplicant from "./pages/applicant/profile/personal-information";
+import EditPersonalInformationProfileApplicant from "./pages/applicant/profile/personal-information/edit";
+// Personal Information
+// Education Histories
+import EducationHistoriesProfileApplicant from "./pages/applicant/profile/education-histories";
+import AddEducationHistoriesProfileApplicant from "./pages/applicant/profile/education-histories/add";
+import EditEducationHistoriesProfileApplicant from "./pages/applicant/profile/education-histories/edit";
+// Education Histories
+// Skills
+import SkillsProfileApplicant from "./pages/applicant/profile/skills";
+// Skills
+// Work Experiences
+import WorkExperiencesProfileApplicant from "./pages/applicant/profile/work-experiences";
+// Work Experiences
+// Certificates
+import CertificatesProfileApplicant from "./pages/applicant/profile/certificates";
+// Certificates
+// Achievments
+import AchievmentsProfileApplicant from "./pages/applicant/profile/achievments";
+// Achievments
+// Profile
 // Job List
 import IndexJobList from "./pages/applicant/job-list";
 import DetailJobList from "./pages/applicant/job-list/detail";
@@ -100,7 +122,7 @@ function App() {
           {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
-            <Route path='add'  element={<AddRole />} />
+            <Route path='add' element={<AddRole />} />
             <Route path='edit/:id' element={<EditRole />} />
           </Route>
           <Route path='applicant'>
@@ -166,7 +188,43 @@ function App() {
         {/* Aplicant */}
         <Route path='applicant' element={<ApplicantProtection />}>
           <Route path='dashboard' element={<DashboardApplicant />} />
-          <Route path='profile' element={<ProfileApplicant />} />
+          {/* Profile */}
+          <Route path='profile'>
+            {/* Personal Information */}
+            <Route path='personal-information'>
+              <Route index element={<PersonalInformationProfileApplicant />} />
+              <Route path='edit/:id' element={<EditPersonalInformationProfileApplicant />} />
+            </Route>
+            {/* Personal Information */}
+            {/* Education Histories */}
+            <Route path='education-histories'>
+              <Route index element={<EducationHistoriesProfileApplicant />} />
+              <Route path='add' element={<AddEducationHistoriesProfileApplicant />} />
+              <Route path='edit/:id' element={<EditEducationHistoriesProfileApplicant />} />
+            </Route>
+            {/* Education Histories */}
+            {/* Skills */}
+            <Route path='skills'>
+              <Route index element={<SkillsProfileApplicant />} />
+            </Route>
+            {/* Skills */}
+            {/* Work Experiences */}
+            <Route path='work-experiences'>
+              <Route index element={<WorkExperiencesProfileApplicant />} />
+            </Route>
+            {/* Work Experiences */}
+            {/* Certificates */}
+            <Route path='certificates'>
+              <Route index element={<CertificatesProfileApplicant />} />
+            </Route>
+            {/* Certificates */}
+            {/* Achievments */}
+            <Route path='achievments'>
+              <Route index element={<AchievmentsProfileApplicant />} />
+            </Route>
+            {/* Achievments */}
+          </Route>
+          {/* Profile */}
           {/* Job List */}
           <Route path='job-list'>
             <Route index element={<IndexJobList />} />

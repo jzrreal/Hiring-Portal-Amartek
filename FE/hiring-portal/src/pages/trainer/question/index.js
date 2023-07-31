@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
@@ -11,6 +11,7 @@ import Footer from "../../../components/footer";
 function Index() {
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Alert Toast
   const Toast = Swal.mixin({
@@ -30,6 +31,9 @@ function Index() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/questions",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setData(response.data.data);
@@ -53,6 +57,9 @@ function Index() {
         axios({
           method: "DELETE",
           url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         }).then(
           Toast.fire({
             icon: 'success',
@@ -120,7 +127,7 @@ function Index() {
                               <td className="text-capitalize">{data.question}</td>
                               <td className="text-capitalize">{data.segment}</td>
                               <td className="text-capitalize">{data.question_level}</td>
-                              <td className="text-capitalize">{dateFormat(data.created_at, "yyyy mmmm dS")}</td>
+                              <td className="text-capitalize">{dateFormat(data.created_at, "dd mmmm yyyy")}</td>
                               <td>
                                 <NavLink to={`/trainer/question/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>

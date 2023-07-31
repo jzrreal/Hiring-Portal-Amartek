@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 export default function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
+    const token = useOutletContext()
 
     const [choice1, setChoice1] = useState("")
     const [bool1, setBool1] = useState(false)
@@ -50,6 +51,9 @@ export default function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/questions/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+              }
         })
         .then(function (response) {
             console.log(response.data.data);

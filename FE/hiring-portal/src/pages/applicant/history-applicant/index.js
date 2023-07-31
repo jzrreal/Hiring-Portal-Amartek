@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
@@ -9,6 +9,7 @@ import Footer from "../../../components/footer";
 
 function Index() {
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Get Data
   useEffect(() => {
@@ -16,7 +17,7 @@ function Index() {
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/applications",
       headers: {
-        Authorization: "Bearer " + localStorage.getItem("authToken")
+        Authorization: "Bearer " + token
       }
     })
       .then(function (response) {
@@ -72,7 +73,7 @@ function Index() {
                           <th>Job Function</th>
                           <th>Apply Date</th>
                           <th>Status</th>
-                          <th>Actions</th>
+                          {/* <th>Actions</th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -102,9 +103,9 @@ function Index() {
                                     )
                                 }
                               </td>
-                              <td>
+                              {/* <td>
                                 <NavLink to={`/applicant/job-list/detail/${data.job_post_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
-                              </td>
+                              </td> */}
                             </tr>
                           );
                         })}

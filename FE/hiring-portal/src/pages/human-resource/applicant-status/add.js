@@ -1,15 +1,16 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
-import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
     const [inputData, setInputData] = useState({ name: '' })
+    const token = useOutletContext()
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -30,13 +31,16 @@ function Add() {
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/application-status",
+            headers: {
+                Authorization: "Bearer " + token
+            },
             data: inputData
         }).then(
             Toast.fire({
                 icon: 'success',
                 title: 'Success save data'
             }),
-            navigate('/human-resource/applicant-status', { replace: true })
+            navigate('/human-resource/applicant-status', { replace: false })
         ).catch(function (error) { console.log(error); })
     }
 

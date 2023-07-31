@@ -23,7 +23,6 @@ function Dashboard() {
       }
     })
       .then(response => {
-        console.log(response.data.data);
         setTotalJobs(response.data.data.total_job_post)
         setTotalApplicants(response.data.data.total_applicants_apply)
         setDataNewApplicant(response.data.data.applicants_apply_responses)
@@ -165,9 +164,9 @@ function Dashboard() {
                               <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">
-                                {data.closed === null || data.closed === "false" ?
-                                  <span className="badge badge-success">False</span>
-                                  : <span className="badge badge-danger">True</span>
+                                {data.closed === null || data.closed === false ?
+                                  <span className="badge badge-success">Open</span>
+                                  : <span className="badge badge-danger">Closed</span>
                                 }
                               </td>
                             </tr>

@@ -1,26 +1,62 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import dateFormat from 'dateformat';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
-import Swal from 'sweetalert2';
 
 function Add() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
+
+  // Alert Toast
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
 
   useEffect(() => {
     axios({
       method: "GET",
-      url: process.env.REACT_APP_API_URL + "/api/applications/" + id + "/applicants"
+      url: process.env.REACT_APP_API_URL + "/api/applications/" + id + "/applicants",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then((response) => {
         setData(response.data.data)
       })
   }, [])
+
+  // Apply Now
+  function generateTest(e) {
+    e.preventDefault()
+    axios({
+      method: "POST",
+      url: process.env.REACT_APP_API_URL + "/api/online-tests/applications/" + id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }).then(
+      Toast.fire({
+        icon: 'success',
+        title: 'Success generete test'
+      }),
+      navigate('/human-resource/job-post', { replace: false })
+    ).catch(function (error) { console.log(error); })
+  }
 
   return (
     <>
@@ -112,7 +148,7 @@ function Add() {
                     </div>
                     <div className="float-right">
                       <NavLink to="/human-resource/job-post" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                      <NavLink to="" type="button" className="btn btn-primary mr-2">Generate Test Online</NavLink>
+                      <button onClick={generateTest} type="button" className="btn btn-primary mr-2">Generate Test Online</button>
                     </div>
                   </div>
                 </div>
