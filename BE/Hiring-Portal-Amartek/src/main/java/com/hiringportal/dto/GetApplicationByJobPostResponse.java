@@ -25,4 +25,5 @@ public class GetApplicationByJobPostResponse {
     private Integer age;
     private Gender gender;
     private Date applyDate;
+    private String testResult;
 }
