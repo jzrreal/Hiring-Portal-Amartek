@@ -13,7 +13,7 @@ function Index() {
   const { id } = useParams();
   const [dataJobPost, setDataJobPost] = useState([{}]);
   const [dataApplicant, setDatadataApplicant] = useState([{}]);
-  const token = useOutletContext()
+  const token = useOutletContext();
 
   // Get Data
   useEffect(() => {

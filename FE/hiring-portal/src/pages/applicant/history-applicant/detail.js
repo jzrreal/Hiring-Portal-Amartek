@@ -11,7 +11,7 @@ import Footer from "../../../components/footer";
 function Detail() {
   const { id } = useParams();
   const [data, setData] = useState({});
-  const token = useOutletContext()
+  const token = useOutletContext();
 
   // Get Data
   useEffect(() => {

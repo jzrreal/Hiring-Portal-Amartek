@@ -3,6 +3,10 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import NotFound from "./pages/notFound";
 
+//Online Test
+import OnlineTestIndex from "./pages/online-test/index";
+import OnlineTest from "./pages/online-test/test";
+//Online Test
 // Human Resource
 import DashboardHumanResource from "./pages/human-resource/dashboard";
 // Role
@@ -98,10 +102,11 @@ import IndexHistoryApplicant from "./pages/applicant/history-applicant";
 // Aplicant
 
 // Auth
-import EmailVerification from './pages/EmailVerification';
+import EmailVerification from './pages/emailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
 import ApplicantProtection from './util/ApplicantProtection';
+import Table from './components/table';
 // Auth
 
 function App() {
@@ -113,6 +118,12 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
         <Route path='/email-verification' element={<EmailVerification />} />
+        <Route path='/table' element={<Table />} />
+
+        {/*Online test*/}
+        <Route path='/online-test' element={<OnlineTestIndex />}/>
+        <Route path='/online-test/start' element={<OnlineTest />}/>
+        {/*Online test*/}
 
         {/* Human Resource */}
         <Route path='human-resource' element={<HumanResourceProtection />}>

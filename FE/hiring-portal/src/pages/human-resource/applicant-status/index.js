@@ -11,7 +11,7 @@ function Index() {
   console.log(process.env.REACT_APP_API_URL + "/api/application-status");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
-  const token = useOutletContext()
+  const token = useOutletContext();
 
   // Alert Toast
   const Toast = Swal.mixin({

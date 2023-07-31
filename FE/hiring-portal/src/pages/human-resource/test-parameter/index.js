@@ -10,7 +10,8 @@ import Footer from "../../../components/footer";
 function Index() {
   // const navigate = useNavigate();
   const [data, setData] = useState([{}]);
-  const token = useOutletContext()
+  const token = useOutletContext();
+
 
   // Alert Toast
   // const Toast = Swal.mixin({

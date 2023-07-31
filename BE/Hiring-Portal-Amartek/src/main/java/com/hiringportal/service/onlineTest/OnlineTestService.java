@@ -1,5 +1,6 @@
 package com.hiringportal.service.onlineTest;
 
+import com.hiringportal.dto.PaginationResultResponse;
 import com.hiringportal.dto.QuestionTestResponse;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,4 +18,6 @@ public interface OnlineTestService {
     void saveAllAnswerAndGetResult(String token);
     @Transactional
     void schedulingForExpiredTestToGetResult();
+    void checkTokenExpired(String token);
+    PaginationResultResponse<QuestionTestResponse> getQuestionTestByTokenPerPage(Integer page, String token);
 }

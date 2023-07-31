@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 function Add() {
     const navigate = useNavigate()
     const [inputData, setInputData] = useState({ name: '' })
-    const token = useOutletContext()
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -35,13 +35,21 @@ function Add() {
                 Authorization: "Bearer " + token
             },
             data: inputData
-        }).then(
-            Toast.fire({
-                icon: 'success',
-                title: 'Success save data'
-            }),
-            navigate('/human-resource/skill-level', { replace: false })
-        ).catch(function (error) { console.log(error); })
+        }).then(response => {
+            if (response.data.status === 200) {
+                Toast.fire({
+                    icon: "success",
+                    title: response.data.message
+                })
+                navigate("/human-resource/skill-level", { replace: false })
+            }
+        })
+            .catch((error) => {
+                Toast.fire({
+                    icon: "error",
+                    title: error.response.data.message
+                })
+            });
     }
 
     return (

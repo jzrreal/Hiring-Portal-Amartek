@@ -1,15 +1,15 @@
 package com.hiringportal.service.onlineTest;
 
-import com.hiringportal.dto.ChoiceTestResponse;
-import com.hiringportal.dto.QuestionAnswerQuery;
-import com.hiringportal.dto.QuestionTestResponse;
-import com.hiringportal.dto.TestQuestionQuery;
+import com.hiringportal.dto.*;
 import com.hiringportal.entities.*;
 import com.hiringportal.repository.*;
 import com.hiringportal.service.email.EmailService;
+import com.hiringportal.utils.PaginationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -123,19 +123,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
     @Override
     public List<QuestionTestResponse> getAllQuestionTestByToken(String token) {
         TestParameter testParameter = testParameterRepository.findById(1).orElseThrow();
-        Test test = testRepository.findTestByTestToken(token)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test not found"));
-
-        if (test.getResult() != null) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
-        }
-
-        if (!new Date(System.currentTimeMillis()).before(test.getEndAt()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
-
-        if (test.getEndTest() != null && !new Date(System.currentTimeMillis()).before(test.getEndTest())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
-        }
+        Test test = getTestFromTokenAndCheck(token);
 
         if (test.getEndTest() == null) {
             test.setEndTest(
@@ -219,6 +207,65 @@ public class OnlineTestServiceImpl implements OnlineTestService {
 
     }
 
+    @Override
+    public void checkTokenExpired(String token) {
+        getTestFromTokenAndCheck(token);
+    }
+
+    @Override
+    public PaginationResultResponse<QuestionTestResponse> getQuestionTestByTokenPerPage(Integer page, String token) {
+        TestParameter testParameter = testParameterRepository.findById(1).orElseThrow();
+        Test test = getTestFromTokenAndCheck(token);
+
+        if (test.getEndTest() == null) {
+            test.setEndTest(
+                    new Date(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(testParameter.getTestTimeMinute()))
+            );
+            testRepository.save(test);
+        }
+
+        PageRequest pageable;
+
+        try {
+            //Set PageRequest to get 1 question every page and order ascending
+            pageable = PageRequest.of(page, 1, Sort.Direction.ASC, "testQuestionId");
+        }catch (IllegalArgumentException exception){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no question number " + page);
+        }
+
+        Page<TestQuestionQuery> pageResult = testQuestionRepository.getPageAllTestQuestionByTestId(test.getTestId(), pageable);
+
+        TestQuestionQuery testQuestion = pageResult.stream().findAny().orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "no question number " + page)
+        );
+
+        Questions questions = questionRepository.findById(testQuestion.getQuestionId()).orElseThrow();
+
+        List<ChoiceTestResponse> choices = choiceRepository.findAllByQuestionId(testQuestion.getQuestionId())
+                .stream().map(
+                        choice -> ChoiceTestResponse.builder()
+                                .choiceId(choice.getChoiceId())
+                                .choice(choice.getChoice())
+                                .build()
+                ).toList();
+
+        QuestionTestResponse result = QuestionTestResponse.builder()
+                .answer(testQuestion.getAnswer())
+                .testQuestionId(testQuestion.getTestQuestionId())
+                .questionId(testQuestion.getQuestionId())
+                .question(questions.getQuestion())
+                .choices(choices)
+                .expiredTime(test.getEndTest().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
+                .build();
+
+        return PaginationUtil.createResultPageResponse(
+                result, //The data
+                (int) pageResult.getTotalElements(), //Number of element total
+                pageResult.getTotalPages(), //Number of page
+                page + 1 //Current page
+        );
+    }
+
     @Scheduled(fixedRate = 3600000) //Every one hour do this job
     public void schedulingForExpiredTestToGetResult() {
         log.info("Time : {}", LocalDateTime.now());
@@ -236,6 +283,28 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         tests.forEach(test -> getResultSaveToTestAndSendEmail(test, test.getTestToken()));
     }
 
+    private Test getTestFromTokenAndCheck(String token) {
+        if (token.isBlank()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Token must not be blank");
+        }
+
+        Test test = testRepository.findTestByTestToken(token)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Test not found"));
+
+        if (test.getResult() != null) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
+        }
+
+        if (!new Date(System.currentTimeMillis()).before(test.getEndAt()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
+
+        if (test.getEndTest() != null && !new Date(System.currentTimeMillis()).before(test.getEndTest())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been expired");
+        }
+
+        return test;
+    }
+
     private void getResultSaveToTestAndSendEmail(Test test, String token) {
         Integer result = 0; //Initiate result total
 
@@ -250,8 +319,11 @@ public class OnlineTestServiceImpl implements OnlineTestService {
                 testQuestionRepository.getAllTestQuestionByTestId(test.getTestId());
 
         //Transform data into Map<Integer, Integer> with key questionId and value its answer
-        Map<Integer, Integer> questionAnswerMap = testQuestions.stream()
-                .collect(Collectors.toMap(TestQuestionQuery::getQuestionId, TestQuestionQuery::getAnswer));
+        Map<Integer, Integer> questionAnswerMap = new HashMap<>();
+
+        for (var testQuestion : testQuestions){
+            questionAnswerMap.put(testQuestion.getQuestionId(), testQuestion.getAnswer());
+        }
 
         //Make list integer that contains all questionId
         List<Integer> idQuestions = testQuestions

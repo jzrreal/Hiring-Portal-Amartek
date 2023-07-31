@@ -14,7 +14,7 @@ function Add() {
     })
     const [jobLevels, setJobLevels] = useState([]);
     const [jobFunction, setJobFunction] = useState([]);
-    const token = useOutletContext()
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({

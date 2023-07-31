@@ -2,7 +2,9 @@ package com.hiringportal.repository;
 
 import com.hiringportal.dto.TestQuestionQuery;
 import com.hiringportal.entities.TestQuestion;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,6 +26,13 @@ public interface TestQuestionRepository extends JpaRepository<TestQuestion, Inte
             where tq.test.testId = :testId
                         """)
     List<TestQuestionQuery> getAllTestQuestionByTestId(Integer testId);
+    @Query(value = """
+            select new com.hiringportal.dto.TestQuestionQuery(tq.testQuestionId, q.questionId, tq.answer)
+            from TestQuestion tq
+            join Questions q on tq.questions.questionId = q.questionId
+            where tq.test.testId = :testId
+                        """)
+    Page<TestQuestionQuery> getPageAllTestQuestionByTestId(Integer testId, Pageable pageable);
 
     @Query(value = """
             select tq from TestQuestion tq
