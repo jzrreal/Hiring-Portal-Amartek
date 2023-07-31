@@ -1,5 +1,6 @@
 package com.hiringportal.entities;
 
+import com.hiringportal.enums.TestResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,6 +36,9 @@ public class Test {
     private Integer result;
     @Column(name = "end_test")
     private Date endTest;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum")
+    private TestResult finalResult;
 
     @NotNull
     @Column(name = "test_token")

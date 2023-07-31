@@ -2,6 +2,7 @@ package com.hiringportal.service.onlineTest;
 
 import com.hiringportal.dto.*;
 import com.hiringportal.entities.*;
+import com.hiringportal.enums.TestResult;
 import com.hiringportal.repository.*;
 import com.hiringportal.service.email.EmailService;
 import com.hiringportal.utils.PaginationUtil;
@@ -92,6 +93,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
                 .endAt(new Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(testParameter.getExpirationHour()))) //Test end from generate test + hour from test parameter
                 .testToken(UUID.randomUUID().toString()) //Random token to send via email as test authentication
                 .jobApplication(jobApplication) //Insert what job application to become test
+                .finalResult(TestResult.WAITING)
                 .build();
         testRepository.save(test);
 
@@ -343,11 +345,11 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         }
         log.info("Result applicants with token {} is : {}", token, result);
 
+        float finalResult = (result.floatValue() / 24) * 100;
         //Update result in table test
         test.setResult(result);
+        test.setFinalResult(testParameter.getThreshold() < finalResult ? TestResult.PASSED : TestResult.FAILED);
         testRepository.save(test);
-
-        float finalResult = (result.floatValue() / 24) * 100;
         log.info("Final result applicants with token {} is : {}", token, finalResult);
         String message = testParameter.getThreshold() < finalResult
                 ? "Congrats, you are passed the test" : "Sorry, you are not passed the test";
