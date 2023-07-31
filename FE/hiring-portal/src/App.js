@@ -80,6 +80,7 @@ import EmailVerification from './pages/emailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
 import ApplicantProtection from './util/ApplicantProtection';
+import Table from './components/table';
 // Auth
 
 function App() {
@@ -91,6 +92,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
         <Route path='/email-verification' element={<EmailVerification />} />
+        <Route path='/table' element={<Table />} />
 
         {/* Human Resource */}
         <Route path='human-resource' element={<HumanResourceProtection />}>
