@@ -8,7 +8,7 @@ import Footer from "../../../components/footer";
 
 function Index() {
   const [data, setData] = useState([{}]);
-  const token = useOutletContext()
+  const token = useOutletContext();
 
   // Get Data
   useEffect(() => {

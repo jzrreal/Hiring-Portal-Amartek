@@ -11,7 +11,7 @@ function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
-    const token = useOutletContext()
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({

@@ -11,7 +11,7 @@ function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
-    const token = useOutletContext()
+    const token = useOutletContext();
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -49,7 +49,10 @@ function Edit() {
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
-            data: data
+            data: data,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         }).then(
             Toast.fire({
                 icon: 'success',
