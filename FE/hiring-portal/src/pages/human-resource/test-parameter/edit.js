@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -11,6 +11,7 @@ function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
+    const token = useOutletContext()
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -30,6 +31,9 @@ function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -45,13 +49,16 @@ function Edit() {
         axios({
             method: "PUT",
             url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            },
             data: data
         }).then(
             Toast.fire({
                 icon: 'success',
                 title: 'Success update data'
             }),
-            navigate('/human-resource/test-parameter', { replace: true })
+            navigate('/human-resource/test-parameter', { replace: false })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -96,7 +103,7 @@ function Edit() {
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">ID Test Parameter</label>
-                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
+                                                <input type="text" className="form-control" id="id" value={data.id} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="expiration_hour">Expired Hours</label>
@@ -105,6 +112,10 @@ function Edit() {
                                             <div className="form-group">
                                                 <label for="test_time_minute">Test Time (in Minute)</label>
                                                 <input type="number" className="form-control" id="test_time_minute" value={data.test_time_minute} onChange={e => setData({ ...data, test_time_minute: e.target.value })} />
+                                            </div>
+                                            <div className="form-group">
+                                                <label for="threshold">Threshold</label>
+                                                <input type="number" step="0.01" className="form-control" id="threshold" value={data.threshold} onChange={e => setData({ ...data, threshold: e.target.value })} />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>

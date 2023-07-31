@@ -32,7 +32,10 @@ export default function ApplicantProtection () {
         return <Navigate to="/login" />;
     }
     if(localStorage.getItem("role") !== "Applicant") {
-        return <Navigate to={redirectManager(localStorage.getItem("role"))} />
+        return <Navigate to={redirectManager(localStorage.getItem("role"))} replace="true" />
+    }
+    if(!localStorage.getItem("role")) {
+        return <Navigate to="/login" />
     }
     
     else {

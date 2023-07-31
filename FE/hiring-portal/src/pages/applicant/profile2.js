@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate, useOutletContext } from "react-router-dom";
+import Swal from 'sweetalert2';
 import axios from "axios";
 import dateFormat from 'dateformat';
 
@@ -8,8 +9,24 @@ import Sidebar from "../../components/sidebar";
 import Footer from "../../components/footer";
 
 function Profile() {
+    const navigate = useNavigate;
+    const [inputData, setInputData] = useState({})
     const [dataProfile, setDataProfile] = useState({});
     const [dataEducation, setDataEducation] = useState([{}]);
+    const token = useOutletContext()
+
+    // Alert Toast
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
 
     // Get Profile
     useEffect(() => {
@@ -17,7 +34,7 @@ function Profile() {
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/profiles/applicants",
             headers: {
-                Authorization: "Bearer " + localStorage.getItem("authToken")
+                Authorization: "Bearer " + token
             }
         })
             .then(response => {
@@ -26,14 +43,67 @@ function Profile() {
                     method: "GET",
                     url: process.env.REACT_APP_API_URL + "/api/education-histories/applicants/" + response.data.data.id,
                     headers: {
-                        Authorization: "Bearer " + localStorage.getItem("authToken")
+                        Authorization: "Bearer " + token
                     }
                 })
                     .then(response => {
                         setDataEducation(response.data.data)
                     })
             })
+
     }, [])
+
+    // Add Data Education Histories
+    function handleSubmit(e) {
+        e.preventDefault()
+        axios({
+            method: "POST",
+            url: process.env.REACT_APP_API_URL + "/api/education-histories",
+            headers: {
+                Authorization: "Bearer " + token
+            },
+            data: inputData
+        })
+            .then((response) => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Success save data'
+                })
+                navigate('/applicant/profile')
+            }
+            )
+            .catch(function (error) { console.log(error); })
+    }
+
+    // Delete Data Education Histories
+    function deleteData(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delete Now!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios({
+                    method: "DELETE",
+                    url: process.env.REACT_APP_API_URL + "/api/education-histories/" + id,
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                }).then(
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Success delete data'
+                    }),
+                    navigate('/applicant/profile')
+                ).catch(function (error) {
+                    console.log(error);
+                })
+            }
+        })
+    }
 
     return (
         <div className="wrapper">
@@ -100,7 +170,7 @@ function Profile() {
                                         <span className="text-muted">
                                             <i class="fas fa-venus mr-1"></i> Birth Date
                                         </span>
-                                        <p class="font-weight-bold"> {dateFormat(dataProfile.birth_date, "dddd, mmmm dS yyyy")} </p>
+                                        <p class="font-weight-bold"> {dateFormat(dataProfile.birth_date, "dd mmmm yyyy")} </p>
                                         <hr />
                                         <span className="text-muted">
                                             <i class="fas fa-user mr-1"></i> Age
@@ -178,27 +248,34 @@ function Profile() {
                                     <div class="card-body">
                                         <div class="tab-content">
                                             <div class="tab-pane active" id="education-histories">
+                                                <div className="d-flex mb-3">
+                                                    <button className="btn btn-sm btn-primary" data-toggle="modal" data-target="#addModal">Add Education</button>
+                                                </div>
                                                 <ul class="products-list product-list-in-card px-2">
                                                     {dataEducation.map((data) => {
                                                         return (
                                                             <li class="item py-3">
                                                                 <div class="product-img">
-                                                                    <img
-                                                                        src="/assets/dist/img/default-150x150.png"
-                                                                        alt="Product Image"
-                                                                        class="img-size-50"
-                                                                    />
+                                                                    <i className="fas fa-school" style={{ fontSize: 32 }}></i>
                                                                 </div>
                                                                 <div class="product-info">
                                                                     <h6 class="product-title m-0">
                                                                         {data.name}
-                                                                        <span class="badge badge-primary px-2 py-2 float-right">
-                                                                            {data.yearStart} - {data.yearEnd}
-                                                                        </span>
+                                                                        <button class="btn btn-sm btn-danger float-right" onClick={() => deleteData(data.historiesId)}>
+                                                                            <i className="fas fa-trash-alt"></i>
+                                                                        </button>
+                                                                        <button class="btn btn-sm btn-warning float-right mr-2" data-toggle="modal" data-target={`#editModal${data.historiesId}`}>
+                                                                            <i className="fas fa-edit"></i>
+                                                                        </button>
                                                                     </h6>
-                                                                    <span class="text-muted">{data.level}</span>
-                                                                    <span class="text-muted mx-2">-</span>
-                                                                    <span class="text-muted">{data.major}</span>
+                                                                    <div>
+                                                                        <span class="text-muted"> {data.yearStart} - {data.yearEnd}</span>
+                                                                    </div>
+                                                                    <div>
+                                                                        <span class="text-muted">{data.level}</span>
+                                                                        <span class="text-muted mx-2">-</span>
+                                                                        <span class="text-muted">{data.major}</span>
+                                                                    </div>
                                                                 </div>
                                                             </li>
                                                         );
@@ -395,6 +472,55 @@ function Profile() {
             {/* Footer */}
             <Footer />
             {/* Footer */}
+
+            {/* Add Modal */}
+            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Add New Education</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form onSubmit={handleSubmit}>
+                            <div class="modal-body">
+                                <div className="form-group">
+                                    <label for="name">School / University Name</label>
+                                    <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Set School / University Name" />
+                                </div>
+                                <div className="form-group">
+                                    <label for="level">Level</label>
+                                    <input type="text" className="form-control" id="level" onChange={e => setInputData({ ...inputData, level: e.target.value })} placeholder="Set Level" />
+                                </div>
+                                <div className="form-group">
+                                    <label for="major">Major</label>
+                                    <input type="text" className="form-control" id="major" onChange={e => setInputData({ ...inputData, major: e.target.value })} placeholder="Set Major" />
+                                </div>
+                                <div className="row">
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label for="year_start">Year Start</label>
+                                            <input type="month" className="form-control" id="year_start" onChange={e => setInputData({ ...inputData, year_start: dateFormat(e.target.value, "yyyy") })} />
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div className="form-group">
+                                            <label for="year_end">Year End</label>
+                                            <input type="month" className="form-control" id="year_end" onChange={e => setInputData({ ...inputData, year_end: dateFormat(e.target.value, "yyyy") })} />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {/* Add Modal */}
         </div >
     );
 }

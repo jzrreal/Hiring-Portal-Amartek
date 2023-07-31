@@ -1,6 +1,7 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useParams, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
+import dateFormat from 'dateformat';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -9,12 +10,16 @@ import Footer from "../../../components/footer";
 function Edit() {
     const { id } = useParams();
     const [data, setData] = useState([])
+    const token = useOutletContext()
 
     // Get Data
     useEffect(() => {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/applicants/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+              }
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -65,31 +70,31 @@ function Edit() {
                                         <form>
                                             <div className="form-group">
                                                 <label for="name">ID Applicant</label>
-                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} readOnly />
+                                                <input type="text" className="form-control" id="id" value={data.id} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="fullname">Fullname</label>
-                                                <input type="text" className="form-control" id="fullname" value={data.full_name} onChange={e => setData({ ...data, full_name: e.target.value })} readOnly />
+                                                <input type="text" className="form-control" id="fullname" value={data.full_name} readOnly />
                                             </div>
                                             <div className="form-group">
-                                                <label for="gebder">Gender</label>
-                                                <input type="text" className="form-control" id="gebder" value={data.gender} onChange={e => setData({ ...data, full_name: e.target.value })} readOnly />
+                                                <label for="gender">Gender</label>
+                                                <input type="text" className="form-control" id="gender" value={data.gender} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="email">Email</label>
-                                                <input type="email" className="form-control" id="email" value={data.email} onChange={e => setData({ ...data, email: e.target.value })} readOnly />
+                                                <input type="email" className="form-control" id="email" value={data.email} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="phone">Phone Number</label>
-                                                <input type="text" className="form-control" id="phone" value={data.phone} onChange={e => setData({ ...data, phone: e.target.value })} readOnly />
+                                                <input type="text" className="form-control" id="phone" value={data.phone} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="birthdate">Birth Date</label>
-                                                <input type="text" className="form-control" id="birthdate" value={data.birth_date} onChange={e => setData({ ...data, birth_date: e.target.value })} readOnly />
+                                                <input type="text" className="form-control" id="birthdate" value={dateFormat(data.birth_date, "dd mmmm yyyy")} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="summary">Summary</label>
-                                                <textarea className="form-control" id="summary" value={data.summary} onChange={e => setData({ ...data, summary: e.target.value })} readOnly />
+                                                <textarea className="form-control" id="summary" value={data.summary} readOnly />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/applicant" type="button" className="btn btn-secondary mr-2">Back</NavLink>

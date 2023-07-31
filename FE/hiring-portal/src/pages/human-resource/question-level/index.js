@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -10,6 +10,7 @@ import Footer from "../../../components/footer";
 function Index() {
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Alert Toast
   const Toast = Swal.mixin({
@@ -29,6 +30,9 @@ function Index() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/question-levels",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setData(response.data.data);
@@ -52,13 +56,16 @@ function Index() {
         axios({
           method: "DELETE",
           url: process.env.REACT_APP_API_URL + "/api/question-levels/" + id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         }).then(
           Toast.fire({
             icon: 'success',
             title: 'Success delete data'
           }),
           setData(data),
-          navigate('/human-resource/question-level', { replace: true })
+          navigate('/human-resource/question-level', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
     })
@@ -115,7 +122,7 @@ function Index() {
                           return (
                             <tr>
                               <td className="text-capitalize">{data.name}</td>
-                              <td className="text-capitalize">{data.point}</td>
+                              <td className="text-capitalize">{data.point + " Point"}</td>
                               <td>
                                 <NavLink to={`/human-resource/question-level/edit/${data.questionLevelId}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
                                 <button onClick={() => deleteData(data.questionLevelId)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>

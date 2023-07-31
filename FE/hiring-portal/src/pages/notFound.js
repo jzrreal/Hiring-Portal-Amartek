@@ -2,6 +2,9 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 function NotFound() {
+  // Title Page
+  document.title = "404 Page Not Found | Hiring Portal";
+  // Title Page
   const navigate = useNavigate();
   return (
     <div class="lockscreen-wrapper">

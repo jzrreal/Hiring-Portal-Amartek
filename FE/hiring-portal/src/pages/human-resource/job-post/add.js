@@ -1,34 +1,20 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
-import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()
     const [inputData, setInputData] = useState({
-        title: '', description: '', requirements: '',
-        job_level_id: 1, job_function_id: 1,
-        open_until: '', vacancy: ''
+      job_function_id: 1, job_level_id: 1
     })
-
     const [jobLevels, setJobLevels] = useState([]);
     const [jobFunction, setJobFunction] = useState([]);
-
-    const jobLevelDropdown = (value) => {
-        return (
-            <option>{value.name}</option>
-        )
-    }
-
-    const jobFunctionDropdown = (value) => {
-        return (
-            <option>{value.name}</option>
-        )
-    }
+    const token = useOutletContext()
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -43,6 +29,41 @@ function Add() {
         }
     })
 
+    const jobLevelDropdown = (value) => {
+        return (
+            <option className="text-capitalize">{value.name}</option>
+        )
+    }
+
+    const jobFunctionDropdown = (value) => {
+        return (
+            <option className="text-capitalize">{value.name}</option>
+        )
+    }
+    useEffect(() => {
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/job-levels",
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
+            .then((response) => {
+                setJobLevels(response.data.data)
+            })
+
+        axios({
+            method: "GET",
+            url: process.env.REACT_APP_API_URL + "/api/job-functions",
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
+            .then((response) => {
+                setJobFunction(response.data.data)
+            })
+    }, [])
+
     // Add Data
     function handleSubmit(e) {
         e.preventDefault()
@@ -50,39 +71,20 @@ function Add() {
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/job-posts",
             headers: {
-                Authorization : "Bearer " + localStorage.getItem("authToken")
+                Authorization: "Bearer " + token
             },
             data: inputData
         })
-        .then( (response) => {
-            Toast.fire({
-                icon: 'success',
-                title: 'Success save data'
-        })
-        }
-        )
-        .catch(function (error) { console.log(error); })
+            .then((response) => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Success save data'
+                })
+                navigate('/human-resource/job-post', { replace: false })
+            }
+            )
+            .catch(function (error) { console.log(error); })
     }
-
-    useEffect( () => {
-        axios({
-            method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-levels"
-        })
-        .then((response) => {
-            console.log(response.data.data)
-            setJobLevels(response.data.data)
-        })
-
-        axios({
-            method: "GET",
-            url: process.env.REACT_APP_API_URL + "/api/job-functions"
-        })
-        .then((response) => {
-            console.log(response.data.data)
-            setJobFunction(response.data.data)
-        })
-    }, [])
 
     return (
         <>
@@ -127,21 +129,21 @@ function Add() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="title">Title Job</label>
-                                                        <input type="text" className="form-control" id="title" onChange={e => setInputData({ ...inputData, title: e.target.value })}/>
+                                                        <input type="text" className="form-control" id="title" onChange={e => setInputData({ ...inputData, title: e.target.value })} placeholder="Set Title Job" />
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="title">Job Level</label>
-                                                        <select className='form-control' id='job_level' onChange={e => setInputData({...inputData, job_level_id: jobLevels.find(({name}) => name===e.target.value).id}) } >
+                                                        <label for="job_level">Job Level</label>
+                                                        <select className='form-control text-capitalize' id='job_level' onChange={e => setInputData({ ...inputData, job_level_id: jobLevels.find(({ name }) => name === e.target.value).id })} >
                                                             {jobLevels.map(jobLevelDropdown)}
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div className='col'>
                                                     <div className="form-group">
-                                                        <label for="title">Job Function</label>
-                                                        <select className='form-control' id='job_level' onChange={e => setInputData({ ...inputData, job_function_id: jobFunction.find( ({name}) => name===e.target.value ).id })} >
+                                                        <label for="job_function">Job Function</label>
+                                                        <select className='form-control text-capitalize' id='job_function' onChange={e => setInputData({ ...inputData, job_function_id: jobFunction.find(({ name }) => name === e.target.value).id })} >
                                                             {jobFunction.map(jobFunctionDropdown)}
                                                         </select>
                                                     </div>
@@ -149,17 +151,17 @@ function Add() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="description">Desctiption Job</label>
-                                                <textarea className="form-control" id="description" onChange={e => setInputData({ ...inputData, description: e.target.value })} placeholder="Description Job Name" />
+                                                <textarea className="form-control" id="description" onChange={e => setInputData({ ...inputData, description: e.target.value })} placeholder="Set Description Job" />
                                             </div>
                                             <div className="form-group">
                                                 <label for="requirement">Requirement Job</label>
-                                                <textarea className="form-control" id="requirement" onChange={e => setInputData({ ...inputData, requirements: e.target.value })} placeholder="Requirement Job Name" />
+                                                <textarea className="form-control" id="requirement" onChange={e => setInputData({ ...inputData, requirements: e.target.value })} placeholder="Set Requirement Job" />
                                             </div>
                                             <div className='row'>
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="vacancy">Vacancy</label>
-                                                        <input type="number" className="form-control" id="vacancy" onChange={e => setInputData({ ...inputData, vacancy: e.target.value })} />
+                                                        <input type="number" className="form-control" id="vacancy" onChange={e => setInputData({ ...inputData, vacancy: e.target.value })} placeholder="Set Vacancy" />
                                                     </div>
                                                 </div>
                                                 <div className='col'>

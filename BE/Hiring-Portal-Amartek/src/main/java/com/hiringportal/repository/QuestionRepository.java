@@ -57,4 +57,20 @@ public interface QuestionRepository extends JpaRepository<Questions, Integer> {
             where q.questionId in :idQuestions and c.correct is true
             """)
     List<QuestionAnswerQuery> findAllQuestionIdQuestionLevelIdCorrectChoiceIdInListQuestionId(List<Integer> idQuestions);
+    @Query(value = """
+            select count(q.questionId) from Questions q where q.questionLevel.questionLevelId = 1
+            """)
+    Integer getTotalEasyQuestion();
+    @Query(value = """
+            select count(q.questionId) from Questions q where q.questionLevel.questionLevelId = 2
+            """)
+    Integer getTotalMediumQuestion();
+    @Query(value = """
+            select count(q.questionId) from Questions q where q.questionLevel.questionLevelId = 3
+            """)
+    Integer getTotalHardQuestion();
+    @Query(value = """
+            select q from Questions q 
+            """)
+    List<Questions> findFiveLatestQuestion(PageRequest pageRequest);
 }

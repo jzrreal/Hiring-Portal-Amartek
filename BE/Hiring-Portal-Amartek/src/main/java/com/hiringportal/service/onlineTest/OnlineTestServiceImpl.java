@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -20,6 +21,7 @@ import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -213,7 +215,31 @@ public class OnlineTestServiceImpl implements OnlineTestService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Test has been finished");
         }
 
+        getResultSaveToTestAndSendEmail(test, token);
+
+    }
+
+    @Scheduled(fixedRate = 3600000) //Every one hour do this job
+    public void schedulingForExpiredTestToGetResult() {
+        log.info("Time : {}", LocalDateTime.now());
+
+        LocalDateTime localDateTime = LocalDateTime.now();
+        List<Test> tests = testRepository.findAllExpiredTestAndResultIsNull(
+                Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant())
+        );
+
+        log.info("There are job with total amount : {}", tests.size());
+
+        //If there are no tas return
+        if (tests.isEmpty()) return;
+
+        tests.forEach(test -> getResultSaveToTestAndSendEmail(test, test.getTestToken()));
+    }
+
+    private void getResultSaveToTestAndSendEmail(Test test, String token) {
         Integer result = 0; //Initiate result total
+
+        TestParameter testParameter = testParameterRepository.findById(1).orElseThrow();
 
         //Get all question level and mapping to map with key its id and value its point
         Map<Integer, Integer> questionLevelMap = questionLevelRepository.findAll()
@@ -239,7 +265,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         //Remember there must be null answer, when applicant not answer the following question
         for (QuestionAnswerQuery questionAnswerQuery : questionAnswerQueries) {
             //Compare correct answer from db with applicant answer
-            if (questionAnswerQuery.getChoiceId().equals(questionAnswerMap.get(questionAnswerQuery.getQuestionId()))){
+            if (questionAnswerQuery.getChoiceId().equals(questionAnswerMap.get(questionAnswerQuery.getQuestionId()))) {
                 result += questionLevelMap.get(questionAnswerQuery.getQuestionLevelId());
             }
         }
@@ -249,10 +275,17 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         test.setResult(result);
         testRepository.save(test);
 
-        final float finalResult = (float) (result/24) * 100;
+        float finalResult = (result.floatValue() / 24) * 100;
         log.info("Final result applicants with token {} is : {}", token, finalResult);
+        String message = testParameter.getThreshold() < finalResult
+                ? "Congrats, you are passed the test" : "Sorry, you are not passed the test";
+        String additionalMessage = testParameter.getThreshold() < finalResult
+                ? "We will contact you for next information" : "Don't be disappointed, try again another time";
         //Send email to applicant with custom message, in this case i make condition if result less than 15
         //Email message contains rejection, and vice versa. Also send the final result
+        String email = test.getJobApplication().getCandidateProfile().getUser().getEmail();
+        String name = test.getJobApplication().getCandidateProfile().getUser().getFullName();
+        emailService.sendEmailResultTest(name, email, message, additionalMessage);
 
     }
 }

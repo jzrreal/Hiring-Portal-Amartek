@@ -5,6 +5,7 @@ import axios from "axios";
 function Sidebar() {
   const [username, setUsername] = useState("")
   const [role, setRole] = useState("")
+  const url = window.location.origin;
 
   useEffect(() => {
     axios({
@@ -25,7 +26,7 @@ function Sidebar() {
       <Link to="/human-resource/dashboard" className="brand-link">
         <img src="https://www.amartek.id/i/favicon.png" className="img-fuild" />
         <span className="brand-text font-weight-bold font-weight-light ml-3">
-          Portal Hiring
+          Hiring Portal
         </span>
       </Link>
       {/* Brand Logo */}
@@ -38,7 +39,7 @@ function Sidebar() {
         <div className="info ml-2">
           {
             role == "Applicant" ?
-              <NavLink to="/applicant/profile" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</NavLink>
+              <NavLink to="/applicant/profile/personal-information" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</NavLink>
               :
               <a href="#" className="d-block text-white font-weight-bold" style={{ fontSize: 18, }}>{username}</a>
           }
@@ -88,8 +89,8 @@ function Sidebar() {
             {/* Master Data */}
             {
               role == "Human Resource" ?
-                <li li className="nav-item">
-                  <a href="#" className="nav-link" id="master-data">
+                <li className="nav-item">
+                  <a href="#" id="master-data" className="nav-link">
                     <i className="nav-icon fas fa-copy mr-2"></i>
                     <p>
                       Master Data
@@ -164,14 +165,6 @@ function Sidebar() {
                     </NavLink>
                   </li>
                   {/* Job Post */}
-                  {/* Job Applicant */}
-                  <li className="nav-item">
-                    <NavLink to="/human-resource/job-applicant" className="nav-link">
-                      <i className="nav-icon fas fa-briefcase mr-2"></i>
-                      <p>Job Applicant</p>
-                    </NavLink>
-                  </li>
-                  {/* Job Applicant */}
                 </>
                 : (role == "Applicant" ?
                   <>

@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -8,28 +8,31 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  console.log(process.env.REACT_APP_API_URL + "/api/test-parameters");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Alert Toast
-  const Toast = Swal.mixin({
-    toast: true,
-    position: 'top-end',
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
-    }
-  })
+  // const Toast = Swal.mixin({
+  //   toast: true,
+  //   position: 'top-end',
+  //   showConfirmButton: false,
+  //   timer: 3000,
+  //   timerProgressBar: true,
+  //   didOpen: (toast) => {
+  //     toast.addEventListener('mouseenter', Swal.stopTimer)
+  //     toast.addEventListener('mouseleave', Swal.resumeTimer)
+  //   }
+  // })
 
   // Get Data
   useEffect(() => {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/test-parameters",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setData(response.data.data);
@@ -40,30 +43,30 @@ function Index() {
   }, [])
 
   // Delete Data
-  function deleteData(id) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete Now!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios({
-          method: "DELETE",
-          url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
-        }).then(
-          Toast.fire({
-            icon: 'success',
-            title: 'Success delete data'
-          }),
-          setData(data),
-          navigate('/human-resource/test-parameter', { replace: true })
-        ).catch(function (error) { console.log(error); })
-      }
-    })
-  }
+  // function deleteData(id) {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: "You won't be able to revert this!",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#d33',
+  //     confirmButtonText: 'Yes, Delete Now!'
+  //   }).then((result) => {
+  //     if (result.isConfirmed) {
+  //       axios({
+  //         method: "DELETE",
+  //         url: process.env.REACT_APP_API_URL + "/api/test-parameters/" + id,
+  //       }).then(
+  //         Toast.fire({
+  //           icon: 'success',
+  //           title: 'Success delete data'
+  //         }),
+  //         setData(data),
+  //         navigate('/human-resource/test-parameter', { replace: false })
+  //       ).catch(function (error) { console.log(error); })
+  //     }
+  //   })
+  // }
 
   return (
     <>
@@ -102,12 +105,12 @@ function Index() {
               <div className="col-12">
                 <div className="card">
                   <div className="card-body">
-                    <NavLink to="/human-resource/test-parameter/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Test Parameter</NavLink>
                     <table id="example1" className="table table-bordered table-striped table-hover">
                       <thead>
                         <tr>
                           <th>Expired Hours</th>
                           <th>Test Time (in Minute)</th>
+                          <th>Threshold</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -117,9 +120,10 @@ function Index() {
                             <tr>
                               <td className="text-capitalize">{data.expiration_hour} Hour</td>
                               <td className="text-capitalize">{data.test_time_minute} Minute</td>
+                              <td className="text-capitalize">{data.threshold}</td>
                               <td>
                                 <NavLink to={`/human-resource/test-parameter/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
-                                <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+                                {/* <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button> */}
                               </td>
                             </tr>
                           );

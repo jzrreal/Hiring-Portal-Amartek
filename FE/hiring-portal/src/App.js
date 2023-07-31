@@ -41,18 +41,17 @@ import EditJobFunction from './pages/human-resource/job-function/edit';
 // Job Function
 // Test Parameter
 import IndexTestParameter from './pages/human-resource/test-parameter';
-import AddTestParameter from './pages/human-resource/test-parameter/add';
+// import AddTestParameter from './pages/human-resource/test-parameter/add';
 import EditTestParameter from './pages/human-resource/test-parameter/edit';
 // Test Parameter
 
 // Job Post
 import IndexJobPost from './pages/human-resource/job-post';
+import DetailJobPost from './pages/human-resource/job-post/detail';
+import DetailApplicantJobPost from './pages/human-resource/job-post/detailApplicant';
 import AddJobPost from './pages/human-resource/job-post/add';
 import EditJobPost from './pages/human-resource/job-post/edit';
 // Job Post
-// Job Applicant
-import IndexJobApplicant from './pages/human-resource/job-applicant';
-// Job Applicant
 // Human Resource
 
 // Trainer
@@ -66,11 +65,40 @@ import EditQuestion from './pages/trainer/question/edit';
 
 // Aplicant
 import DashboardApplicant from "./pages/applicant/dashboard";
-import ProfileApplicant from "./pages/applicant/profile";
+// Profile
+// Personal Information
+import PersonalInformationProfileApplicant from "./pages/applicant/profile/personal-information";
+import EditPersonalInformationProfileApplicant from "./pages/applicant/profile/personal-information/edit";
+// Personal Information
+// Education Histories
+import EducationHistoriesProfileApplicant from "./pages/applicant/profile/education-histories";
+import AddEducationHistoriesProfileApplicant from "./pages/applicant/profile/education-histories/add";
+import EditEducationHistoriesProfileApplicant from "./pages/applicant/profile/education-histories/edit";
+// Education Histories
+// Skills
+import SkillsProfileApplicant from "./pages/applicant/profile/skills";
+// Skills
+// Work Experiences
+import WorkExperiencesProfileApplicant from "./pages/applicant/profile/work-experiences";
+// Work Experiences
+// Certificates
+import CertificatesProfileApplicant from "./pages/applicant/profile/certificates";
+// Certificates
+// Achievments
+import AchievmentsProfileApplicant from "./pages/applicant/profile/achievments";
+// Achievments
+// Profile
+// Job List
+import IndexJobList from "./pages/applicant/job-list";
+import DetailJobList from "./pages/applicant/job-list/detail";
+// Job List
+// History Applicant
+import IndexHistoryApplicant from "./pages/applicant/history-applicant";
+// History Applicant
 // Aplicant
 
 // Auth
-import EmailVerification from './pages/emailVerification';
+import EmailVerification from './pages/EmailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
 import ApplicantProtection from './util/ApplicantProtection';
@@ -126,7 +154,7 @@ function App() {
           </Route>
           <Route path='test-parameter'>
             <Route index element={<IndexTestParameter />} />
-            <Route path='add' element={<AddTestParameter />} />
+            {/* <Route path='add' element={<AddTestParameter />} /> */}
             <Route path='edit/:id' element={<EditTestParameter />} />
           </Route>
           {/* Master Data */}
@@ -134,10 +162,9 @@ function App() {
           <Route path='job-post'>
             <Route index element={<IndexJobPost />} />
             <Route path='add' element={<AddJobPost />} />
+            <Route path='detail/:id' element={<DetailJobPost />} />
+            <Route path='detail/applicant/:id' element={<DetailApplicantJobPost />} />
             <Route path='edit/:id' element={<EditJobPost />} />
-          </Route>
-          <Route path='job-applicant'>
-            <Route index element={<IndexJobApplicant />} />
           </Route>
           {/* Job */}
         </Route>
@@ -159,7 +186,54 @@ function App() {
         {/* Aplicant */}
         <Route path='applicant' element={<ApplicantProtection />}>
           <Route path='dashboard' element={<DashboardApplicant />} />
-          <Route path='profile' element={<ProfileApplicant />} />
+          {/* Profile */}
+          <Route path='profile'>
+            {/* Personal Information */}
+            <Route path='personal-information'>
+              <Route index element={<PersonalInformationProfileApplicant />} />
+              <Route path='edit/:id' element={<EditPersonalInformationProfileApplicant />} />
+            </Route>
+            {/* Personal Information */}
+            {/* Education Histories */}
+            <Route path='education-histories'>
+              <Route index element={<EducationHistoriesProfileApplicant />} />
+              <Route path='add' element={<AddEducationHistoriesProfileApplicant />} />
+              <Route path='edit/:id' element={<EditEducationHistoriesProfileApplicant />} />
+            </Route>
+            {/* Education Histories */}
+            {/* Skills */}
+            <Route path='skills'>
+              <Route index element={<SkillsProfileApplicant />} />
+            </Route>
+            {/* Skills */}
+            {/* Work Experiences */}
+            <Route path='work-experiences'>
+              <Route index element={<WorkExperiencesProfileApplicant />} />
+            </Route>
+            {/* Work Experiences */}
+            {/* Certificates */}
+            <Route path='certificates'>
+              <Route index element={<CertificatesProfileApplicant />} />
+            </Route>
+            {/* Certificates */}
+            {/* Achievments */}
+            <Route path='achievments'>
+              <Route index element={<AchievmentsProfileApplicant />} />
+            </Route>
+            {/* Achievments */}
+          </Route>
+          {/* Profile */}
+          {/* Job List */}
+          <Route path='job-list'>
+            <Route index element={<IndexJobList />} />
+            <Route path='detail/:id' element={<DetailJobList />} />
+          </Route>
+          {/* Job List */}
+          {/* History Applicant */}
+          <Route path='history-applicant'>
+            <Route index element={<IndexHistoryApplicant />} />
+          </Route>
+          {/* History Applicant */}
         </Route>
         {/* Aplicant */}
       </Routes>

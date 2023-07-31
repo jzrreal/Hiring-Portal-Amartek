@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function EmailVerification() {
 
@@ -8,6 +9,19 @@ export default function EmailVerification() {
 
   const [contentTitle, setContentTitle] = useState("")
   const [email, setEmail] = useState("")
+  const [cooldown, setCooldown] = useState(0)
+
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
   
   useEffect(()=>{
     axios({
@@ -23,6 +37,37 @@ export default function EmailVerification() {
     })
   }, []);
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if(cooldown===0) {
+      axios({
+        method: "POST",
+        url: process.env.REACT_APP_API_URL + "/api/auth/resend-verification",
+        data: {email}
+      })
+      .then((response) => {
+        Toast.fire({
+          icon: 'error',
+          title: response.data.data.message
+        })
+        var timeLeft = 30
+        var timer = setInterval(() => {
+          if(timeLeft===0) {
+            clearInterval(timer)
+          }
+          setCooldown(timeLeft)
+          timeLeft -= 1
+        }, 1000)
+      })
+      .catch((err) => {
+        Toast.fire({
+          icon: 'error',
+          title: err.response.data.message
+        })
+      })
+    }
+  }
+
   if (window.location.href === "http://localhost:3000/email-verification") {
     return (
       <div className="hold-transition login-page">
@@ -32,9 +77,9 @@ export default function EmailVerification() {
               </div>
               <div className="card mt-5">
                   <div className="card-body login-card-body">
-                      <p className="login-box-msg">Sign In to start your session</p>
+                      <p className="login-box-msg">Enter your email</p>
 
-                      <form method="POST" onSubmit="">
+                      <form onSubmit={submitHandler} method="POST">
                           <div className="form-group">
                               <label for="exampleInputEmail1">Email</label>
                               <div className="input-group mb-3">
@@ -51,11 +96,11 @@ export default function EmailVerification() {
                                   </div>
                               </div>
                           </div>
-                          <button type="submit" className="btn btn-primary btn-block">Sign In</button>
-                          <a href="/register" className="btn btn-outline-primary btn-block">Register</a>
+                          <button type="submit" className={`btn btn-primary btn-block ${cooldown!==0?"disabled":""}`}>{`Request verification ${cooldown===0?"":cooldown}`}</button>
+                          {/* <a href="/register" className="btn btn-outline-primary btn-block">Back to login</a> */}
                       </form>
-                      <div>
-                          <Link to="/register">Resend email verification?</Link>
+                      <div className='py-2'>
+                          <Link to="/login">Back to login</Link>
                       </div>
                   </div>
               </div>

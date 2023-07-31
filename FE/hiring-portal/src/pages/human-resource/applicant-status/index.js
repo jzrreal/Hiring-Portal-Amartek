@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -11,6 +11,7 @@ function Index() {
   console.log(process.env.REACT_APP_API_URL + "/api/application-status");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Alert Toast
   const Toast = Swal.mixin({
@@ -30,6 +31,9 @@ function Index() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/application-status",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setData(response.data.data);
@@ -53,13 +57,16 @@ function Index() {
         axios({
           method: "DELETE",
           url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         }).then(
           Toast.fire({
             icon: 'success',
             title: 'Success delete data'
           }),
           setData(data),
-          navigate('/human-resource/applicant-status', { replace: true })
+          navigate('/human-resource/applicant-status', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
     })

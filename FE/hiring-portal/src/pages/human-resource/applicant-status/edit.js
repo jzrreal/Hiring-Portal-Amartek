@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -11,6 +11,7 @@ function Edit() {
     const navigate = useNavigate()
     const { id } = useParams();
     const [data, setData] = useState([])
+    const token = useOutletContext()
 
     // Alert Toast
     const Toast = Swal.mixin({
@@ -30,6 +31,9 @@ function Edit() {
         axios({
             method: "GET",
             url: process.env.REACT_APP_API_URL + "/api/application-status/" + id,
+            headers: {
+                Authorization: "Bearer " + token
+            }
         })
             .then(function (response) {
                 setData(response.data.data);
@@ -51,7 +55,7 @@ function Edit() {
                 icon: 'success',
                 title: 'Success update data'
             }),
-            navigate('/human-resource/applicant-status', { replace: true })
+            navigate('/human-resource/applicant-status', { replace: false })
         ).catch(function (error) { console.log(error); })
     }
 
@@ -96,7 +100,7 @@ function Edit() {
                                         <form onSubmit={handleSubmit}>
                                             <div className="form-group">
                                                 <label for="name">ID Applicant Status</label>
-                                                <input type="text" className="form-control" id="id" value={data.id} onChange={e => setData({ ...data, id: e.target.value })} />
+                                                <input type="text" className="form-control" id="id" value={data.id} readOnly />
                                             </div>
                                             <div className="form-group">
                                                 <label for="name">Name</label>

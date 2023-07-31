@@ -1,5 +1,5 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -8,9 +8,9 @@ import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
 
 function Index() {
-  console.log(process.env.REACT_APP_API_URL + "/api/roles");
   const navigate = useNavigate();
   const [data, setData] = useState([{}]);
+  const token = useOutletContext()
 
   // Alert Toast
   const Toast = Swal.mixin({
@@ -30,6 +30,9 @@ function Index() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/roles",
+      headers: {
+        Authorization: "Bearer " + token
+      }
     })
       .then(function (response) {
         setData(response.data.data);
@@ -53,13 +56,15 @@ function Index() {
         axios({
           method: "DELETE",
           url: process.env.REACT_APP_API_URL + "/api/roles/" + id,
+          headers: {
+            Authorization: "Bearer " + token
+          }
         }).then(
           Toast.fire({
             icon: 'success',
             title: 'Success delete data'
           }),
-          setData(data),
-          navigate('/human-resource/role', { replace: true })
+          navigate('/human-resource/role', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
     })
