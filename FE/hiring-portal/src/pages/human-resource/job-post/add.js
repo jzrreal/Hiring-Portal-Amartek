@@ -1,6 +1,7 @@
 import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import day from 'dayjs';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
@@ -14,6 +15,7 @@ function Add() {
     })
     const [jobLevels, setJobLevels] = useState([]);
     const [jobFunction, setJobFunction] = useState([]);
+    const today = new Date().toISOString().split('T')[0];
     const token = useOutletContext();
 
     // Alert Toast
@@ -40,6 +42,7 @@ function Add() {
             <option className="text-capitalize">{value.name}</option>
         )
     }
+
     useEffect(() => {
         axios({
             method: "GET",
@@ -172,7 +175,7 @@ function Add() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="open_until">Open Until</label>
-                                                        <input type="date" className="form-control" id="open_until" onChange={e => setInputData({ ...inputData, open_until: e.target.value })} />
+                                                        <input type="date" className="form-control" id="open_until" min={today} onChange={e => setInputData({ ...inputData, open_until: e.target.value })} />
                                                     </div>
                                                 </div>
                                             </div>

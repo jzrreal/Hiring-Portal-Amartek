@@ -155,6 +155,7 @@ function Index() {
                           <th>School / University</th>
                           <th>Apply At</th>
                           <th>Status</th>
+                          <th>Test Result</th>
                           <th>Actions</th>
                         </tr>
                       </thead>
@@ -182,6 +183,19 @@ function Index() {
                                             : null
                                           )
                                         )
+                                      )
+                                    )
+                                }
+                              </td>
+                              <td className="text-capitalize">
+                                {
+                                  data.test_result == "Waiting" ?
+                                    <span class="badge badge-warning">{data.test_result}</span>
+                                    : (data.test_result == "Passed" ?
+                                      <span class="badge badge-success">{data.test_result}</span>
+                                      : (data.test_result == "Failed" ?
+                                        <span class="badge badge-danger">{data.test_result}</span>
+                                        : null
                                       )
                                     )
                                 }
