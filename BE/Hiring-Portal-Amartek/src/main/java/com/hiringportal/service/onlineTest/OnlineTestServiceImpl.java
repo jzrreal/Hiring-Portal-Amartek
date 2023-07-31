@@ -319,8 +319,11 @@ public class OnlineTestServiceImpl implements OnlineTestService {
                 testQuestionRepository.getAllTestQuestionByTestId(test.getTestId());
 
         //Transform data into Map<Integer, Integer> with key questionId and value its answer
-        Map<Integer, Integer> questionAnswerMap = testQuestions.stream()
-                .collect(Collectors.toMap(TestQuestionQuery::getQuestionId, TestQuestionQuery::getAnswer));
+        Map<Integer, Integer> questionAnswerMap = new HashMap<>();
+
+        for (var testQuestion : testQuestions){
+            questionAnswerMap.put(testQuestion.getQuestionId(), testQuestion.getAnswer());
+        }
 
         //Make list integer that contains all questionId
         List<Integer> idQuestions = testQuestions
