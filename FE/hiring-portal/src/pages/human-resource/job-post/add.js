@@ -75,16 +75,20 @@ function Add() {
                 Authorization: "Bearer " + token
             },
             data: inputData
-        })
-            .then((response) => {
+        }).then(response => {
+            if (response.data.status === 200) {
                 Toast.fire({
-                    icon: 'success',
-                    title: 'Success save data'
+                    icon: "success",
+                    title: response.data.message
                 })
-                navigate('/human-resource/job-post', { replace: false })
+                navigate("/human-resource/job-post", { replace: false })
             }
-            )
-            .catch(function (error) { console.log(error); })
+        }).catch((error) => {
+            Toast.fire({
+                icon: "error",
+                title: error.response.data.message
+            })
+        });
     }
 
     return (

@@ -43,13 +43,12 @@ function Add() {
                 })
                 navigate("/human-resource/skill-level", { replace: false })
             }
-        })
-            .catch((error) => {
-                Toast.fire({
-                    icon: "error",
-                    title: error.response.data.message
-                })
-            });
+        }).catch((error) => {
+            Toast.fire({
+                icon: "error",
+                title: error.response.data.message
+            })
+        });
     }
 
     return (
