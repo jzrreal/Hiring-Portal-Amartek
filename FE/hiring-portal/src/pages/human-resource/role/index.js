@@ -64,7 +64,7 @@ function Index() {
             icon: 'success',
             title: 'Success delete data'
           }),
-          navigate('/human-resource/role', { replace: false })
+          navigate('/human-resource/role', { replace: true })
         ).catch(function (error) { console.log(error); })
       }
     })

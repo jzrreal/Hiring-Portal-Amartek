@@ -92,14 +92,14 @@ function Index() {
                       </div>
                       <div className='col'>
                         <div className="form-group">
-                          <label for="id">Open Until</label>
-                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.open_until, "dd mmmm yyyy")} readOnly />
+                          <label for="id">Updated At</label>
+                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.updated_at, "dd mmmm yyyy")} readOnly />
                         </div>
                       </div>
                       <div className='col'>
                         <div className="form-group">
-                          <label for="id">Updated At</label>
-                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.updated_at, "dd mmmm yyyy")} readOnly />
+                          <label for="id">Vacancy</label>
+                          <input type="text" className="form-control" id="id" value={dataJobPost.vacancy + " People"} readOnly />
                         </div>
                       </div>
                     </div>
@@ -124,6 +124,12 @@ function Index() {
                       </div>
                     </div>
                     <div className='row'>
+                      <div className='col'>
+                        <div className="form-group">
+                          <label for="id">Open Until</label>
+                          <input type="text" className="form-control text-capitalize" id="id" value={dateFormat(dataJobPost.open_until, "dd mmmm yyyy")} readOnly />
+                        </div>
+                      </div>
                       <div className='col'>
                         <div className="form-group">
                           <label for="id">Closed</label>
