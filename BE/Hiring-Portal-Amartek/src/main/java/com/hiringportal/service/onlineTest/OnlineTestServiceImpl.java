@@ -230,13 +230,13 @@ public class OnlineTestServiceImpl implements OnlineTestService {
             //Set PageRequest to get 1 question every page and order ascending
             pageable = PageRequest.of(page, 1, Sort.Direction.ASC, "testQuestionId");
         }catch (IllegalArgumentException exception){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "no question number " + page);
         }
 
         Page<TestQuestionQuery> pageResult = testQuestionRepository.getPageAllTestQuestionByTestId(test.getTestId(), pageable);
 
         TestQuestionQuery testQuestion = pageResult.stream().findAny().orElseThrow(
-                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "no question number " + page)
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "no question number " + page)
         );
 
         Questions questions = questionRepository.findById(testQuestion.getQuestionId()).orElseThrow();
@@ -255,6 +255,7 @@ public class OnlineTestServiceImpl implements OnlineTestService {
                 .questionId(testQuestion.getQuestionId())
                 .question(questions.getQuestion())
                 .choices(choices)
+                .expiredTime(test.getEndTest().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime())
                 .build();
 
         return PaginationUtil.createResultPageResponse(
