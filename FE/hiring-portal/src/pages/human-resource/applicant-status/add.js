@@ -1,11 +1,11 @@
 import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
-import Swal from 'sweetalert2';
 
 function Add() {
     const navigate = useNavigate()

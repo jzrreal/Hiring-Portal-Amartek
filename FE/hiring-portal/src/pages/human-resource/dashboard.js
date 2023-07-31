@@ -164,7 +164,7 @@ function Dashboard() {
                               <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">
-                                {data.closed === null || data.closed === "false" ?
+                                {data.closed === null || data.closed === false ?
                                   <span className="badge badge-success">Open</span>
                                   : <span className="badge badge-danger">Closed</span>
                                 }

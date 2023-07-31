@@ -10,7 +10,7 @@ import Footer from "../../../components/footer";
 function Add() {
     const navigate = useNavigate()
     const [inputData, setInputData] = useState({
-      job_function_id: 1, job_level_id: 1
+        job_function_id: 1, job_level_id: 1
     })
     const [jobLevels, setJobLevels] = useState([]);
     const [jobFunction, setJobFunction] = useState([]);
@@ -67,6 +67,7 @@ function Add() {
     // Add Data
     function handleSubmit(e) {
         e.preventDefault()
+        console.log(inputData);
         axios({
             method: "POST",
             url: process.env.REACT_APP_API_URL + "/api/job-posts",

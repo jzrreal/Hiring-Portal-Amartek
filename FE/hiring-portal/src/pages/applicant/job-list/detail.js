@@ -1,5 +1,6 @@
 import { useEffect, useState, React } from 'react'
-import { NavLink, useOutletContext, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useOutletContext, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
@@ -9,8 +10,22 @@ import Footer from "../../../components/footer";
 
 function Detail() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState({});
   const token = useOutletContext()
+
+  // Alert Toast
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
 
   // Get Data
   useEffect(() => {
@@ -20,15 +35,31 @@ function Detail() {
       headers: {
         Authorization: "Bearer " + token
       }
-    })
-      .then(function (response) {
-        console.log(response.data.data);
-        setData(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    }).then(function (response) {
+      setData(response.data.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
   }, [])
+
+  // Apply Now
+  function applyNow(e) {
+    e.preventDefault()
+    axios({
+      method: "POST",
+      url: process.env.REACT_APP_API_URL + "/api/applications/" + data.id,
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    }).then(
+      Toast.fire({
+        icon: 'success',
+        title: 'Success apply job'
+      }),
+      setData(data),
+      navigate('/applicant/history-applicant', { replace: false })
+    ).catch(function (error) { console.log(error); })
+  }
 
   return (
     <>
@@ -132,9 +163,13 @@ function Detail() {
                       <label for="job_requirement">Job Requirement</label>
                       <textarea className="form-control" id="job_requirement" value={data.requirements} readOnly />
                     </div>
+                    <div className="form-group">
+                      <label for="vacancy">Vacancy</label>
+                      <input type="text" className="form-control text-capitalize" id="vacancy" value={data.vacancy} readOnly />
+                    </div>
                     <div className="float-right">
                       <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                      <NavLink to="" className="btn btn-primary">Apply Now</NavLink>
+                      <button onClick={applyNow} className="btn btn-primary">Apply Now</button>
                     </div>
                   </div>
                 </div>

@@ -26,7 +26,6 @@ function Index() {
     })
       .then(function (response) {
         setDataJobPost(response.data.data);
-        console.log(response.data.data);
         axios({
           method: "GET",
           url: process.env.REACT_APP_API_URL + "/api/applications/job-post/" + response.data.data.id,
@@ -160,7 +159,7 @@ function Index() {
                               <td className="text-capitalize">{data.name}</td>
                               <td className="text-capitalize">{data.gender}</td>
                               <td className="text-capitalize">{data.age} Years</td>
-                              <td className="text-capitalize">{data.major} - {data.school_name}</td>
+                              <td className="text-capitalize">{data.school_name} - {data.major}</td>
                               <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">
                                 {
