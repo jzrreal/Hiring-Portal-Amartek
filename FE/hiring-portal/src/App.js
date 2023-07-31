@@ -98,7 +98,7 @@ import IndexHistoryApplicant from "./pages/applicant/history-applicant";
 // Aplicant
 
 // Auth
-import EmailVerification from './pages/emailVerification';
+import EmailVerification from './pages/EmailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
 import ApplicantProtection from './util/ApplicantProtection';
