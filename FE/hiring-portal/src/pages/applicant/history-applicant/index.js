@@ -73,7 +73,7 @@ function Index() {
                           <th>Job Function</th>
                           <th>Apply Date</th>
                           <th>Status</th>
-                          <th>Actions</th>
+                          {/* <th>Actions</th> */}
                         </tr>
                       </thead>
                       <tbody>
@@ -103,9 +103,9 @@ function Index() {
                                     )
                                 }
                               </td>
-                              <td>
+                              {/* <td>
                                 <NavLink to={`/applicant/job-list/detail/${data.job_post_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
-                              </td>
+                              </td> */}
                             </tr>
                           );
                         })}
