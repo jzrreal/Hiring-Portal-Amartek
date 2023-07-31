@@ -6,6 +6,7 @@ import com.hiringportal.entities.CandidateProfile;
 import com.hiringportal.entities.EducationHistory;
 import com.hiringportal.entities.JobApplication;
 import com.hiringportal.enums.EducationLevel;
+import com.hiringportal.enums.TestResult;
 import com.hiringportal.repository.ApplicationStatusRepository;
 import com.hiringportal.repository.CandidateProfileRepository;
 import com.hiringportal.repository.EducationHistoryRepository;
@@ -131,6 +132,9 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                     String major = educationHistoryQuery != null ? educationHistoryQuery.getMajor() : null;
                     String schoolName = educationHistoryQuery != null ? educationHistoryQuery.getName() : null;
                     Integer age = DateUtil.getAge(candidateProfile.getBirthDate());
+                    String testResult = jobApplication.getTest() == null
+                            ? WordUtil.capitalizeEachLetter(TestResult.WAITING.toString().toLowerCase())
+                            : WordUtil.capitalizeEachLetter(jobApplication.getTest().getFinalResult().toString().toLowerCase());
                     return GetApplicationByJobPostResponse.builder()
                             .age(age)
                             .major(major)
@@ -140,6 +144,7 @@ public class JobApplicationServiceImpl implements JobApplicationService {
                             .applyDate(jobApplication.getApply_date())
                             .jobApplicationId(jobApplication.getId())
                             .status(applicationStatus.get(jobApplication.getApplicationStatus().getId()))
+                            .testResult(testResult)
                             .build();
                 }).toList();
 
