@@ -1,6 +1,7 @@
 package com.hiringportal.controller.transactional;
 
 import com.hiringportal.dto.CustomResponse;
+import com.hiringportal.dto.PaginationResultResponse;
 import com.hiringportal.dto.QuestionTestResponse;
 import com.hiringportal.service.onlineTest.OnlineTestService;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +47,19 @@ public class OnlineTestController {
         );
     }
 
+    @GetMapping("check")
+    public ResponseEntity<Object> checkTestExpiredOrNot(
+            @RequestParam(name = "token") String token
+    ) {
+
+        onlineTestService.checkTokenExpired(token);
+
+        return CustomResponse.generateResponse(
+                "Valid",
+                HttpStatus.OK
+        );
+    }
+
     @PutMapping("test-questions/{testQuestionId}/questions/{questionId}/choices/{choiceId}")
     public ResponseEntity<Object> updateAnswer(
             @PathVariable(name = "testQuestionId") Integer testQuestionId,
@@ -69,6 +83,21 @@ public class OnlineTestController {
         return CustomResponse.generateResponse(
                 "Success finish test",
                 HttpStatus.OK
+        );
+    }
+
+    @GetMapping("pagination")
+    public ResponseEntity<Object> getOnlineTestQuestionPerPage(
+            @RequestParam(name = "token") String token,
+            @RequestParam(name = "number", defaultValue = "1") Integer page
+    ) {
+        PaginationResultResponse<QuestionTestResponse> resultResponse =
+                onlineTestService.getQuestionTestByTokenPerPage((page - 1), token);
+
+        return CustomResponse.generateResponse(
+                "Question number : " + page,
+                HttpStatus.OK,
+                resultResponse
         );
     }
 }

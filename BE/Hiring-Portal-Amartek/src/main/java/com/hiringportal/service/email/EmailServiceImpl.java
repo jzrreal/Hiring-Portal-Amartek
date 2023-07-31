@@ -123,6 +123,6 @@ public class EmailServiceImpl implements EmailService{
          * Pas klik tombol itu pindah halaman mengerjakan soal dan hit api pake token tadi buat dapet soalnya
          *
          */
-        return host + "/api/online-tests?token=" + token;
+        return "http://localhost:3000/online-test?token=" + token;
     }
 }
