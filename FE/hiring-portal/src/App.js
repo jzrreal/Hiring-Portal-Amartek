@@ -3,6 +3,10 @@ import Login from "./pages/login";
 import Register from "./pages/register";
 import NotFound from "./pages/notFound";
 
+//Online Test
+import OnlineTestIndex from "./pages/online-test/index";
+import OnlineTest from "./pages/online-test/test";
+//Online Test
 // Human Resource
 import DashboardHumanResource from "./pages/human-resource/dashboard";
 // Role
@@ -91,6 +95,11 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='*' element={<NotFound />} />
         <Route path='/email-verification' element={<EmailVerification />} />
+
+        {/*Online test*/}
+        <Route path='/online-test' element={<OnlineTestIndex />}/>
+        <Route path='/online-test/start' element={<OnlineTest />}/>
+        {/*Online test*/}
 
         {/* Human Resource */}
         <Route path='human-resource' element={<HumanResourceProtection />}>
