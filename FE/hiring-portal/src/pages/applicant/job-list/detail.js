@@ -163,6 +163,10 @@ function Detail() {
                       <label for="job_requirement">Job Requirement</label>
                       <textarea className="form-control" id="job_requirement" value={data.requirements} readOnly />
                     </div>
+                    <div className="form-group">
+                      <label for="vacancy">Vacancy</label>
+                      <input type="text" className="form-control text-capitalize" id="vacancy" value={data.vacancy} readOnly />
+                    </div>
                     <div className="float-right">
                       <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>
                       <button onClick={applyNow} className="btn btn-primary">Apply Now</button>

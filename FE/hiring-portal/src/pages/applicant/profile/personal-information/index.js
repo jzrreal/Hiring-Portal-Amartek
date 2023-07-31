@@ -88,6 +88,10 @@ function Index() {
                                             <input class="form-control" value={data.email} readOnly />
                                         </div>
                                         <div className="form-group">
+                                            <label>Last Education</label>
+                                            <input class="form-control" value={data.last_education} readOnly />
+                                        </div>
+                                        <div className="form-group">
                                             <label>Age</label>
                                             <input class="form-control" value={data.age + " Years"} readOnly />
                                         </div>

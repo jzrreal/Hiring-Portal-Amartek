@@ -159,7 +159,7 @@ function Index() {
                               <td className="text-capitalize">{data.name}</td>
                               <td className="text-capitalize">{data.gender}</td>
                               <td className="text-capitalize">{data.age} Years</td>
-                              <td className="text-capitalize">{data.major} - {data.school_name}</td>
+                              <td className="text-capitalize">{data.school_name} - {data.major}</td>
                               <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
                               <td className="text-capitalize">
                                 {

@@ -243,7 +243,7 @@ function Edit() {
                                                 <div className='col'>
                                                     <div className="form-group">
                                                         <label for="open_until">Closed</label>
-                                                        <select className='form-control' id='job_level' value={jobResponse.closed} onChange={e => setJobResponse({ ...jobResponse, closed: e.target.value })} >
+                                                        <select className='form-control' id='job_level' value={jobResponse.closed ? true : false} onChange={e => setJobResponse({ ...jobResponse, closed: e.target.value })} >
                                                             <option value={true} >True</option>
                                                             <option value={false}>False</option>
                                                         </select>
