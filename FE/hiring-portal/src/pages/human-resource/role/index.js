@@ -1,7 +1,8 @@
 import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
+import DataTable from '@sifatkabir/reactdatatable'
 import axios from 'axios';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
@@ -73,6 +74,39 @@ function Index() {
     })
   }
 
+  const columns = [
+    {
+      title: "id",
+      key: "id",
+      render: item => (
+        <span className="text-capitalize">{item.id}</span>
+      ),
+    },
+    {
+      title: "Name",
+      key: "name",
+      render: item => (
+        <span className="text-capitalize">{item.name}</span>
+      ),
+      sort: true,
+    },
+    {
+      title: "Actions",
+      render: item => {
+        return (
+          <>
+            <NavLink to={`/human-resource/role/edit/${item.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
+            <button onClick={() => deleteData(item.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+          </>
+        )
+      }
+    }
+  ];
+
+  const option = {
+    pagination: { perPage: 5 }
+  };
+
   return (
     <>
       <div className="wrapper">
@@ -108,7 +142,7 @@ function Index() {
           <section className="content">
             <div className="row">
               <div className="col-12">
-                <div className="card">
+                {/* <div className="card">
                   <div className="card-body">
                     <NavLink to="/human-resource/role/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Role</NavLink>
                     <table id="example1" className="table table-bordered table-striped table-hover">
@@ -132,6 +166,19 @@ function Index() {
                         })}
                       </tbody>
                     </table>
+                  </div>
+                </div> */}
+                <div className="card">
+                  <div className="card-body">
+                    <div className="row justify-content-between">
+                      <NavLink to="/human-resource/role/add" className="btn btn-primary"><i className="fas fa-plus mr-2"></i> New Role</NavLink>
+                    </div>
+                    <DataTable
+                      columns={columns}
+                      data={data}
+                      option={option}
+                      theme="bootstrap">
+                    </DataTable>
                   </div>
                 </div>
               </div>
