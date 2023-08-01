@@ -40,4 +40,8 @@ public interface TestQuestionRepository extends JpaRepository<TestQuestion, Inte
             where tq.testQuestionId = :testQuestionId and q.questionId = :questionId
                         """)
     Optional<TestQuestion> existsByTestQuestionIdAndQuestionId(Integer testQuestionId, Integer questionId);
+    @Query(value = """
+            delete from TestQuestion tq where tq.questions.questionId = :questionId
+            """)
+    void deleteAllTesQuestionByQuestionId(Integer questionId);
 }

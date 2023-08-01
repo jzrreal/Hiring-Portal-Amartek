@@ -7,6 +7,7 @@ import com.hiringportal.entities.Questions;
 import com.hiringportal.repository.ChoiceRepository;
 import com.hiringportal.repository.QuestionLevelRepository;
 import com.hiringportal.repository.QuestionRepository;
+import com.hiringportal.repository.TestQuestionRepository;
 import com.hiringportal.service.ValidationService;
 import com.hiringportal.utils.WordUtil;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class QuestionServiceImpl implements QuestionService {
     private final ChoiceRepository choiceRepository;
     private final ValidationService validationService;
     private final QuestionLevelRepository questionLevelRepository;
+    private final TestQuestionRepository testQuestionRepository;
 
     @Override
     public List<QuestionResponse> getAllQuestion() {
@@ -118,6 +120,8 @@ public class QuestionServiceImpl implements QuestionService {
         getQuestionByIdOrThrow(questionId);
 
         choiceRepository.deleteAllChoiceByQuestionId(questionId);
+
+        testQuestionRepository.deleteAllTesQuestionByQuestionId(questionId);
 
         questionRepository.deleteById(questionId);
 
