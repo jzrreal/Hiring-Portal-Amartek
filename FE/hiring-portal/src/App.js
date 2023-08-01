@@ -106,7 +106,7 @@ import EmailVerification from './pages/emailVerification';
 import HumanResourceProtection from './util/HumanResourceProtection';
 import TrainerProtection from './util/TrainerProtection';
 import ApplicantProtection from './util/ApplicantProtection';
-import Table from './components/table';
+import Table from './components/Table';
 // Auth
 
 function App() {

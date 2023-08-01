@@ -1,4 +1,4 @@
-export default function Table ( {responseData, addColumn} ) {
+export default function Table ( {responseData, getId, addColumn} ) {
 
     const dataMapping = (data) => {
         return (
@@ -8,7 +8,10 @@ export default function Table ( {responseData, addColumn} ) {
                         <td id={data[0]}>{data[value]}</td>
                     )
                 })}
-                {addColumn}
+                {addColumn.map((column) => {
+                    getId(data.id)
+                    return(column)
+                })}
             </tr>
         )
     }
