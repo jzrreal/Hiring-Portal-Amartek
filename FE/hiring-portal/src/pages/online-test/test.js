@@ -147,8 +147,8 @@ export default function Test() {
                             <h4 className="mt-3">{currentNumber}. {data.question}</h4>
                             {choices.map(choice => {
                                 return (
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input p-0" name="inlineRadioOptions"
+                                    <div className="form-check mt-3">
+                                        <input className="form-check-input p-0" name="inlineRadioOptions"
                                             type="radio"
                                             value={choice.choiceId}
                                             checked={choiceId === choice.choiceId}

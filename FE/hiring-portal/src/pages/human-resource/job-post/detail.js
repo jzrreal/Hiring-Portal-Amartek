@@ -173,15 +173,15 @@ function Index() {
                               <td className="text-capitalize">
                                 {
                                   data.status == "submitted" ?
-                                    <span class="badge badge-secondary">{data.status}</span>
+                                    <span className="badge badge-secondary">{data.status}</span>
                                     : (data.status == "reviewed" ?
-                                      <span class="badge badge-info">{data.status}</span>
+                                      <span className="badge badge-info">{data.status}</span>
                                       : (data.status == "test" ?
-                                        <span class="badge badge-warning">{data.status}</span>
+                                        <span className="badge badge-warning">{data.status}</span>
                                         : (data.status == "rejected" ?
-                                          <span class="badge badge-danger">{data.status}</span>
+                                          <span className="badge badge-danger">{data.status}</span>
                                           : (data.status == "accepted" ?
-                                            <span class="badge badge-success">{data.status}</span>
+                                            <span className="badge badge-success">{data.status}</span>
                                             : null
                                           )
                                         )
@@ -192,11 +192,11 @@ function Index() {
                               <td className="text-capitalize">
                                 {
                                   data.test_result == "Waiting" ?
-                                    <span class="badge badge-warning">{data.test_result}</span>
+                                    <span className="badge badge-warning">{data.test_result}</span>
                                     : (data.test_result == "Passed" ?
-                                      <span class="badge badge-success">{data.test_result}</span>
+                                      <span className="badge badge-success">{data.test_result}</span>
                                       : (data.test_result == "Failed" ?
-                                        <span class="badge badge-danger">{data.test_result}</span>
+                                        <span className="badge badge-danger">{data.test_result}</span>
                                         : null
                                       )
                                     )
