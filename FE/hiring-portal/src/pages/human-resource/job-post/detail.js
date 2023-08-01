@@ -156,7 +156,9 @@ function Index() {
                           <th>Apply At</th>
                           <th>Status</th>
                           <th>Test Result</th>
-                          <th>Actions</th>
+                          {
+                            dataJobPost.closed === true ? null : <th>Actions</th>
+                          }
                         </tr>
                       </thead>
                       <tbody>
@@ -200,9 +202,14 @@ function Index() {
                                     )
                                 }
                               </td>
-                              <td>
-                                <NavLink to={`/human-resource/job-post/detail/applicant/${data.job_application_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
-                              </td>
+                              {
+                                dataJobPost.closed === true ?
+                                  null
+                                  :
+                                  <td>
+                                    <NavLink to={`/human-resource/job-post/detail/applicant/${data.job_application_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
+                                  </td>
+                              }
                             </tr>
                           );
                         })}
