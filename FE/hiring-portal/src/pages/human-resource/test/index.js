@@ -1,57 +1,30 @@
-import React, { useState } from 'react'
-import ReactDataTable, { ReactTableCheckBox } from '@sifatkabir/reactdatatable';
+import { React } from "react";
+import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import "react-data-table-component-extensions/dist/index.css";
 
+import { columns, data } from "./data";
 function Index() {
-    const columns = [
-        {
-            title: 'Firstname',
-            render: (item) => {
-                return (
-                    <b>{item.firstname}</b>
-                )
-            },
-            sort: true,
-            key: 'firstname'
-        },
-        {
-            title: 'Lastname',
-            render: (item) => {
-                return (
-                    <b>{item.lastname}</b>
-                )
-            },
-            sort: true,
-            key: 'lastname'
-        },
-        {
-            title: 'Country code',
-            key: 'countrycode',
-            sort: true
-        }
-    ];
-
-    const data = [
-        {
-            "userId": "56615",
-            "firstname": "Kaelyn",
-            "lastname": "Hane",
-            "countrycode": "CL"
-        },
-        {
-            "userId": "66680",
-            "firstname": "Jovani",
-            "lastname": "Mosciski",
-            "countrycode": "AT"
-        },
-    ];
-
-    const option = {
-        pagination: { perPage: 5 }
+    const tableData = {
+        columns,
+        data
     };
 
     return (
-        <ReactDataTable columns={columns} data={data} option={option} theme="bootstrap" />
-    );
+        <div className="main">
+            <DataTableExtensions {...tableData}>
+                <DataTable
+                    columns={columns}
+                    data={data}
+                    noHeader
+                    defaultSortField="id"
+                    defaultSortAsc={false}
+                    pagination
+                    highlightOnHover
+                />
+            </DataTableExtensions>
+        </div>
+    )
 }
 
 export default Index

@@ -1,6 +1,8 @@
 import { useEffect, useState, React } from 'react'
 import { NavLink, useNavigate, useOutletContext } from 'react-router-dom';
-import DataTable from '@sifatkabir/reactdatatable'
+import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import "react-data-table-component-extensions/dist/index.css";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
@@ -76,35 +78,27 @@ function Index() {
 
   const columns = [
     {
-      title: "id",
-      key: "id",
-      render: item => (
-        <span className="text-capitalize">{item.id}</span>
-      ),
+      name: "Name",
+      selector: "name",
+      sortable: true,
+      filterDigit: 3
     },
     {
-      title: "Name",
-      key: "name",
-      render: item => (
-        <span className="text-capitalize">{item.name}</span>
-      ),
-      sort: true,
-    },
-    {
-      title: "Actions",
-      render: item => {
+      name: "Actions",
+      selector: row => {
         return (
           <>
-            <NavLink to={`/human-resource/role/edit/${item.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
-            <button onClick={() => deleteData(item.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+            <NavLink to={`/human-resource/role/edit/${row.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
+            <button onClick={() => deleteData(row.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
           </>
         )
       }
     }
   ];
 
-  const option = {
-    pagination: { perPage: 5 }
+  const tableData = {
+    columns,
+    data
   };
 
   return (
@@ -173,12 +167,16 @@ function Index() {
                     <div className="row justify-content-between">
                       <NavLink to="/human-resource/role/add" className="btn btn-primary"><i className="fas fa-plus mr-2"></i> New Role</NavLink>
                     </div>
-                    <DataTable
-                      columns={columns}
-                      data={data}
-                      option={option}
-                      theme="bootstrap">
-                    </DataTable>
+                    <DataTableExtensions {...tableData} filterDigit={0} export={false} print={false} filterPlaceholder="Cari">
+                      <DataTable
+                        columns={columns}
+                        data={data}
+                        defaultSortField="id"
+                        defaultSortAsc={false}
+                        pagination
+                        highlightOnHover
+                      />
+                    </DataTableExtensions>
                   </div>
                 </div>
               </div>
