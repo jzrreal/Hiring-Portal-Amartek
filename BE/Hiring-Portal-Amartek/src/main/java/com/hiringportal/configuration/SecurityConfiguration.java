@@ -38,7 +38,7 @@ public class SecurityConfiguration {
                 ).authenticated()
                 //Need authentication with role Candidate
                 .antMatchers(HttpMethod.POST, "/api/applications/*", "/api/education-histories").hasAuthority("applicant")
-                .antMatchers(HttpMethod.PUT, "/api/education-histories/*").hasAuthority("applicant")
+                .antMatchers(HttpMethod.PUT, "/api/education-histories/*", "/api/applicants").hasAuthority("applicant")
                 .antMatchers(HttpMethod.DELETE, "/api/applications/*", "/api/education-histories/*").hasAuthority("applicant")
                 .antMatchers(HttpMethod.GET, "/api/applications", "/api/profiles/applicants").hasAuthority("applicant")
                 //Need authentication with role HR

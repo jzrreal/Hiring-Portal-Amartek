@@ -62,6 +62,10 @@ public class CandidateProfileServiceImpl implements CandidateProfileService{
         candidateProfile.setBirthDate(request.getBirthDate());
         candidateProfile.setSummary(request.getSummary());
 
+        User user = candidateProfile.getUser();
+        user.setFullName(request.getFullName());
+        userRepository.save(user);
+
         return candidateProfileRepository.save(candidateProfile);
     }
 

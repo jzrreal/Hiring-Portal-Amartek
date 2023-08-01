@@ -204,7 +204,7 @@ function App() {
             {/* Personal Information */}
             <Route path='personal-information'>
               <Route index element={<PersonalInformationProfileApplicant />} />
-              <Route path='edit/:id' element={<EditPersonalInformationProfileApplicant />} />
+              <Route path='edit' element={<EditPersonalInformationProfileApplicant />} />
             </Route>
             {/* Personal Information */}
             {/* Education Histories */}

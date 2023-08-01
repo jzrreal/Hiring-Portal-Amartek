@@ -4,14 +4,15 @@ import com.hiringportal.dto.CandidateProfileRequest;
 import com.hiringportal.dto.CandidateProfileResponse;
 import com.hiringportal.dto.CustomResponse;
 import com.hiringportal.entities.CandidateProfile;
+import com.hiringportal.entities.User;
 import com.hiringportal.service.candidateProfile.CandidateProfileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000/")
@@ -53,12 +54,14 @@ public class CandidateProfileController {
         );
     }
 
-    @PutMapping(value = "{candidateProfileId}")
+    @PutMapping()
     public ResponseEntity<Object> updateCandidateProfile(
-            @PathVariable(name = "candidateProfileId") Integer candidateProfileId,
+            Authentication authentication,
             @RequestBody CandidateProfileRequest request
     ) {
-        request.setId(candidateProfileId);
+        User user = (User) authentication.getPrincipal();
+        request.setId(user.getCandidateProfile().getId());
+        request.setUserId(user.getId());
 
         CandidateProfile response = candidateProfileService.update(request);
 
