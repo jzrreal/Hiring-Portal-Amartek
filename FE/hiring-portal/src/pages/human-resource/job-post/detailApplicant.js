@@ -88,6 +88,7 @@ function Add() {
                   <ol className="breadcrumb float-sm-right">
                     <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
                     <li className="breadcrumb-item"><NavLink to="/human-resource/job-post">Job Post</NavLink></li>
+                    <li className="breadcrumb-item"><NavLink onClick={() => navigate(-1)}>Detail Job Post</NavLink></li>
                     <li className="breadcrumb-item active">Detail of List Applicant</li>
                   </ol>
                 </div>
@@ -153,7 +154,7 @@ function Add() {
                       <textarea className="form-control" id="summary" value={data.summary} readOnly />
                     </div>
                     <div className="float-right">
-                      <NavLink to="/human-resource/job-post" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                      <NavLink onClick={() => navigate(-1)} type="button" className="btn btn-secondary mr-2">Back</NavLink>
                       <button onClick={generateTest} type="button" className="btn btn-primary mr-2">Generate Test Online</button>
                     </div>
                   </div>

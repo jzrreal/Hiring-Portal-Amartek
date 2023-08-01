@@ -5,7 +5,6 @@ import axios from "axios";
 function Sidebar() {
   const [username, setUsername] = useState("")
   const [role, setRole] = useState("")
-  const url = window.location.origin;
 
   useEffect(() => {
     axios({
@@ -20,6 +19,7 @@ function Sidebar() {
         setRole(response.data.data.role)
       })
   }, [])
+
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
@@ -168,7 +168,7 @@ function Sidebar() {
                 </>
                 : (role == "Applicant" ?
                   <>
-                    <li class="nav-header mt-2">JOB</li>
+                    <li className="nav-header mt-2">JOB</li>
                     {/* Job List */}
                     <li className="nav-item">
                       <NavLink to="/applicant/job-list" className="nav-link">
@@ -195,7 +195,7 @@ function Sidebar() {
             {
               role == "Trainer" ?
                 <>
-                  <li class="nav-header mt-2">TEST</li>
+                  <li className="nav-header mt-2">TEST</li>
                   {/* Question */}
                   <li className="nav-item">
                     <NavLink to="/trainer/question" className="nav-link">

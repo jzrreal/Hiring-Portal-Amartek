@@ -41,15 +41,15 @@ function Index() {
                 {/* Content Header */}
                 <section className="content-header">
                     <div className="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
                                 <h1>Profile</h1>
                             </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><NavLink to="/applicant/dashboard">Dashboard</NavLink></li>
-                                    <li class="breadcrumb-item"><NavLink to="/applicant/profile/personal-information">Profile</NavLink></li>
-                                    <li class="breadcrumb-item active">Personal Information</li>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                    <li className="breadcrumb-item"><NavLink to="/applicant/dashboard">Dashboard</NavLink></li>
+                                    <li className="breadcrumb-item"><NavLink to="/applicant/profile/personal-information">Profile</NavLink></li>
+                                    <li className="breadcrumb-item active">Personal Information</li>
                                 </ol>
                             </div>
                         </div>
@@ -58,15 +58,15 @@ function Index() {
                 </section>
 
                 {/* Main Content */}
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Menu Profile</h3>
+                <section className="content">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-3">
+                                <div className="card card-primary">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Menu Profile</h3>
                                     </div>
-                                    <div class="card-body">
+                                    <div className="card-body">
                                         <MenuApplicantProfile />
                                     </div>
                                 </div>
@@ -81,31 +81,31 @@ function Index() {
                                         <hr />
                                         <div className="form-group">
                                             <label>Fullname</label>
-                                            <input class="form-control" value={data.full_name} readOnly />
+                                            <input className="form-control" value={data.full_name} readOnly />
                                         </div>
                                         <div className="form-group">
                                             <label>Email</label>
-                                            <input class="form-control" value={data.email} readOnly />
+                                            <input className="form-control" value={data.email} readOnly />
                                         </div>
                                         <div className="form-group">
                                             <label>Last Education</label>
-                                            <input class="form-control" value={data.last_education} readOnly />
+                                            <input className="form-control" value={data.last_education} readOnly />
                                         </div>
                                         <div className="form-group">
                                             <label>Age</label>
-                                            <input class="form-control" value={data.age + " Years"} readOnly />
+                                            <input className="form-control" value={data.age + " Years"} readOnly />
                                         </div>
                                         <div className="form-group">
                                             <label>Birth Date</label>
-                                            <input class="form-control" value={dateFormat(data.birth_date, "dd mmmm yyyy")} readOnly />
+                                            <input className="form-control" value={dateFormat(data.birth_date, "dd mmmm yyyy")} readOnly />
                                         </div>
                                         <div className="form-group">
                                             <label>Phone Number</label>
-                                            <input class="form-control" value={data.phone} readOnly />
+                                            <input className="form-control" value={data.phone} readOnly />
                                         </div>
                                         <div className="form-group">
                                             <label>Summary</label>
-                                            <textarea class="form-control" value={data.summary} readOnly />
+                                            <textarea className="form-control" value={data.summary} readOnly />
                                         </div>
                                     </div>
                                 </div>
