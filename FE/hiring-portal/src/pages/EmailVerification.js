@@ -47,8 +47,8 @@ export default function EmailVerification() {
       })
       .then((response) => {
         Toast.fire({
-          icon: 'error',
-          title: response.data.data.message
+          icon: 'success',
+          title: response.data.message
         })
         var timeLeft = 30
         var timer = setInterval(() => {
@@ -81,7 +81,7 @@ export default function EmailVerification() {
 
                       <form onSubmit={submitHandler} method="POST">
                           <div className="form-group">
-                              <label for="exampleInputEmail1">Email</label>
+                              <label htmlFor="exampleInputEmail1">Email</label>
                               <div className="input-group mb-3">
                                   <input 
                                       type="email" 
@@ -110,7 +110,6 @@ export default function EmailVerification() {
   }
 
   else {
-
     return (
       <div className="lockscreen-wrapper">
         <div className="lockscreen-logo">

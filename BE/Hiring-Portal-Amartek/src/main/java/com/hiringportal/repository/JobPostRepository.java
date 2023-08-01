@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Date;
 import java.util.List;
 
 public interface JobPostRepository extends JpaRepository<JobPost, Integer> {
@@ -17,5 +18,10 @@ public interface JobPostRepository extends JpaRepository<JobPost, Integer> {
             select jp from JobPost jp
             """)
     List<JobPost> findAllFiveNewestJobPost(PageRequest pageRequest);
+    @Query(value = """
+            select jp from JobPost jp
+            where jp.open_until < :date and (jp.closed is null or jp.closed is false )
+            """)
+    List<JobPost> findAllExpiredJobPost(Date date);
 
 }

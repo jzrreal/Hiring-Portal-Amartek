@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import CountdownTimer from "./CountdownTimer";
 
-import {render} from "@testing-library/react";
+import { render } from "@testing-library/react";
 import login from "../login";
 
 export default function Test() {
@@ -53,8 +53,8 @@ export default function Test() {
             .then(response => {
                 setValid(true);
             }).catch(error => {
-            navigate(`/online-test?token=${testToken}`);
-        })
+                navigate(`/online-test?token=${testToken}`);
+            })
     }, [])
 
     useEffect(() => {
@@ -70,8 +70,8 @@ export default function Test() {
                     setChoiceId(response.data.data.result.answer);
                 }
             }).catch(error => {
-            navigate(`/online-test?token=${testToken}`);
-        })
+                navigate(`/online-test?token=${testToken}`);
+            })
     }, [currentNumber, testToken])
 
     useEffect(() => {
@@ -87,7 +87,7 @@ export default function Test() {
     }
 
     //For navigate to another question
-    const changeNumber = ({button}) => {
+    const changeNumber = ({ button }) => {
         urlParameter.set('number', button);
         navigate(`${pathName}?${urlParameter.toString()}`);
         setCurrentNumber(button);
@@ -109,7 +109,9 @@ export default function Test() {
 
     const active = {
         margin: '2px',
-        backgroundColor: 'lightyellow'
+        backgroundColor: 'blue',
+        color: 'white',
+        fontWeight: 'bold'
     }
 
     const listButton = [];
@@ -120,68 +122,54 @@ export default function Test() {
 
 
     return (
-        <div className='container-fluid pt-4'>
-            <div className="row justify-content-end">
-                <div className="col-2" style={{backgroundColor: 'lightgreen'}}>
-                    <CountdownTimer timestamp={new Date(data.expired_time).getTime()} token={testToken}/>
-                </div>
-            </div>
-            <div className="row justify-content-center">
-                <div className="col-2">
-                    <div className="card-body">
-                        <div className="row justify-content-center" style={style1}>
+        <div className='container mt-4'>
+            <div className='row'>
+                <div className='col-3'>
+                    <div className='card'>
+                        <div className="card-body d-flex flex-row flex-wrap justify-content-center">
                             {listButton.map(button =>
-                                <button
-                                    style={Number(currentNumber) === button ? active : buttonStyle}
-                                    key={button}
-                                    onClick={() => changeNumber({button})}>
-                                    {button}
-                                </button>
+                                    <button className="btn btn-outline-primary my-2 mr-2"
+                                        style={Number(currentNumber) === button ? active : buttonStyle}
+                                        key={button}
+                                        onClick={() => changeNumber({ button })}>
+                                        {button}
+                                    </button>
                             )}
                         </div>
                     </div>
                 </div>
-                <div className="col-6" style={style2}>
-                    <div className="card-body">
-                        <div className="row">
-                            <h3>{currentNumber}. {data.question}</h3>
-                        </div>
-                        {choices.map(choice => {
-                            return (
-                                <>
-                                    <div className="row mb-0 pb-0">
-                                        <div className="col-1">
-                                            <input
-                                                name="inlineRadioOptions"
-                                                type="radio"
-                                                value={choice.choiceId}
-                                                checked={choiceId === choice.choiceId}
-                                                onChange={changeAnswer}
-                                            />
-                                            <label className="form-check-label"></label>
-                                        </div>
-                                        <div className="col-11">
-                                            <p key={choice.choice}>{choice.choice}</p>
-                                        </div>
+                <div className='col-9'>
+                    <div className='card'>
+                        <div className="card-body">
+                            <div className="bg-success py-2 font-weight-bold">
+                                <CountdownTimer timestamp={new Date(data.expired_time).getTime()} token={testToken} />
+                            </div>
+                            <h4 className="mt-3">{currentNumber}. {data.question}</h4>
+                            {choices.map(choice => {
+                                return (
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input p-0" name="inlineRadioOptions"
+                                            type="radio"
+                                            value={choice.choiceId}
+                                            checked={choiceId === choice.choiceId}
+                                            onChange={changeAnswer} />
+                                        <p key={choice.choice}>{choice.choice}</p>
                                     </div>
-                                </>
-                            );
-                        })}
-                        {currentNumber == 9 ?
-                            <div className="row justify-content-end">
+                                );
+                            })}
+                            {currentNumber == totalNumber ?
                                 <button
-                                    className="btn btn-info"
+                                    className="btn btn-primary btn-block"
                                     onClick={finishTest}
                                 >Finish
                                 </button>
-                            </div>
-                            :
-                            <></>
-                        }
+                                :
+                                <></>
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-            <h1>Hallo Ges, Token mu = {testToken}. Kamu ada di number {currentNumber}</h1>
             <div className="lockscreen-footer text-center">
                 <strong>Copyright &copy; 2023 <a href="https://www.amartek.id/">Bumi Amartha Teknologi
                     Mandiri</a></strong>

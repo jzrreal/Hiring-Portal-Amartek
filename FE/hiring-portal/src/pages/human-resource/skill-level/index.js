@@ -25,22 +25,24 @@ function Index() {
     }
   })
 
-  // Get Data
   useEffect(() => {
+    getData()
+  }, [])
+
+  // Get Data
+  function getData() {
     axios({
       method: "GET",
       url: process.env.REACT_APP_API_URL + "/api/skill-levels",
       headers: {
         Authorization: "Bearer " + token
       }
-    })
-      .then(function (response) {
-        setData(response.data.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, [])
+    }).then(function (response) {
+      setData(response.data.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
 
   // Delete Data
   function deleteData(id) {
@@ -64,7 +66,7 @@ function Index() {
             icon: 'success',
             title: 'Success delete data'
           }),
-          setData(data),
+          getData(),
           navigate('/human-resource/skill-level', { replace: false })
         ).catch(function (error) { console.log(error); })
       }
