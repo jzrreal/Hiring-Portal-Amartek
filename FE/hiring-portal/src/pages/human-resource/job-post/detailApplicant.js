@@ -41,7 +41,7 @@ function Add() {
   }, [])
 
   // Apply Now
-  function generateTest(e) {
+  const generateTest = (e) => {
     e.preventDefault()
     axios({
       method: "POST",
@@ -49,13 +49,19 @@ function Add() {
       headers: {
         Authorization: "Bearer " + token
       }
-    }).then(
+    }).then((response) => {
       Toast.fire({
         icon: 'success',
-        title: 'Success generete test'
-      }),
+        title: response.data.message
+      })
       navigate('/human-resource/job-post', { replace: false })
-    ).catch(function (error) { console.log(error); })
+    })
+    .catch( (error) => {
+      Toast.fire({
+        icon: 'success',
+        title: error.response.data.message
+      })
+    })
   }
 
   return (
