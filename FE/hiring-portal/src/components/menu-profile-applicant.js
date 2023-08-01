@@ -11,7 +11,7 @@ function MenuApplicantProfile() {
                 <Link to="/applicant/profile/education-histories" className="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Education Histories</Link>
             </li>
             <li className="nav-item py-3">
-                <Link to="/applicant/profile/skilss" className="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Skills</Link>
+                <Link to="/applicant/profile/skills" className="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Skills</Link>
             </li>
             <li className="nav-item py-3">
                 <Link to="/applicant/profile/work-experiences" className="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Work Experiences</Link>
