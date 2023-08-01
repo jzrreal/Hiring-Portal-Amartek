@@ -175,7 +175,7 @@ function Detail() {
                     </div>
                     <div className="float-right">
                       <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                      <button onClick={applyNow} className="btn btn-primary">Apply Now</button>
+                      <button onClick={applyNow} className="btn btn-primary" disabled={data.closed || data.applied}>Apply Now</button>
                     </div>
                   </div>
                 </div>
