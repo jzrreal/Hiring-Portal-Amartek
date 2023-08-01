@@ -26,4 +26,5 @@ public class JobPostDetailResponse {
     private Date updatedAt;
     private Integer vacancy;
     private Boolean closed;
+    private Boolean applied;
 }

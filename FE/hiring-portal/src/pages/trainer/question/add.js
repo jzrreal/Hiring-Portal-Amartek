@@ -68,7 +68,8 @@ function Add() {
     }, [])
 
     // Add Data
-    function handleSubmit() {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         // manual karena pusing
         inputData.choice_requests[0].choice = choice1;
         inputData.choice_requests[1].choice = choice2;
@@ -89,13 +90,15 @@ function Add() {
                 Authorization: "Bearer " + token
             },
             data: inputData
-        }).then(
+        })
+        .then(() => {
             Toast.fire({
                 icon: 'success',
                 title: 'Success save data'
-            }),
+            })
             navigate('/trainer/question', { replace: false })
-        ).catch(function (error) { console.log(error); })
+        })
+        .catch(function (error) { console.log(error); })
     }
 
     return (

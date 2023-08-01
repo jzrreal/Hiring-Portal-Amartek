@@ -94,7 +94,7 @@ function Index() {
                                         <span className="badge badge-warning">{data.status}</span>
                                         : (data.status == "rejected" ?
                                           <span className="badge badge-danger">{data.status}</span>
-                                          : (data.status == "accepted" ?
+                                          : (data.status == "passed" ?
                                             <span className="badge badge-success">{data.status}</span>
                                             : null
                                           )
