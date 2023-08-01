@@ -129,7 +129,7 @@ function Dashboard() {
                 <div className="card-body">
                   <div className="d-flex justify-content-between">
                     <h5><i className="fas fa-clock mr-2"></i><span>New History Applicant</span></h5>
-                    <NavLink to="/applicant/history-applicant" className="btn btn-sm btn-primary" >See More Availabe Job</NavLink>
+                    <NavLink to="/applicant/history-applicant" className="btn btn-sm btn-primary" >See More History</NavLink>
                   </div>
                   <div className="table-responsive mt-3">
                     <table className="table table-bordered table-striped table-hover">
