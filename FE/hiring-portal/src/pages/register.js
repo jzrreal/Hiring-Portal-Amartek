@@ -236,7 +236,7 @@ function Register() {
                 <a href="/login" className="btn btn-outline-primary btn-block" >Back to Login</a>
               </div>
             </form>
-            <a type="button" onClick={handleReVerifyEmail} className={`${emailSent ? "btn btn-warning btn-block" : ""} ${cooldown !== 0 ? "disabled" : ""}`}>{`${emailSent ? "Resend email verification" : ""} ${cooldown !== 0 ? cooldown : ""}`}</a>
+            <a type="button" onClick={handleReVerifyEmail} className={`${emailSent ? "btn btn-warning btn-block mt-3" : ""} ${cooldown !== 0 ? "disabled" : ""}`}>{`${emailSent ? "Resend email verification" : ""} ${cooldown !== 0 ? cooldown : ""}`}</a>
           </div>
         </div>
       </div>

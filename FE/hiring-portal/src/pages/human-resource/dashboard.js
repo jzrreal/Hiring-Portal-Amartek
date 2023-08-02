@@ -34,6 +34,8 @@ function Dashboard() {
       })
   }, []);
 
+
+
   return (
     <div className="wrapper">
       {/* Navbar */}
@@ -60,120 +62,122 @@ function Dashboard() {
 
         {/* Main Content */}
         <section className="content">
-          <div className="row">
-            <div className="col-12 col-sm-6 col-md-6">
-              <div className="info-box">
-                <span className="info-box-icon bg-info elevation-1"><i className="fas fa-briefcase"></i></span>
-                <div className="info-box-content">
-                  <span className="info-box-text">Total Jobs</span>
-                  <span className="info-box-number">
-                    {totalJobs}
-                  </span>
+          <div className="container">
+            <div className="row">
+              <div className="col-12 col-sm-6 col-md-6">
+                <div className="info-box">
+                  <span className="info-box-icon bg-info elevation-1"><i className="fas fa-briefcase"></i></span>
+                  <div className="info-box-content">
+                    <span className="info-box-text">Total Jobs</span>
+                    <span className="info-box-number">
+                      {totalJobs}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="col-12 col-sm-6 col-md-6">
-              <div className="info-box mb-3">
-                <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-users"></i></span>
-                <div className="info-box-content">
-                  <span className="info-box-text">Total Applicants Apply Job</span>
-                  <span className="info-box-number">{totalApplicants}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col">
-              <div className="card">
-                <div className="card-body">
-                  <h5><i className="fas fa-users mr-2"></i> New Applicants Apply Job</h5>
-                  <div className="table-responsive mt-3">
-                    <table className="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th>Fullname</th>
-                          <th>Job Title</th>
-                          <th>Job Level</th>
-                          <th>Job Function</th>
-                          <th>Apply At</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataNewApplicant.map((data) => {
-                          return (
-                            <tr>
-                              <td className="text-capitalize">{data.applicant_name}</td>
-                              <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">{data.job_level}</td>
-                              <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">
-                                {
-                                  data.status == "submitted" ?
-                                    <span className="badge badge-secondary">{data.status}</span>
-                                    : (data.status == "reviewed" ?
-                                      <span className="badge badge-info">{data.status}</span>
-                                      : (data.status == "test" ?
-                                        <span className="badge badge-warning">{data.status}</span>
-                                        : (data.status == "rejected" ?
-                                          <span className="badge badge-danger">{data.status}</span>
-                                          : (data.status == "passed" ?
-                                            <span className="badge badge-success">{data.status}</span>
-                                            : null
-                                          )
-                                        )
-                                      )
-                                    )
-                                }
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+              <div className="col-12 col-sm-6 col-md-6">
+                <div className="info-box mb-3">
+                  <span className="info-box-icon bg-danger elevation-1"><i className="fas fa-users"></i></span>
+                  <div className="info-box-content">
+                    <span className="info-box-text">Total Applicants Apply Job</span>
+                    <span className="info-box-number">{totalApplicants}</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="row mt-3">
-            <div className="col">
-              <div className="card">
-                <div className="card-body">
-                  <h5><i className="fas fa-users mr-2"></i> New Job Post</h5>
-                  <div className="table-responsive mt-3">
-                    <table className="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th>Job Title</th>
-                          <th>Job Level</th>
-                          <th>Job Function</th>
-                          <th>Post At</th>
-                          <th>Open Until</th>
-                          <th>Closed</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataNewJobs.map((data) => {
-                          return (
-                            <tr>
-                              <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.job_level}</td>
-                              <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">
-                                {data.closed === null || data.closed === false ?
-                                  <span className="badge badge-success">Open</span>
-                                  : <span className="badge badge-danger">Closed</span>
-                                }
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+            <div className="row mt-3">
+              <div className="col">
+                <div className="card">
+                  <div className="card-body">
+                    <h5><i className="fas fa-users mr-2"></i> New Applicants Apply Job</h5>
+                    <div className="table-responsive mt-3">
+                      <table className="table table-bordered table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Fullname</th>
+                            <th>Job Title</th>
+                            <th>Job Level</th>
+                            <th>Job Function</th>
+                            <th>Apply At</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dataNewApplicant.map((data) => {
+                            return (
+                              <tr>
+                                <td className="text-capitalize">{data.applicant_name}</td>
+                                <td className="text-capitalize">{data.title}</td>
+                                <td className="text-capitalize">{data.job_function}</td>
+                                <td className="text-capitalize">{data.job_level}</td>
+                                <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
+                                <td className="text-capitalize">
+                                  {
+                                    data.status == "submitted" ?
+                                      <span className="badge badge-secondary">{data.status}</span>
+                                      : (data.status == "reviewed" ?
+                                        <span className="badge badge-info">{data.status}</span>
+                                        : (data.status == "test" ?
+                                          <span className="badge badge-warning">{data.status}</span>
+                                          : (data.status == "rejected" ?
+                                            <span className="badge badge-danger">{data.status}</span>
+                                            : (data.status == "passed" ?
+                                              <span className="badge badge-success">{data.status}</span>
+                                              : null
+                                            )
+                                          )
+                                        )
+                                      )
+                                  }
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-3">
+              <div className="col">
+                <div className="card">
+                  <div className="card-body">
+                    <h5><i className="fas fa-users mr-2"></i> New Job Post</h5>
+                    <div className="table-responsive mt-3">
+                      <table className="table table-bordered table-striped table-hover">
+                        <thead>
+                          <tr>
+                            <th>Job Title</th>
+                            <th>Job Level</th>
+                            <th>Job Function</th>
+                            <th>Post At</th>
+                            <th>Open Until</th>
+                            <th>Closed</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {dataNewJobs.map((data) => {
+                            return (
+                              <tr>
+                                <td className="text-capitalize">{data.title}</td>
+                                <td className="text-capitalize">{data.job_level}</td>
+                                <td className="text-capitalize">{data.job_function}</td>
+                                <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
+                                <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
+                                <td className="text-capitalize">
+                                  {data.closed === null || data.closed === false ?
+                                    <span className="badge badge-success">Open</span>
+                                    : <span className="badge badge-danger">Closed</span>
+                                  }
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>

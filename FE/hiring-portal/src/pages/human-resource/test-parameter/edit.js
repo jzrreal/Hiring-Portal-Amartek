@@ -63,39 +63,39 @@ function Edit() {
     }
 
     return (
-        <>
-            <div className="wrapper">
-                {/* Navbar */}
-                <Navbar />
-                {/* Navbar */}
+        <div className="wrapper">
+            {/* Navbar */}
+            <Navbar />
+            {/* Navbar */}
 
-                {/* Sidebar */}
-                <Sidebar />
-                {/* Sidebar */}
+            {/* Sidebar */}
+            <Sidebar />
+            {/* Sidebar */}
 
-                {/* Content */}
-                <div className="content-wrapper">
-                    {/* Content Header */}
-                    <div className="content-header">
-                        <div className="container-fluid">
-                            <div className="row mb-2">
-                                <div className="col-sm-6">
-                                    <h1 className="m-0">Edit Test Parameter</h1>
-                                </div>
-                                <div className="col-sm-6">
-                                    <ol className="breadcrumb float-sm-right">
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/test-parameter">Test Parameter</NavLink></li>
-                                        <li className="breadcrumb-item active">Edit Test Parameter</li>
-                                    </ol>
-                                </div>
+            {/* Content */}
+            <div className="content-wrapper">
+                {/* Content Header */}
+                <div className="content-header">
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
+                                <h1 className="m-0">Edit Test Parameter</h1>
+                            </div>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
+                                    <li className="breadcrumb-item"><NavLink to="/human-resource/test-parameter">Test Parameter</NavLink></li>
+                                    <li className="breadcrumb-item active">Edit Test Parameter</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
-                    {/* Content Header */}
+                </div>
+                {/* Content Header */}
 
-                    {/* Main Content */}
-                    <section className="content">
+                {/* Main Content */}
+                <section className="content">
+                    <div className="container">
                         <div className="row">
                             <div className="col-12">
                                 <div className="card">
@@ -115,7 +115,7 @@ function Edit() {
                                             </div>
                                             <div className="form-group">
                                                 <label for="threshold">Threshold</label>
-                                                <input type="number" step="0.01" className="form-control" id="threshold" value={data.threshold} onChange={e => setData({ ...data, threshold: e.target.value })} />
+                                                <input type="number" step="0.01" max="100.0" className="form-control" id="threshold" value={data.threshold} onChange={e => setData({ ...data, threshold: e.target.value })} />
                                             </div>
                                             <div className="float-right">
                                                 <NavLink to="/human-resource/test-parameter" type="button" className="btn btn-secondary mr-2">Back</NavLink>
@@ -126,16 +126,16 @@ function Edit() {
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    {/* Main Contet */}
-                </div>
-                {/* Content */}
-
-                {/* Footer */}
-                <Footer />
-                {/* Footer */}
+                    </div>
+                </section>
+                {/* Main Contet */}
             </div>
-        </>
+            {/* Content */}
+
+            {/* Footer */}
+            <Footer />
+            {/* Footer */}
+        </div>
     )
 }
 

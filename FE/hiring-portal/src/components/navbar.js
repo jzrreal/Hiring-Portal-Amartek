@@ -1,12 +1,10 @@
 import axios from 'axios'
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 function Navbar() {
-
   const logoutEvent = (e) => {
     e.preventDefault()
-
     axios({
       method: "POST",
       url: process.env.REACT_APP_API_URL + "/api/auth/logout",
