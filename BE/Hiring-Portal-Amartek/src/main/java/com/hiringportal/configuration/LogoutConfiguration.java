@@ -1,5 +1,6 @@
 package com.hiringportal.configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hiringportal.entities.Token;
 import com.hiringportal.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,14 +10,14 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Date;
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
 public class LogoutConfiguration implements LogoutHandler {
 
     private final TokenRepository tokenRepository;
+    private final ObjectMapper objectMapper;
 
     @Override
     public void logout(
@@ -26,17 +27,12 @@ public class LogoutConfiguration implements LogoutHandler {
     ) {
         String authHeader = request.getHeader("Authorization");
         String jwtToken;
-        String stringJson;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            stringJson = "{\"timestamp\":\"" + new Date() + "\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/auth/logout\"}";
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
             try {
-                response.getWriter().write(stringJson);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            } catch (Exception e) {
+                throw new RuntimeException(e.getMessage());
             }
             return;
         }
@@ -49,17 +45,22 @@ public class LogoutConfiguration implements LogoutHandler {
             storedToken.setExpired(true);
             storedToken.setRevokeToken(true);
             tokenRepository.save(storedToken);
-            stringJson = "{\"status\":200,\"message\":\"Success logout\"}";
             response.setStatus(HttpServletResponse.SC_OK);
-        }else {
-            stringJson = "{\"timestamp\":\"" + new Date() + "\",\"status\":403,\"error\":\"Forbidden\",\"path\":\"/api/auth/logout\"}";
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        } else {
+            try {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         }
 
         try {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            response.getWriter().write(stringJson);
+            response.getWriter().write(objectMapper.writeValueAsString(Map.of(
+                    "status", 200,
+                    "message", "Success logout"
+            )));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
