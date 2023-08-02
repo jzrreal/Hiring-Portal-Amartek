@@ -91,14 +91,14 @@ function Add() {
             },
             data: inputData
         })
-        .then(() => {
-            Toast.fire({
-                icon: 'success',
-                title: 'Success save data'
+            .then(() => {
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Success save data'
+                })
+                navigate('/trainer/question', { replace: false })
             })
-            navigate('/trainer/question', { replace: false })
-        })
-        .catch(function (error) { console.log(error); })
+            .catch(function (error) { console.log(error); })
     }
 
     return (
@@ -135,81 +135,83 @@ function Add() {
 
                     {/* Main Content */}
                     <section className="content">
-                        <div className="row">
-                            <div className="col-12">
-                                <div className="card">
-                                    <div className="card-body">
-                                        <form onSubmit={handleSubmit}>
-                                            <div className='row'>
-                                                <div className='col'>
-                                                    <div className="form-group">
-                                                        <label htmlFor="segment">Segment</label>
-                                                        <select className="form-control" id="segment" onChange={e => setInputData({ ...inputData, segment: e.target.value })}>
-                                                            <option value="DATABASE">Database</option>
-                                                            <option value="BASIC_PROGRAMMING">Basic Programming</option>
-                                                            <option value="LOGIKA_MATEMATIKA">Logika Matematika</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div className='col'>
-                                                    <div className="form-group">
-                                                        <label htmlFor="question_level">Question Level</label>
-                                                        <select className="form-control text-capitalize" id="question_level" onChange={e => setInputData({ ...inputData, question_level_id: questionLevels.find(({ name }) => name === e.target.value).questionLevelId })}>
-                                                            {questionLevels.map(questionLevelList)}
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="question">Question</label>
-                                                <textarea className="form-control" id="question" onChange={e => setInputData({ ...inputData, question: e.target.value })} placeholder="Set Question"></textarea>
-                                            </div>
-                                            <div className="form-group">
-                                                <label htmlFor="question">Choice</label>
+                        <div className="container">
+                            <div className="row">
+                                <div className="col-12">
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <form onSubmit={handleSubmit}>
                                                 <div className='row'>
-                                                    {/* {inputData.choice_requests.map(choicesList)} */}
                                                     <div className='col'>
-                                                        <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice1(e.target.value)} />
-                                                        <div className="form-check">
-                                                            <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(true); setBool2(false); setBool3(false); setBool4(false); setBool5(false) }} />
-                                                            <label className="form-check-label">True</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="segment">Segment</label>
+                                                            <select className="form-control" id="segment" onChange={e => setInputData({ ...inputData, segment: e.target.value })}>
+                                                                <option value="DATABASE">Database</option>
+                                                                <option value="BASIC_PROGRAMMING">Basic Programming</option>
+                                                                <option value="LOGIKA_MATEMATIKA">Logika Matematika</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div className='col'>
-                                                        <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice2(e.target.value)} />
-                                                        <div className="form-check">
-                                                            <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(true); setBool3(false); setBool4(false); setBool5(false) }} />
-                                                            <label className="form-check-label">True</label>
-                                                        </div>
-                                                    </div>
-                                                    <div className='col'>
-                                                        <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice3(e.target.value)} />
-                                                        <div className="form-check">
-                                                            <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(false); setBool3(true); setBool4(false); setBool5(false) }} />
-                                                            <label className="form-check-label">True</label>
-                                                        </div>
-                                                    </div>
-                                                    <div className='col'>
-                                                        <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice4(e.target.value)} />
-                                                        <div className="form-check">
-                                                            <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(false); setBool3(false); setBool4(true); setBool5(false) }} />
-                                                            <label className="form-check-label">True</label>
-                                                        </div>
-                                                    </div>
-                                                    <div className='col'>
-                                                        <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice5(e.target.value)} />
-                                                        <div className="form-check">
-                                                            <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(false); setBool3(false); setBool4(false); setBool5(true) }} />
-                                                            <label className="form-check-label">True</label>
+                                                        <div className="form-group">
+                                                            <label htmlFor="question_level">Question Level</label>
+                                                            <select className="form-control text-capitalize" id="question_level" onChange={e => setInputData({ ...inputData, question_level_id: questionLevels.find(({ name }) => name === e.target.value).questionLevelId })}>
+                                                                {questionLevels.map(questionLevelList)}
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div className="float-right">
-                                                <NavLink to="/trainer/question" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                                                <button type='submit' className="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </form>
+                                                <div className="form-group">
+                                                    <label htmlFor="question">Question</label>
+                                                    <textarea className="form-control" id="question" onChange={e => setInputData({ ...inputData, question: e.target.value })} placeholder="Set Question"></textarea>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="question">Choice</label>
+                                                    <div className='row'>
+                                                        {/* {inputData.choice_requests.map(choicesList)} */}
+                                                        <div className='col'>
+                                                            <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice1(e.target.value)} />
+                                                            <div className="form-check">
+                                                                <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(true); setBool2(false); setBool3(false); setBool4(false); setBool5(false) }} />
+                                                                <label className="form-check-label">True</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col'>
+                                                            <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice2(e.target.value)} />
+                                                            <div className="form-check">
+                                                                <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(true); setBool3(false); setBool4(false); setBool5(false) }} />
+                                                                <label className="form-check-label">True</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col'>
+                                                            <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice3(e.target.value)} />
+                                                            <div className="form-check">
+                                                                <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(false); setBool3(true); setBool4(false); setBool5(false) }} />
+                                                                <label className="form-check-label">True</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col'>
+                                                            <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice4(e.target.value)} />
+                                                            <div className="form-check">
+                                                                <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(false); setBool3(false); setBool4(true); setBool5(false) }} />
+                                                                <label className="form-check-label">True</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className='col'>
+                                                            <input className='form-control mb-3' placeholder='Set Choice' onChange={e => setChoice5(e.target.value)} />
+                                                            <div className="form-check">
+                                                                <input className="form-check-input" type="radio" name="radio1" onChange={e => { setBool1(false); setBool2(false); setBool3(false); setBool4(false); setBool5(true) }} />
+                                                                <label className="form-check-label">True</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="float-right">
+                                                    <NavLink to="/trainer/question" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                                                    <button type='submit' className="btn btn-primary">Save changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

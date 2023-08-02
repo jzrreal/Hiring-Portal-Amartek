@@ -9,7 +9,6 @@ import OnlineTest from "./pages/online-test/test";
 //Online Test
 // Human Resource
 import DashboardHumanResource from "./pages/human-resource/dashboard";
-import TestTable from "./pages/human-resource/test";
 // Role
 import IndexRole from './pages/human-resource/role';
 import AddRole from './pages/human-resource/role/add';
@@ -129,7 +128,6 @@ function App() {
         {/* Human Resource */}
         <Route path='human-resource' element={<HumanResourceProtection />}>
           <Route path='dashboard' element={<DashboardHumanResource />} />
-          <Route path='testTable' element={<TestTable />} />
           {/* Master Data */}
           <Route path='role'>
             <Route index element={<IndexRole />} />
