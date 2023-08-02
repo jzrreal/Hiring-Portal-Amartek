@@ -1,10 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {Link, Navigate, NavLink, useNavigate} from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Sidebar() {
+    const naviaget = useNavigate();
   const [username, setUsername] = useState("")
   const [role, setRole] = useState("")
+
+    // Alert Toast
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
   useEffect(() => {
     axios({
@@ -17,7 +32,16 @@ function Sidebar() {
       .then(response => {
         setUsername(response.data.data.full_name)
         setRole(response.data.data.role)
-      })
+      }).catch(error => {
+        if (error.response.status === 401){
+            localStorage.removeItem("authToken");
+            Toast.fire({
+                icon: "error",
+                title: "Your session is expired, please login again"
+            })
+            naviaget("/login");
+        }
+    })
   }, [])
 
   return (
