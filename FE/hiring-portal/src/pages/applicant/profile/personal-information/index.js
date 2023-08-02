@@ -23,7 +23,9 @@ function Index() {
         })
             .then(response => {
                 setData(response.data.data)
-            })
+            }).catch(error => {
+                //Do nothing
+        })
     }, [])
 
     return (
