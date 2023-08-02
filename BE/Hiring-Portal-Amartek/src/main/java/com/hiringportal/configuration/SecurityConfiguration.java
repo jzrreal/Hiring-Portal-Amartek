@@ -22,6 +22,7 @@ public class SecurityConfiguration {
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutConfiguration logoutConfiguration;
+    private final AuthenticationEntryPointHandler authenticationEntryPointHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -62,7 +63,7 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling().authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPointHandler)
                 .and()
                 .authenticationProvider(authenticationProvider)
                 .logout()
@@ -74,5 +75,4 @@ public class SecurityConfiguration {
                 .cors();
         return http.build();
     }
-//    .hasAnyAuthority("human resource")
 }
