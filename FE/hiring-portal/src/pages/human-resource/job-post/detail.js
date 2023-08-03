@@ -13,8 +13,8 @@ import Footer from "../../../components/footer";
 
 function Index() {
   const { id } = useParams();
+  const [data, setData] = useState([{}]);
   const [dataJobPost, setDataJobPost] = useState([{}]);
-  const [dataApplicant, setDatadataApplicant] = useState([{}]);
   const token = useOutletContext();
 
   // Get Data
@@ -36,7 +36,7 @@ function Index() {
           }
         })
           .then(function (response) {
-            setDatadataApplicant(response.data.data);
+            setData(response.data.data);
           })
           .catch(function (error) {
             console.log(error);
@@ -99,15 +99,15 @@ function Index() {
       selector: row => {
         return (
           row.status == "submitted" ?
-            <span className="badge badge-secondary p-2" style={{ fontSize: 12 }}>{row.status}</span>
+            <span className="badge badge-secondary text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
             : (row.status == "reviewed" ?
-              <span className="badge badge-info p-2" style={{ fontSize: 12 }}>{row.status}</span>
+              <span className="badge badge-info text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
               : (row.status == "test" ?
-                <span className="badge badge-warning p-2" style={{ fontSize: 12 }}>{row.status}</span>
+                <span className="badge badge-warning text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
                 : (row.status == "rejected" ?
-                  <span className="badge badge-danger p-2" style={{ fontSize: 12 }}>{row.status}</span>
+                  <span className="badge badge-danger text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
                   : (row.status == "passed" ?
-                    <span className="badge badge-success p-2" style={{ fontSize: 12 }}>{row.status}</span>
+                    <span className="badge badge-success text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
                     : null
                   )
                 )
@@ -122,11 +122,11 @@ function Index() {
       selector: row => {
         return (
           row.test_result == "Waiting" ?
-            <span className="badge badge-warning p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
+            <span className="badge badge-warning text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
             : (row.test_result == "Passed" ?
-              <span className="badge badge-success p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
+              <span className="badge badge-success text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
               : (row.test_result == "Failed" ?
-                <span className="badge badge-danger p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
+                <span className="badge badge-danger text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
                 : null
               )
             )
@@ -138,11 +138,11 @@ function Index() {
       selector: row => {
         return (
           row.test_result == "Waiting" ?
-            <span className="badge badge-warning p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
+            <span className="badge badge-warning text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
             : (row.test_result == "Passed" ?
-              <span className="badge badge-success p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
+              <span className="badge badge-success text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
               : (row.test_result == "Failed" ?
-                <span className="badge badge-danger p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
+                <span className="badge badge-danger text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
                 : null
               )
             )
@@ -153,7 +153,7 @@ function Index() {
 
   const tableData = {
     columns,
-    dataApplicant
+    data
   };
 
   const customStyles = {
@@ -279,86 +279,17 @@ function Index() {
                 <div className="card">
                   <div className="card-body">
                     <h4 className="mb-3">List of Applicant</h4>
-                    {/* <DataTableExtensions {...tableData} filterDigit={0} export={false} print={false} filterPlaceholder="Seacrh by Name">
+                    <DataTableExtensions {...tableData} filterDigit={0} export={false} print={false} filterPlaceholder="Seacrh by Name">
                       <DataTable
                         columns={columns}
-                        data={dataApplicant}
+                        data={data}
                         fixedHeader={true}
                         striped={true}
                         pagination
                         highlightOnHover
                         customStyles={customStyles}
                       />
-                    </DataTableExtensions> */}
-                    <table id="example1" className="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th>Applicant Name</th>
-                          <th>Gender</th>
-                          <th>Age</th>
-                          <th>School / University</th>
-                          <th>Apply At</th>
-                          <th>Status</th>
-                          <th>Test Result</th>
-                          {
-                            dataJobPost.closed === true ? null : <th>Actions</th>
-                          }
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {dataApplicant.map((data) => {
-                          return (
-                            <tr>
-                              <td className="text-capitalize">{data.name}</td>
-                              <td className="text-capitalize">{data.gender}</td>
-                              <td className="text-capitalize">{data.age} Years</td>
-                              <td className="text-capitalize">{data.school_name} - {data.major}</td>
-                              <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">
-                                {
-                                  data.status == "submitted" ?
-                                    <span className="badge badge-secondary">{data.status}</span>
-                                    : (data.status == "reviewed" ?
-                                      <span className="badge badge-info">{data.status}</span>
-                                      : (data.status == "test" ?
-                                        <span className="badge badge-warning">{data.status}</span>
-                                        : (data.status == "rejected" ?
-                                          <span className="badge badge-danger">{data.status}</span>
-                                          : (data.status == "passed" ?
-                                            <span className="badge badge-success">{data.status}</span>
-                                            : null
-                                          )
-                                        )
-                                      )
-                                    )
-                                }
-                              </td>
-                              <td className="text-capitalize">
-                                {
-                                  data.test_result == "Waiting" ?
-                                    <span className="badge badge-warning">{data.test_result}</span>
-                                    : (data.test_result == "Passed" ?
-                                      <span className="badge badge-success">{data.test_result}</span>
-                                      : (data.test_result == "Failed" ?
-                                        <span className="badge badge-danger">{data.test_result}</span>
-                                        : null
-                                      )
-                                    )
-                                }
-                              </td>
-                              {
-                                dataJobPost.closed === true ?
-                                  null
-                                  :
-                                  <td>
-                                    <NavLink to={`/human-resource/job-post/detail/applicant/${data.job_application_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
-                                  </td>
-                              }
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    </DataTableExtensions>
                   </div>
                 </div>
               </div>
