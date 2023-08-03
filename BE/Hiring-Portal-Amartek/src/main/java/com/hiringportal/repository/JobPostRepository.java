@@ -1,5 +1,6 @@
 package com.hiringportal.repository;
 
+import com.hiringportal.dto.JobPostChartResponse;
 import com.hiringportal.entities.JobPost;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,5 +24,11 @@ public interface JobPostRepository extends JpaRepository<JobPost, Integer> {
             where jp.open_until < :date and (jp.closed is null or jp.closed is false )
             """)
     List<JobPost> findAllExpiredJobPost(Date date);
+    @Query(value = """
+                select new com.hiringportal.dto.JobPostChartResponse(jf.name, count(jp.id)) from JobPost jp
+                right join JobFunction jf on jp.jobFunction.id = jf.id
+                group by jf.name
+            """)
+    List<JobPostChartResponse> getChartByJobFunction();
 
 }

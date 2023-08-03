@@ -3,8 +3,7 @@ package com.hiringportal.controller.transactional;
 import java.sql.Date;
 import java.util.List;
 
-import com.hiringportal.dto.JobPostDetailResponse;
-import com.hiringportal.dto.JobPostResponse;
+import com.hiringportal.dto.*;
 import com.hiringportal.entities.User;
 import com.hiringportal.repository.JobApplicationRepository;
 import com.hiringportal.service.ValidationService;
@@ -20,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hiringportal.dto.CustomResponse;
-import com.hiringportal.dto.JobPostRequest;
 import com.hiringportal.entities.JobPost;
 import com.hiringportal.entities.User;
 import com.hiringportal.service.jobFunction.JobFunctionService;
@@ -105,6 +102,17 @@ public class JobPostController {
     public ResponseEntity<Object> delete(@PathVariable(required = true) Integer id) {
         jobPostService.delete(id);
         return CustomResponse.generateResponse("Success delete", HttpStatus.OK);
+    }
+
+    @GetMapping("chart")
+    public ResponseEntity<Object> getChartOfJobPost(){
+        List<JobPostChartResponse> responses = jobPostService.getChartJobPostByJobFunction();
+
+        return CustomResponse.generateResponse(
+                "Data found with total amount : " + responses.size(),
+                HttpStatus.OK,
+                responses
+        );
     }
 
     // save or update proccess
