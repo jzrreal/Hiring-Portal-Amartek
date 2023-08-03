@@ -20,8 +20,11 @@ public class CandidateProfileRequest {
     @NotBlank
     private String phone;
     private String summary;
+    @NotBlank
+    private String fullName;
     @NotNull
     private Date birthDate;
+    @JsonIgnore
     private Integer userId;
     private Gender gender;
 }

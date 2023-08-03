@@ -4,12 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
@@ -20,6 +22,7 @@ public class SecurityConfiguration {
     private final JwtAuthFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
     private final LogoutConfiguration logoutConfiguration;
+    private final AuthenticationEntryPointHandler authenticationEntryPointHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,7 +41,7 @@ public class SecurityConfiguration {
                 ).authenticated()
                 //Need authentication with role Candidate
                 .antMatchers(HttpMethod.POST, "/api/applications/*", "/api/education-histories").hasAuthority("applicant")
-                .antMatchers(HttpMethod.PUT, "/api/education-histories/*").hasAuthority("applicant")
+                .antMatchers(HttpMethod.PUT, "/api/education-histories/*", "/api/applicants").hasAuthority("applicant")
                 .antMatchers(HttpMethod.DELETE, "/api/applications/*", "/api/education-histories/*").hasAuthority("applicant")
                 .antMatchers(HttpMethod.GET, "/api/applications", "/api/profiles/applicants").hasAuthority("applicant")
                 //Need authentication with role HR
@@ -60,6 +63,8 @@ public class SecurityConfiguration {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPointHandler)
+                .and()
                 .authenticationProvider(authenticationProvider)
                 .logout()
                 .logoutUrl("/api/auth/logout")
@@ -70,5 +75,4 @@ public class SecurityConfiguration {
                 .cors();
         return http.build();
     }
-//    .hasAnyAuthority("human resource")
 }

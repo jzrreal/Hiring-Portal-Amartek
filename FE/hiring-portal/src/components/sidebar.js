@@ -1,11 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {Link, Navigate, NavLink, useNavigate} from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function Sidebar() {
+    const naviaget = useNavigate();
   const [username, setUsername] = useState("")
   const [role, setRole] = useState("")
-  const url = window.location.origin;
+
+    // Alert Toast
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
   useEffect(() => {
     axios({
@@ -18,8 +32,18 @@ function Sidebar() {
       .then(response => {
         setUsername(response.data.data.full_name)
         setRole(response.data.data.role)
-      })
+      }).catch(error => {
+        if (error.response.status === 401){
+            localStorage.removeItem("authToken");
+            Toast.fire({
+                icon: "error",
+                title: "Your session is expired, please login again"
+            })
+            naviaget("/login");
+        }
+    })
   }, [])
+
   return (
     <aside className="main-sidebar sidebar-dark-primary elevation-4">
       {/* Brand Logo */}
@@ -168,7 +192,7 @@ function Sidebar() {
                 </>
                 : (role == "Applicant" ?
                   <>
-                    <li class="nav-header mt-2">JOB</li>
+                    <li className="nav-header mt-2">JOB</li>
                     {/* Job List */}
                     <li className="nav-item">
                       <NavLink to="/applicant/job-list" className="nav-link">
@@ -195,7 +219,7 @@ function Sidebar() {
             {
               role == "Trainer" ?
                 <>
-                  <li class="nav-header mt-2">TEST</li>
+                  <li className="nav-header mt-2">TEST</li>
                   {/* Question */}
                   <li className="nav-item">
                     <NavLink to="/trainer/question" className="nav-link">

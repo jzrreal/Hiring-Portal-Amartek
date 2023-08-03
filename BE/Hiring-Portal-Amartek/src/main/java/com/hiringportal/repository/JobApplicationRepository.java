@@ -1,6 +1,5 @@
 package com.hiringportal.repository;
 
-import com.hiringportal.dto.ApplicationHistoryResponse;
 import com.hiringportal.dto.JobApplicationResponse;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,4 +48,7 @@ public interface JobApplicationRepository extends JpaRepository<JobApplication, 
             join ApplicationStatus jas on ja.applicationStatus.id = jas.id
                 """)
     List<JobApplication> findFirstFiveJobApplication(PageRequest pageRequest);
+
+
+    Boolean existsByJobPost_IdAndCandidateProfile_Id(Integer jobPostId, Integer candidateProfileId);
 }

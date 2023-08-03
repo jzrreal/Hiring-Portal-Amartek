@@ -1,26 +1,26 @@
 import { React } from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 function MenuApplicantProfile() {
     return (
-        <ul class="nav flex-column">
-            <li class="nav-item pt-0 pb-3">
-                <Link to="/applicant/profile/personal-information" class="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Personal Information</Link>
+        <ul className="nav flex-column">
+            <li className="nav-item pt-0 pb-3">
+                <NavLink to="/applicant/profile/personal-information" className="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Personal Information</NavLink>
             </li>
-            <li class="nav-item py-3">
-                <Link to="/applicant/profile/education-histories" class="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Education Histories</Link>
+            <li className="nav-item py-3">
+                <NavLink to="/applicant/profile/education-histories" className="nav-link text-muted px-0"><i className="fas fa-graduation-cap mr-2"></i> Education Histories</NavLink>
             </li>
-            <li class="nav-item py-3">
-                <Link to="/applicant/profile/skilss" class="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Skills</Link>
+            <li className="nav-item py-3">
+                <NavLink to="/applicant/profile/skills" className="nav-link text-muted px-0"><i className="fas fa-rocket mr-2"></i> Skills</NavLink>
             </li>
-            <li class="nav-item py-3">
-                <Link to="/applicant/profile/work-experiences" class="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Work Experiences</Link>
+            <li className="nav-item py-3">
+                <NavLink to="/applicant/profile/work-experiences" className="nav-link text-muted px-0"><i className="fas fa-briefcase mr-2"></i> Work Experiences</NavLink>
             </li>
-            <li class="nav-item py-3">
-                <Link to="/applicant/profile/certificates" class="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Certificates</Link>
+            <li className="nav-item py-3">
+                <NavLink to="/applicant/profile/certificates" className="nav-link text-muted px-0"><i className="fas fa-certificate mr-2"></i> Certificates</NavLink>
             </li>
-            <li class="nav-item py-3">
-                <Link to="/applicant/profile/achievments" class="nav-link text-muted px-0"><i className="fas fa-user mr-2"></i> Achievments</Link>
+            <li className="nav-item py-3">
+                <NavLink to="/applicant/profile/achievments" className="nav-link text-muted px-0"><i className="fas fa-award mr-2"></i> Achievments</NavLink>
             </li>
         </ul>
     )

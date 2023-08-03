@@ -27,7 +27,6 @@ function Add() {
         }
     })
 
-    // Add Data
     function handleSubmit(e) {
         e.preventDefault()
         console.log(inputData);
@@ -38,16 +37,31 @@ function Add() {
                 Authorization: "Bearer " + token
             },
             data: inputData
-        }).then(
+        }).then(response => {
+            if (response.data.status === 200){
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Success save data'
+                })
+                navigate('/applicant/profile/education-histories', { replace: false })
+            }
+        }
+    ).catch(error => {
+            console.log(error);
+        if (error.response.data.status === 500){
             Toast.fire({
-                icon: 'success',
-                title: 'Success save data'
-            }),
-            navigate('/applicant/profile/education-histories', { replace: false })
-        ).catch(function (error) {
-            console.log(error)
+                icon: "error",
+                title: `Level ${inputData.level} already exist`
+            })
+        }else {
+            Toast.fire({
+                icon: "error",
+                title: error.response.data.message
+            })
+        }
         })
     }
+    // Add Data
 
     return (
         <div className="wrapper">
@@ -64,16 +78,16 @@ function Add() {
                 {/* Content Header */}
                 <section className="content-header">
                     <div className="container-fluid">
-                        <div class="row mb-2">
-                            <div class="col-sm-6">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
                                 <h1>Profile</h1>
                             </div>
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><NavLink to="/applicant/dashboard">Dashboard</NavLink></li>
-                                    <li class="breadcrumb-item"><NavLink to="/applicant/profile/personal-information">Profile</NavLink></li>
-                                    <li class="breadcrumb-item"><NavLink to="/applicant/profile/education-histories">Education Histories</NavLink></li>
-                                    <li class="breadcrumb-item active">Add Education Histories</li>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                    <li className="breadcrumb-item"><NavLink to="/applicant/dashboard">Dashboard</NavLink></li>
+                                    <li className="breadcrumb-item"><NavLink to="/applicant/profile/personal-information">Profile</NavLink></li>
+                                    <li className="breadcrumb-item"><NavLink to="/applicant/profile/education-histories">Education Histories</NavLink></li>
+                                    <li className="breadcrumb-item active">Add Education Histories</li>
                                 </ol>
                             </div>
                         </div>
@@ -82,15 +96,15 @@ function Add() {
                 </section>
 
                 {/* Main Content */}
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Menu Profile</h3>
+                <section className="content">
+                    <div className="container-fluid">
+                        <div className="row">
+                            <div className="col-md-3">
+                                <div className="card card-primary">
+                                    <div className="card-header">
+                                        <h3 className="card-title">Menu Profile</h3>
                                     </div>
-                                    <div class="card-body">
+                                    <div className="card-body">
                                         <MenuApplicantProfile />
                                     </div>
                                 </div>
@@ -110,9 +124,20 @@ function Add() {
                                                 <label for="name">School / University Name</label>
                                                 <input type="text" className="form-control" id="name" onChange={e => setInputData({ ...inputData, name: e.target.value })} placeholder="Set School / University Name" />
                                             </div>
-                                            <div className="form-group">
-                                                <label for="level">Level</label>
-                                                <input type="text" className="form-control" id="level" onChange={e => setInputData({ ...inputData, level: e.target.value })} placeholder="Set Level" />
+                                            <div className='row'>
+                                                <div className='col'>
+                                                    <div className="form-group">
+                                                        <label htmlFor="level">Level</label>
+                                                        <select className="form-control" id="level" onChange={e => setInputData({ ...inputData, level: e.target.value })}>
+                                                            <option value="" selected>Select Level Education</option>
+                                                            <option value="SMA">SMA</option>
+                                                            <option value="D3">D3</option>
+                                                            <option value="S1">S1</option>
+                                                            <option value="S2">S2</option>
+                                                            <option value="S3">S3</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="form-group">
                                                 <label for="major">Major</label>

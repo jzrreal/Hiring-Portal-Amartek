@@ -75,17 +75,17 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         List<Questions> questionLogikaMatematikaEasy = questionRepository.findRandomThreeEasyQuestionLogikaMatematika(PageRequest.of(0, 3));
 
         //store all question
-        allQuestions.add(questionDatabaseHard);
-        allQuestions.add(questionBasicProgrammingHard);
-        allQuestions.add(questionLogikaMatematikaHard);
-        allQuestions.add(questionDatabaseMedium);
-        allQuestions.add(questionBasicProgrammingMedium);
-        allQuestions.add(questionLogikaMatematikaMedium);
-
-        //store all question
         allQuestions.addAll(questionDatabaseEasy);
         allQuestions.addAll(questionBasicProgrammingEasy);
         allQuestions.addAll(questionLogikaMatematikaEasy);
+
+        //store all question
+        allQuestions.add(questionDatabaseMedium);
+        allQuestions.add(questionBasicProgrammingMedium);
+        allQuestions.add(questionLogikaMatematikaMedium);
+        allQuestions.add(questionDatabaseHard);
+        allQuestions.add(questionBasicProgrammingHard);
+        allQuestions.add(questionLogikaMatematikaHard);
 
         //insert data to tb_tr_tests
         Test test = Test.builder()
@@ -351,6 +351,9 @@ public class OnlineTestServiceImpl implements OnlineTestService {
         test.setFinalResult(testParameter.getThreshold() < finalResult ? TestResult.PASSED : TestResult.FAILED);
         testRepository.save(test);
         log.info("Final result applicants with token {} is : {}", token, finalResult);
+        Integer applicationStatusId = testParameter.getThreshold() < finalResult ? 6 : 4;
+        JobApplication jobApplication = test.getJobApplication();
+        jobApplication.setApplicationStatus(applicationStatusRepository.findById(applicationStatusId).orElseThrow());
         String message = testParameter.getThreshold() < finalResult
                 ? "Congrats, you are passed the test" : "Sorry, you are not passed the test";
         String additionalMessage = testParameter.getThreshold() < finalResult

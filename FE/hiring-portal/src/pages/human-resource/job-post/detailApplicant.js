@@ -41,7 +41,7 @@ function Add() {
   }, [])
 
   // Apply Now
-  function generateTest(e) {
+  const generateTest = (e) => {
     e.preventDefault()
     axios({
       method: "POST",
@@ -49,49 +49,56 @@ function Add() {
       headers: {
         Authorization: "Bearer " + token
       }
-    }).then(
+    }).then((response) => {
       Toast.fire({
         icon: 'success',
-        title: 'Success generete test'
-      }),
+        title: response.data.message
+      })
       navigate('/human-resource/job-post', { replace: false })
-    ).catch(function (error) { console.log(error); })
+    })
+      .catch((error) => {
+        Toast.fire({
+          icon: 'success',
+          title: error.response.data.message
+        })
+      })
   }
 
   return (
-    <>
-      <div className="wrapper">
-        {/* Navbar */}
-        <Navbar />
-        {/* Navbar */}
+    <div className="wrapper">
+      {/* Navbar */}
+      <Navbar />
+      {/* Navbar */}
 
-        {/* Sidebar */}
-        <Sidebar />
-        {/* Sidebar */}
+      {/* Sidebar */}
+      <Sidebar />
+      {/* Sidebar */}
 
-        {/* Content */}
-        <div className="content-wrapper">
-          {/* Content Header */}
-          <div className="content-header">
-            <div className="container-fluid">
-              <div className="row mb-2">
-                <div className="col-sm-6">
-                  <h1 className="m-0">Detail of List Applicant</h1>
-                </div>
-                <div className="col-sm-6">
-                  <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                    <li className="breadcrumb-item"><NavLink to="/human-resource/job-post">Job Post</NavLink></li>
-                    <li className="breadcrumb-item active">Detail of List Applicant</li>
-                  </ol>
-                </div>
+      {/* Content */}
+      <div className="content-wrapper">
+        {/* Content Header */}
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <h1 className="m-0">Detail of List Applicant</h1>
+              </div>
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
+                  <li className="breadcrumb-item"><NavLink to="/human-resource/job-post">Job Post</NavLink></li>
+                  <li className="breadcrumb-item"><NavLink onClick={() => navigate(-1)}>Detail Job Post</NavLink></li>
+                  <li className="breadcrumb-item active">Detail of List Applicant</li>
+                </ol>
               </div>
             </div>
           </div>
-          {/* Content Header */}
+        </div>
+        {/* Content Header */}
 
-          {/* Main Content */}
-          <section className="content">
+        {/* Main Content */}
+        <section className="content">
+          <div className="container">
             <div className="row">
               <div className="col-12">
                 <div className="card">
@@ -147,23 +154,23 @@ function Add() {
                       <textarea className="form-control" id="summary" value={data.summary} readOnly />
                     </div>
                     <div className="float-right">
-                      <NavLink to="/human-resource/job-post" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                      <NavLink onClick={() => navigate(-1)} type="button" className="btn btn-secondary mr-2">Back</NavLink>
                       <button onClick={generateTest} type="button" className="btn btn-primary mr-2">Generate Test Online</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          {/* Main Contet */}
-        </div>
-        {/* Content */}
-
-        {/* Footer */}
-        <Footer />
-        {/* Footer */}
+          </div>
+        </section>
+        {/* Main Contet */}
       </div>
-    </>
+      {/* Content */}
+
+      {/* Footer */}
+      <Footer />
+      {/* Footer */}
+    </div>
   )
 }
 
