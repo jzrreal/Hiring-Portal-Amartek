@@ -14,12 +14,16 @@ export default function Table (  ) {
             }
         })
         .then(response => {
-            console.log(response.data.data);
+            // console.log(response.data.data);
             setTableData(response.data.data);
         })
     }, [])
     
     const [tableData, setTableData] = useState([{}])
+    const [Id, setId] = useState()
+    const getId = (newGetId) => {
+        setId(newGetId)
+    }
 
     const clickHandler = (e) => {
         // e.preventDefault()
@@ -37,7 +41,15 @@ export default function Table (  ) {
             </thead>
             <tbody>
                 {/* <tr> */}
-                    <TableData responseData={tableData} addColumn = {<button>Click here</button>} />
+                    <TableData responseData={tableData} getId = {getId} addColumn={
+                        [
+                            <td>
+                                <button onClick={(e) => console.log(e.nativeEvent)}>Click 1</button>
+                            </td>,
+                            <td>
+                                <button onClick={e => console.log(Id)}>Click 2</button>
+                            </td>
+                        ]} />
                 {/* </tr> */}
             </tbody>
         </table>
