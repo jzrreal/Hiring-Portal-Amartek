@@ -4,6 +4,10 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 import dateFormat from 'dateformat'
 
+import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import "react-data-table-component-extensions/dist/index.css";
+
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
@@ -74,95 +78,162 @@ function Index() {
     })
   }
 
+  const columns = [
+    {
+      name: "Job Title",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{row.title}</span>
+        )
+      }
+    },
+    {
+      name: "Job Level",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{row.job_level}</span>
+        )
+      }
+    },
+    {
+      name: "Post At",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{dateFormat(row.post_at, "dd mmmm yyyy")}</span>
+        )
+      }
+    },
+    {
+      name: "Open Until",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{dateFormat(row.open_until, "dd mmmm yyyy")}</span>
+        )
+      }
+    },
+    {
+      name: "Closed",
+      sortable: true,
+      selector: row => {
+        return (
+          row.closed === null || row.closed === false ?
+            <span className="badge badge-success p-2" style={{ fontSize: 12 }}>Open</span>
+            : <span className="badge badge-danger p-2" style={{ fontSize: 12 }}>Closed</span>
+        )
+      }
+    },
+    {
+      name: "Actions",
+      selector: row => {
+        return (
+          <>
+            <NavLink to={`/human-resource/job-post/detail/${row.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
+            <NavLink to={`/human-resource/job-post/edit/${row.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
+            <button onClick={() => deleteData(row.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
+          </>
+        )
+      }
+    }
+  ];
+
+  const tableData = {
+    columns,
+    data
+  };
+
+  const customStyles = {
+    tables: {
+      style: {
+        backgroundColor: '#000000'
+      }
+    },
+    rows: {
+      style: {
+        minHeight: '72px', // override the row height
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: '8px', // override the cell padding for head cells
+        paddingRight: '8px',
+        fontSize: '16px',
+        fontWeight: 'bold'
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: '8px', // override the cell padding for data cells
+        paddingRight: '8px',
+      },
+    },
+  };
+
   return (
-    <>
-      <div className="wrapper">
-        {/* Navbar */}
-        <Navbar />
-        {/* Navbar */}
+    <div className="wrapper">
+      {/* Navbar */}
+      <Navbar />
+      {/* Navbar */}
 
-        {/* Sidebar */}
-        <Sidebar />
-        {/* Sidebar */}
+      {/* Sidebar */}
+      <Sidebar />
+      {/* Sidebar */}
 
-        {/* Content */}
-        <div className="content-wrapper">
-          {/* Content Header */}
-          <div className="content-header">
-            <div className="container-fluid">
-              <div className="row mb-2">
-                <div className="col-sm-6">
-                  <h1 className="m-0">List of Job Post</h1>
-                </div>
-                <div className="col-sm-6">
-                  <ol className="breadcrumb float-sm-right">
-                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                    <li className="breadcrumb-item active">Job Post</li>
-                  </ol>
-                </div>
+      {/* Content */}
+      <div className="content-wrapper">
+        {/* Content Header */}
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-6">
+                <NavLink to="/human-resource/job-post/add" className="btn btn-primary"><i className="fas fa-plus mr-2"></i> New Job Post</NavLink>
+              </div>
+              <div className="col-sm-6">
+                <ol className="breadcrumb float-sm-right">
+                  <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
+                  <li className="breadcrumb-item active">Job Post</li>
+                </ol>
               </div>
             </div>
           </div>
-          {/* Content Header */}
+        </div>
+        {/* Content Header */}
 
-          {/* Main Content */}
-          <section className="content">
+        {/* Main Content */}
+        <section className="content">
+          <div className="container">
             <div className="row">
               <div className="col-12">
                 <div className="card">
                   <div className="card-body">
-                    <NavLink to="/human-resource/job-post/add" className="btn btn-primary mb-3"><i className="fas fa-plus mr-2"></i> New Job Post</NavLink>
-                    <table id="example1" className="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th>Title Job</th>
-                          <th>Job Level</th>
-                          <th>Job Function</th>
-                          <th>Post At</th>
-                          <th>Open Until</th>
-                          <th>Closed</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.map((data) => {
-                          return (
-                            <tr>
-                              <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.job_level}</td>
-                              <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">{dateFormat(data.post_at, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">{dateFormat(data.open_until, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">
-                                {data.closed === null || data.closed === false ?
-                                  <span className="badge badge-success">Open</span>
-                                  : <span className="badge badge-danger">Closed</span>
-                                }
-                              </td>
-                              <td>
-                                <NavLink to={`/human-resource/job-post/detail/${data.id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
-                                <NavLink to={`/human-resource/job-post/edit/${data.id}`} className="btn btn-sm btn-warning mr-2"><i className="fas fa-pencil-alt"></i></NavLink>
-                                <button onClick={() => deleteData(data.id)} className="btn btn-sm btn-danger"><i className="fas fa-trash-alt"></i></button>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                    <DataTableExtensions {...tableData} filterDigit={0} export={false} print={false} filterPlaceholder="Seacrh by Name">
+                      <DataTable
+                        columns={columns}
+                        data={data}
+                        fixedHeader={true}
+                        striped={true}
+                        pagination
+                        highlightOnHover
+                        customStyles={customStyles}
+                      />
+                    </DataTableExtensions>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          {/* Main Contet */}
-        </div>
-        {/* Content */}
-
-        {/* Footer */}
-        <Footer />
-        {/* Footer */}
+          </div>
+        </section>
+        {/* Main Contet */}
       </div>
-    </>
+      {/* Content */}
+
+      {/* Footer */}
+      <Footer />
+      {/* Footer */}
+    </div>
   )
 }
 

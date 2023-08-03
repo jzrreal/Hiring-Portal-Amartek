@@ -64,49 +64,51 @@ function Detail() {
 
           {/* Main Content */}
           <section className="content">
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-body">
-                    <div className="form-group">
-                      <label for="name">ID Applicant Status</label>
-                      <input type="text" className="form-control" id="id" value={data.id} readOnly />
-                    </div>
-                    <div className="row">
-                      <div className="col">
-                        <div className="form-group">
-                          <label for="job_title">Job Title</label>
-                          <input type="text" className="form-control" id="job_title" value={data.title} readOnly />
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="form-group">
+                        <label for="name">ID Applicant Status</label>
+                        <input type="text" className="form-control" id="id" value={data.id} readOnly />
+                      </div>
+                      <div className="row">
+                        <div className="col">
+                          <div className="form-group">
+                            <label for="job_title">Job Title</label>
+                            <input type="text" className="form-control" id="job_title" value={data.title} readOnly />
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="form-group">
+                            <label for="job_level">Job Level</label>
+                            <input type="text" className="form-control" id="job_level" value={data.job_level} readOnly />
+                          </div>
+                        </div>
+                        <div className="col">
+                          <div className="form-group">
+                            <label for="job_function">Job Function</label>
+                            <input type="text" className="form-control" id="job_function" value={data.job_function} readOnly />
+                          </div>
                         </div>
                       </div>
-                      <div className="col">
-                        <div className="form-group">
-                          <label for="job_level">Job Level</label>
-                          <input type="text" className="form-control" id="job_level" value={data.job_level} readOnly />
-                        </div>
+                      <div className="form-group">
+                        <label for="job_description">Job Description</label>
+                        <textarea className="form-control" id="job_description" value={data.description} readOnly />
                       </div>
-                      <div className="col">
-                        <div className="form-group">
-                          <label for="job_function">Job Function</label>
-                          <input type="text" className="form-control" id="job_function" value={data.job_function} readOnly />
-                        </div>
+                      <div className="form-group">
+                        <label for="job_requirement">Job Requirement</label>
+                        <textarea className="form-control" id="job_requirement" value={data.requirements} readOnly />
                       </div>
-                    </div>
-                    <div className="form-group">
-                      <label for="job_description">Job Description</label>
-                      <textarea className="form-control" id="job_description" value={data.description} readOnly />
-                    </div>
-                    <div className="form-group">
-                      <label for="job_requirement">Job Requirement</label>
-                      <textarea className="form-control" id="job_requirement" value={data.requirements} readOnly />
-                    </div>
-                    <div className="form-group">
-                      <label for="open_until">Open Until</label>
-                      <textarea className="form-control" id="open_until" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
-                    </div>
-                    <div className="float-right">
-                      <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>
-                      <NavLink to="" className="btn btn-primary">Apply Now</NavLink>
+                      <div className="form-group">
+                        <label for="open_until">Open Until</label>
+                        <textarea className="form-control" id="open_until" value={dateFormat(data.open_until, "dd mmmm yyyy")} readOnly />
+                      </div>
+                      <div className="float-right">
+                        <NavLink to="/applicant/job-list" type="button" className="btn btn-secondary mr-2">Back</NavLink>
+                        <NavLink to="" className="btn btn-primary">Apply Now</NavLink>
+                      </div>
                     </div>
                   </div>
                 </div>

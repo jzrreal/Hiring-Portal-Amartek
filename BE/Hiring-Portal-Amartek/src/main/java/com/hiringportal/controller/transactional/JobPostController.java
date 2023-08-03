@@ -1,12 +1,12 @@
 package com.hiringportal.controller.transactional;
 
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 
 import com.hiringportal.dto.JobPostDetailResponse;
 import com.hiringportal.dto.JobPostResponse;
 import com.hiringportal.entities.User;
+import com.hiringportal.repository.JobApplicationRepository;
 import com.hiringportal.service.ValidationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +39,7 @@ public class JobPostController {
     private final JobLevelService jobLevelService;
     private final JobFunctionService jobFunctionService;
     private final UserService userService;
+    private final JobApplicationRepository jobApplicationRepository;
     private final ValidationService validationService;
 
     // get all
@@ -58,8 +59,16 @@ public class JobPostController {
 
     // get id
     @GetMapping("/{id}")
-    public ResponseEntity<Object> get(@PathVariable(required = true) Integer id) {
+    public ResponseEntity<Object> get(
+            @PathVariable(required = true) Integer id,
+            Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
         JobPostDetailResponse response = setJobPostToJobPostDetailResponse(jobPostService.getById(id));
+
+        if (user.getCandidateProfile() != null){
+            response.setApplied(jobApplicationRepository.existsByJobPost_IdAndCandidateProfile_Id(id, user.getCandidateProfile().getId()));
+        }
+
         return CustomResponse.generateResponse("Data found", HttpStatus.OK, response);
     }
 

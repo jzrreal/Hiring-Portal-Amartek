@@ -23,7 +23,9 @@ function Index() {
         })
             .then(response => {
                 setData(response.data.data)
-            })
+            }).catch(error => {
+                //Do nothing
+        })
     }, [])
 
     return (
@@ -76,7 +78,7 @@ function Index() {
                                     <div className="card-body">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                             <h5 className="font-weight-bold m-0">Your Personal Information</h5>
-                                            <NavLink className="btn btn-outline-warning"><i className="fas fa-edit mr-2"></i> Edit Data</NavLink>
+                                            <NavLink to="/applicant/profile/personal-information/edit" className="btn btn-outline-warning"><i className="fas fa-edit mr-2"></i> Edit Data</NavLink>
                                         </div>
                                         <hr />
                                         <div className="form-group">

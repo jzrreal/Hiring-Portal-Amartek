@@ -3,6 +3,10 @@ import { NavLink, useOutletContext } from 'react-router-dom';
 import axios from 'axios';
 import dateFormat from 'dateformat'
 
+import DataTable from "react-data-table-component";
+import DataTableExtensions from "react-data-table-component-extensions";
+import "react-data-table-component-extensions/dist/index.css";
+
 import Navbar from "../../../components/navbar";
 import Sidebar from "../../../components/sidebar";
 import Footer from "../../../components/footer";
@@ -27,6 +31,94 @@ function Index() {
         console.log(error);
       });
   }, [])
+
+  const columns = [
+    {
+      name: "Job Title",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{row.title}</span>
+        )
+      }
+    },
+    {
+      name: "Job Level",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{row.job_level}</span>
+        )
+      }
+    },
+    {
+      name: "Job Function",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{row.job_function}</span>
+        )
+      }
+    },
+    {
+      name: "Apply Date",
+      sortable: true,
+      selector: row => {
+        return (
+          <span className="text-capitalize text-md">{dateFormat(row.apply_date, "dd mmmm yyyy")}</span>
+        )
+      }
+    },
+    {
+      name: "Status",
+      selector: row => {
+        return (
+          row.status == "submitted" ?
+            <span className="badge badge-secondary text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
+            : (row.status == "reviewed" ?
+              <span className="badge badge-info text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
+              : (row.status == "test" ?
+                <span className="badge badge-warning text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
+                : (row.status == "rejected" ?
+                  <span className="badge badge-danger text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
+                  : (row.status == "passed" ?
+                    <span className="badge badge-success text-capitalize p-2" style={{ fontSize: 12 }}>{row.status}</span>
+                    : null
+                  )
+                )
+              )
+            )
+        )
+      }
+    }
+  ];
+
+  const tableData = {
+    columns,
+    data
+  };
+
+  const customStyles = {
+    rows: {
+      style: {
+        minHeight: '72px', // override the row height
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: '8px', // override the cell padding for head cells
+        paddingRight: '8px',
+        fontSize: '16px',
+        fontWeight: 'bold'
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: '8px', // override the cell padding for data cells
+        paddingRight: '8px',
+      },
+    },
+  };
 
   return (
     <>
@@ -61,56 +153,22 @@ function Index() {
 
           {/* Main Content */}
           <section className="content">
-            <div className="row">
-              <div className="col-12">
-                <div className="card">
-                  <div className="card-body">
-                    <table id="example1" className="table table-bordered table-striped table-hover">
-                      <thead>
-                        <tr>
-                          <th>Job Title</th>
-                          <th>Job Level</th>
-                          <th>Job Function</th>
-                          <th>Apply Date</th>
-                          <th>Status</th>
-                          {/* <th>Actions</th> */}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.map((data) => {
-                          return (
-                            <tr>
-                              <td className="text-capitalize">{data.title}</td>
-                              <td className="text-capitalize">{data.job_level}</td>
-                              <td className="text-capitalize">{data.job_function}</td>
-                              <td className="text-capitalize">{dateFormat(data.apply_date, "dd mmmm yyyy")}</td>
-                              <td className="text-capitalize">
-                                {
-                                  data.status == "submitted" ?
-                                    <span className="badge badge-secondary">{data.status}</span>
-                                    : (data.status == "reviewed" ?
-                                      <span className="badge badge-info">{data.status}</span>
-                                      : (data.status == "test" ?
-                                        <span className="badge badge-warning">{data.status}</span>
-                                        : (data.status == "rejected" ?
-                                          <span className="badge badge-danger">{data.status}</span>
-                                          : (data.status == "passed" ?
-                                            <span className="badge badge-success">{data.status}</span>
-                                            : null
-                                          )
-                                        )
-                                      )
-                                    )
-                                }
-                              </td>
-                              {/* <td>
-                                <NavLink to={`/applicant/job-list/detail/${data.job_post_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
-                              </td> */}
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+            <div className="container">
+              <div className="row">
+                <div className="col-12">
+                  <div className="card">
+                    <div className="card-body">
+                      <DataTableExtensions {...tableData} filterDigit={0} export={false} print={false} filterPlaceholder="Seacrh by Name">
+                        <DataTable
+                          columns={columns}
+                          data={data}
+                          striped={true}
+                          pagination
+                          highlightOnHover
+                          customStyles={customStyles}
+                        />
+                      </DataTableExtensions>
+                    </div>
                   </div>
                 </div>
               </div>

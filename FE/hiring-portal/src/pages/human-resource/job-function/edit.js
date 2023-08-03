@@ -63,39 +63,39 @@ function Edit() {
     }
 
     return (
-        <>
-            <div className="wrapper">
-                {/* Navbar */}
-                <Navbar />
-                {/* Navbar */}
+        <div className="wrapper">
+            {/* Navbar */}
+            <Navbar />
+            {/* Navbar */}
 
-                {/* Sidebar */}
-                <Sidebar />
-                {/* Sidebar */}
+            {/* Sidebar */}
+            <Sidebar />
+            {/* Sidebar */}
 
-                {/* Content */}
-                <div className="content-wrapper">
-                    {/* Content Header */}
-                    <div className="content-header">
-                        <div className="container-fluid">
-                            <div className="row mb-2">
-                                <div className="col-sm-6">
-                                    <h1 className="m-0">Edit Job Function</h1>
-                                </div>
-                                <div className="col-sm-6">
-                                    <ol className="breadcrumb float-sm-right">
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
-                                        <li className="breadcrumb-item"><NavLink to="/human-resource/job-function">Job Function</NavLink></li>
-                                        <li className="breadcrumb-item active">Edit Job Function</li>
-                                    </ol>
-                                </div>
+            {/* Content */}
+            <div className="content-wrapper">
+                {/* Content Header */}
+                <div className="content-header">
+                    <div className="container-fluid">
+                        <div className="row mb-2">
+                            <div className="col-sm-6">
+                                <h1 className="m-0">Edit Job Function</h1>
+                            </div>
+                            <div className="col-sm-6">
+                                <ol className="breadcrumb float-sm-right">
+                                    <li className="breadcrumb-item"><NavLink to="/human-resource/dashboard">Dashboard</NavLink></li>
+                                    <li className="breadcrumb-item"><NavLink to="/human-resource/job-function">Job Function</NavLink></li>
+                                    <li className="breadcrumb-item active">Edit Job Function</li>
+                                </ol>
                             </div>
                         </div>
                     </div>
-                    {/* Content Header */}
+                </div>
+                {/* Content Header */}
 
-                    {/* Main Content */}
-                    <section className="content">
+                {/* Main Content */}
+                <section className="content">
+                    <div className="container">
                         <div className="row">
                             <div className="col-12">
                                 <div className="card">
@@ -118,16 +118,16 @@ function Edit() {
                                 </div>
                             </div>
                         </div>
-                    </section>
-                    {/* Main Contet */}
-                </div>
-                {/* Content */}
-
-                {/* Footer */}
-                <Footer />
-                {/* Footer */}
+                    </div>
+                </section>
+                {/* Main Contet */}
             </div>
-        </>
+            {/* Content */}
+
+            {/* Footer */}
+            <Footer />
+            {/* Footer */}
+        </div>
     )
 }
 
