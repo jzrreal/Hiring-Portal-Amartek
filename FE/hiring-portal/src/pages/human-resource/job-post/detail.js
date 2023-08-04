@@ -71,7 +71,7 @@ function Index() {
       sortable: true,
       selector: row => {
         return (
-          <span className="text-capitalize text-md">{row.age}</span>
+          <span className="text-capitalize text-md">{row.age + " Years"}</span>
         )
       }
     },
@@ -137,15 +137,12 @@ function Index() {
       name: "Actions",
       selector: row => {
         return (
-          row.test_result == "Waiting" ?
-            <span className="badge badge-warning text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
-            : (row.test_result == "Passed" ?
-              <span className="badge badge-success text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
-              : (row.test_result == "Failed" ?
-                <span className="badge badge-danger text-capitalize p-2" style={{ fontSize: 12 }}>{row.test_result}</span>
-                : null
-              )
-            )
+          row.closed === true ?
+            null
+            :
+            <td>
+              <NavLink to={`/human-resource/job-post/detail/applicant/${row.job_application_id}`} className="btn btn-sm btn-info mr-2"><i className="fas fa-eye"></i></NavLink>
+            </td>
         )
       }
     }
