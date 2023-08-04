@@ -1,7 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import axios from "axios";
 import dateFormat from "dateformat";
+import "chart.js/auto";
+import { Bar } from "react-chartjs-2";
 
 import Navbar from "../../components/navbar";
 import Sidebar from "../../components/sidebar";
@@ -12,6 +14,9 @@ function Dashboard() {
   const [totalApplicants, setTotalApplicants] = useState(0);
   const [dataNewApplicant, setDataNewApplicant] = useState([{}]);
   const [dataNewJobs, setDataNewJobs] = useState([{}]);
+  const [dataChart, setDataChart] = useState([{}]);
+  const labelChart = []
+  const valueChart = []
   const token = useOutletContext()
 
   useEffect(() => {
@@ -32,9 +37,39 @@ function Dashboard() {
         setTotalJobs(0);
         setTotalApplicants(0);
       })
+
+    axios({
+      method: "GET",
+      url: process.env.REACT_APP_API_URL + "/api/job-posts/chart",
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    })
+      .then(response => {
+        setDataChart(response.data.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, []);
 
+  dataChart.forEach(value => {
+    labelChart.push(value.job_function)
+    valueChart.push(value.total)
+  })
 
+  // Chart
+  const chart = {
+    labels: labelChart,
+    datasets: [
+      {
+        label: "Applicant",
+        backgroundColor: "#007bff",
+        borderColor: "#007bff",
+        data: valueChart,
+      },
+    ],
+  };
 
   return (
     <div className="wrapper">
@@ -89,7 +124,17 @@ function Dashboard() {
               <div className="col">
                 <div className="card">
                   <div className="card-body">
-                    <h5><i className="fas fa-users mr-2"></i> New Applicants Apply Job</h5>
+                    <h5><i className="fas fa-chart-bar mr-2"></i> Statistic Applicants Apply by Job Function</h5>
+                    <Bar data={chart} />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="row mt-3">
+              <div className="col">
+                <div className="card">
+                  <div className="card-body">
+                    <h5><i className="fas fa-users mr-2"></i> List New Applicants Apply Job</h5>
                     <div className="table-responsive mt-3">
                       <table className="table table-bordered table-striped table-hover">
                         <thead>
@@ -144,7 +189,7 @@ function Dashboard() {
               <div className="col">
                 <div className="card">
                   <div className="card-body">
-                    <h5><i className="fas fa-users mr-2"></i> New Job Post</h5>
+                    <h5><i className="fas fa-users mr-2"></i> List New Job Post</h5>
                     <div className="table-responsive mt-3">
                       <table className="table table-bordered table-striped table-hover">
                         <thead>

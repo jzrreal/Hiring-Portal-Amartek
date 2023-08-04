@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 
+import com.hiringportal.dto.JobPostChartResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -79,6 +80,11 @@ public class JobPostServiceImpl implements JobPostService {
         if (jobPosts.isEmpty()) return;
 
         jobPosts.forEach(this::setJobPostToClosedAndSave);
+    }
+
+    @Override
+    public List<JobPostChartResponse> getChartJobPostByJobFunction() {
+        return jobPostRepository.getChartByJobFunction();
     }
 
     private void setJobPostToClosedAndSave(JobPost jobPost){
