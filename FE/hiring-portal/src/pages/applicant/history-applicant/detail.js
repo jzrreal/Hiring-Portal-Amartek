@@ -64,7 +64,7 @@ function Detail() {
 
           {/* Main Content */}
           <section className="content">
-            <div className="container">
+            <div className="container-fluid">
               <div className="row">
                 <div className="col-12">
                   <div className="card">
