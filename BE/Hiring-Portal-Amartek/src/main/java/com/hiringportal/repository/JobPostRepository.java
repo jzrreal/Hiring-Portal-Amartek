@@ -25,7 +25,8 @@ public interface JobPostRepository extends JpaRepository<JobPost, Integer> {
             """)
     List<JobPost> findAllExpiredJobPost(Date date);
     @Query(value = """
-                select new com.hiringportal.dto.JobPostChartResponse(jf.name, count(jp.id)) from JobPost jp
+                select new com.hiringportal.dto.JobPostChartResponse(jf.name, count(jap.id)) from JobPost jp
+                join JobApplication jap on jp.id = jap.jobPost.id
                 right join JobFunction jf on jp.jobFunction.id = jf.id
                 group by jf.name
             """)
