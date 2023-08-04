@@ -46,6 +46,7 @@ public class EmailServiceImpl implements EmailService{
             System.out.println(exception.getMessage());
             throw new RuntimeException(exception.getMessage());
         }
+        log.info("Email verification to {}, successfully send", to);
     }
 
     @Override
@@ -72,6 +73,7 @@ public class EmailServiceImpl implements EmailService{
             System.out.println(exception.getMessage());
             throw new RuntimeException(exception.getMessage());
         }
+        log.info("Email test to {}, successfully send", to);
     }
 
     @Override
@@ -96,6 +98,7 @@ public class EmailServiceImpl implements EmailService{
             System.out.println(exception.getMessage());
             throw new RuntimeException(exception.getMessage());
         }
+        log.info("Email test result to {}, successfully send", to);
     }
 
     private String generateMessageEmailVerification(String name){
