@@ -32,6 +32,7 @@ public class CandidateProfile {
     @Column(columnDefinition = "text")
     private String summary;
     private Date birthDate;
+    @Column(columnDefinition = "TINYINT")
     private Boolean verify;
     private String token;
     
